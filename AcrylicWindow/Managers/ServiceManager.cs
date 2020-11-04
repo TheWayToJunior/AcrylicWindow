@@ -21,10 +21,6 @@ namespace AcrylicWindow
 
         public Page LoginPage => _provider.GetService<LoginPage>();
 
-        public ViewModelBase MainPageVM => _provider.GetService<MainPageViewModel>();
-
-        public ViewModelBase LoginPageVM => _provider.GetService<LoginPageViewModel>();
-
         public IDictionary<string, Page> Pages => _provider.GetServices<ITab>()
             .Cast<Page>()
             .ToDictionary(page => page.GetType().Name);

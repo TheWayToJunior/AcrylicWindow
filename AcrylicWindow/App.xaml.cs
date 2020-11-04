@@ -35,7 +35,9 @@ namespace AcrylicWindow
             services.AddScoped<MainWindowViewModel>();
 
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
-            services.AddScoped(provider => new MainPageViewModel(nameof(HomeTab),
+
+            services.AddScoped(provider => new MainPageViewModel(
+                provider.GetService<MessageBus>(),
                 provider.GetService<ServiceManager>().Pages));
 
             services.AddScoped<LoginPageViewModel>();

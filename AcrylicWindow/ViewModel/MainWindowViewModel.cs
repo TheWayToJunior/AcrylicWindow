@@ -25,10 +25,16 @@ namespace AcrylicWindow.ViewModel
 
             _messageBus.Receive<LoginMessage>(this, async message => 
             {
-                var m = message.Password;
-
+                /// TODO: Authorize
                 await Task.Delay(500);
                 CurrentPage = _serviceManager.MainPage;
+            });
+
+            _messageBus.Receive<LogoutMessage>(this, async message =>
+            {
+                /// TODO: Logout
+                await Task.Delay(500);
+                CurrentPage = _serviceManager.LoginPage;
             });
 
             CurrentPage = manager.LoginPage;

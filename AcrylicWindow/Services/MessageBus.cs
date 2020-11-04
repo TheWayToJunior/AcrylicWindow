@@ -28,7 +28,8 @@ namespace AcrylicWindow.Services
             await Task.WhenAll(tasks);
         }
 
-        public IDisposable Receive<TMessage>(object receiver, Func<TMessage, Task> handler) where TMessage : IMessage
+        public IDisposable Receive<TMessage>(object receiver, Func<TMessage, Task> handler) 
+            where TMessage : IMessage
         {
             var sub = new MessageSubscriber(receiver.GetType(), typeof(TMessage), s => _consumers.TryRemove(s, out var _));
 

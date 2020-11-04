@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using AcrylicWindow.Model;
+using AcrylicWindow.Services;
+using AcrylicWindow.View.Pages;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,6 +10,7 @@ namespace AcrylicWindow.ViewModel
 {
     public class MainPageViewModel : ViewModelBase
     {
+        private readonly MessageBus _messageBus;
         private readonly IDictionary<string, Page> _pages;
 
         private Page _currentPage;
@@ -33,12 +37,18 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public MainPageViewModel(string startPage, IDictionary<string, Page> pages)
+        public MainPageViewModel(MessageBus messageBus, IDictionary<string, Page> pages)
         {
+            _messageBus = messageBus;
             _pages = pages;
 
-            CurrentPage = _pages[startPage];
-            CloseCommand = new DelegateCommand(obj => Application.Current.Shutdown());
+            CurrentPage = _pages[nameof(HomeTab)];
+            CloseCommand = new DelegateCommand(Logout);
+        }
+
+        private async void Logout(object obj)
+        {
+            await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage("UserName"));
         }
     }
 }

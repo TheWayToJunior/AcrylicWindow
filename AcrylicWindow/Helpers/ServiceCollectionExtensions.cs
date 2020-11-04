@@ -1,5 +1,4 @@
-﻿using AcrylicWindow.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 
@@ -48,7 +47,7 @@ namespace AcrylicWindow.Helpers
         public static IServiceCollection AddScopedView<TView>(this IServiceCollection services, Type viewModelType)
             where TView : FrameworkElement, new()
         {
-            return services.AddScoped(provider => 
+            return services.AddScoped(provider =>
                 new TView { DataContext = provider.GetService(viewModelType) });
         }
 

@@ -14,4 +14,14 @@ namespace AcrylicWindow.Model
             Password = password;
         }
     }
+
+    public class LogoutMessage : IMessage
+    {
+        public string Email { get; set; }
+
+        public LogoutMessage(string email)
+        {
+            Email = email;
+        }
+    }
 }
