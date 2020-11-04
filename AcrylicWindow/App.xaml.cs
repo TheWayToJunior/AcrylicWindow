@@ -34,7 +34,6 @@ namespace AcrylicWindow
             services.AddScoped(provider => new MainWindowViewModel(nameof(HomePage),
                 provider.GetServices<Page>().ToDictionary(page => page.GetType().Name)));
 
-            services.AddScoped<LoginWindow>();
             services.AddScoped<LoginWindowViewModel>();
         }
 
