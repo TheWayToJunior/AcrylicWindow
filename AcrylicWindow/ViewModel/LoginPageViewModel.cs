@@ -1,6 +1,5 @@
 ﻿using AcrylicWindow.Model;
 using AcrylicWindow.Services;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -12,11 +11,14 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand LoginCommand { get; }
 
+        public ICommand CloseCommand { get; }
+
         public LoginPageViewModel(MessageBus messageBus)
         {
             _messageBus = messageBus;
 
             LoginCommand = new DelegateCommand(Login);
+            CloseCommand = new DelegateCommand(_=> Application.Current.Shutdown());
         }
 
         private async void Login(object obj)

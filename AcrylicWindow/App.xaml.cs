@@ -22,34 +22,31 @@ namespace AcrylicWindow
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ServiceManager>();
-            services.AddSingleton<MessageBus>();
-
             services.AddSingleton<HomeViewModel>();
             services.AddSingletonView<ITab, HomeTab>(typeof(HomeViewModel));
 
             services.AddSingleton<ITab, OptionsTab>();
             services.AddSingleton<ITab, EmployeesTab>();
 
-            services.AddScoped<MainWindow>();
-            services.AddScoped<MainWindowViewModel>();
-
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
-
             services.AddScoped(provider => new MainPageViewModel(
                 provider.GetService<MessageBus>(),
                 provider.GetService<ServiceManager>().Pages));
 
             services.AddScoped<LoginPageViewModel>();
             services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
+
+            services.AddScopedView<MainWindow>(typeof(MainWindowViewModel));
+            services.AddScoped<MainWindowViewModel>();
+
+            services.AddScoped<ServiceManager>();
+            services.AddScoped<MessageBus>();
         }
 
         private void OnStartup(object sender, StartupEventArgs args)
         {
-            var mainWindow = _provider.GetService<MainWindow>();
-            mainWindow.DataContext = _provider.GetService<MainWindowViewModel>();
-
-            mainWindow.Show();
+            _provider.GetService<MainWindow>()
+                .Show();
         }
     }
 }

@@ -86,7 +86,7 @@
     <Compile Include="IContract\IMessage.cs" />
     <Compile Include="IContract\ITab.cs" />
     <Compile Include="Managers\ServiceManager.cs" />
-    <Compile Include="Model\LoginMessage.cs" />
+    <Compile Include="Model\Message.cs" />
     <Compile Include="Model\MessageSubscriber.cs" />
     <Compile Include="Services\MessageBus.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />

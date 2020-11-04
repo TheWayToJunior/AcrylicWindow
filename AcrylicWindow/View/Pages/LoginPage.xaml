@@ -4,17 +4,37 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AcrylicWindow.View.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       Title="LoginPage">
 
     <Grid>
         <Border Background="White"
                 Width="320"
-                Height="460"></Border>
-        <Button
-            Command="{Binding LoginCommand}"
-            Width="150">
-            Login
-        </Button>
+                Height="460">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button
+                    Command="{Binding CloseCommand}"
+                    Margin="0 0 5 0"
+                    HorizontalAlignment="Right"
+                    Width="30"
+                    Height="30"
+                    Foreground="Black"
+                    Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="Close"
+                                             Width="15"/>
+                </Button>
+                <Button
+                    Grid.Row="1"
+                    Command="{Binding LoginCommand}"
+                    Width="150">
+                    Login
+                </Button>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
