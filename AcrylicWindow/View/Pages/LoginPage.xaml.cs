@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AcrylicWindow.View.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainPage.xaml
+    /// Логика взаимодействия для LoginPage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class LoginPage : Page
     {
-        public HomePage()
+        public LoginPage()
         {
             InitializeComponent();
         }

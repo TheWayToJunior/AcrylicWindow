@@ -82,16 +82,30 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="Helpers\ServiceCollectionExtensions.cs" />
+    <Compile Include="IContract\IMessage.cs" />
+    <Compile Include="IContract\ITab.cs" />
+    <Compile Include="Managers\ServiceManager.cs" />
+    <Compile Include="Model\LoginMessage.cs" />
+    <Compile Include="Model\MessageSubscriber.cs" />
+    <Compile Include="Services\MessageBus.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
-    <Compile Include="ViewModel\LoginWindowViewModel.cs" />
-    <Compile Include="View\Pages\EmployeesPage.xaml.cs">
-      <DependentUpon>EmployeesPage.xaml</DependentUpon>
+    <Compile Include="ViewModel\LoginPageViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\Tabs\EmployeesTab.xaml.cs">
+      <DependentUpon>EmployeesTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Compile Include="View\Tabs\HomeTab.xaml.cs">
+      <DependentUpon>HomeTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\OptionsPage.xaml.cs">
-      <DependentUpon>OptionsPage.xaml</DependentUpon>
+    <Compile Include="View\Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Tabs\OptionsTab.xaml.cs">
+      <DependentUpon>OptionsTab.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -101,21 +115,29 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Pages\EmployeesPage.xaml">
+    <Page Include="View\Tabs\EmployeesTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Pages\HomePage.xaml">
+    <Page Include="View\Tabs\HomeTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Pages\OptionsPage.xaml">
+    <Page Include="View\Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Tabs\OptionsTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,10 +169,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

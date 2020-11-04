@@ -13,93 +13,11 @@
          fw:AcrylicWindow.TintColor="#D1A5D3FD"
          fw:AcrylicWindow.FallbackColor="#D1A5D3FD"
          FontSize="15" FontFamily="Arial" WindowStyle="None">
-    <Grid fw:PointerTracker.Enabled="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid>
-            <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
-                    <Button Foreground="Black"
-                            Command="{Binding CloseCommand}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}}"
-                            Background="{x:Null}" BorderBrush="{x:Null}">
-                        <materialDesign:PackIcon Kind="ArrowLeft" />
-                    </Button>
-                    <TextBlock Text="Выход" VerticalAlignment="Center" 
-                               FontSize="12"
-                               FontWeight="Regular"/>
-                </StackPanel>
-                <ListView SelectedItem="{Binding SelectedElement}">
-                    <ListViewItem Padding="0" Name="HomePage">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Home" Margin="15"/>
-                            <TextBlock Text="Главная"  
-                                           VerticalAlignment="Center"
-                                           FontWeight="Light"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <TextBlock Text="Таблицы" 
-                           FontSize="16" 
-                           FontWeight="Regular"
-                           Margin="15"/>
-                <ListView SelectedItem="{Binding SelectedElement}">
-                    <ListViewItem Name="EmployeesPage">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Work" Margin="15"/>
-                            <TextBlock Text="Сотрудники"  
-                                   VerticalAlignment="Center"
-                                   FontWeight="Light"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="PeopleGroup" Margin="15"/>
-                            <TextBlock Text="Ученики"  
-                                   VerticalAlignment="Center"
-                                   FontWeight="Light"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Group" Margin="15"/>
-                            <TextBlock Text="Группы"  
-                                   VerticalAlignment="Center"
-                                   FontWeight="Light"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-                <TextBlock Text="Система" 
-                           FontSize="16" 
-                           FontWeight="Regular"
-                           Margin="15"/>
-                <ListView SelectedItem="{Binding SelectedElement}">
-                    <ListViewItem Name="OptionsPage">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Settings" Margin="15"/>
-                            <TextBlock Text="Настройки"  
-                                   VerticalAlignment="Center"
-                                   FontWeight="Light"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="InfoCircle" Margin="15"/>
-                            <TextBlock Text="Справка"  
-                                   VerticalAlignment="Center"
-                                   FontWeight="Light"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-            </StackPanel>
-        </Grid>
-        <Frame Grid.Column="1" Background="#FFFFFF"
-               NavigationUIVisibility="Hidden"
-               Content="{Binding CurrentPage}"
-             MouseLeftButtonDown="Frame_MouseLeftButtonDown">
+    <Grid>
+        <Frame 
+            MouseLeftButtonDown="Frame_MouseLeftButtonDown"
+            NavigationUIVisibility="Hidden"
+            Content="{Binding CurrentPage}">
         </Frame>
     </Grid>
 </Window>

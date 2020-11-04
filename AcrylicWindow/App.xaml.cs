@@ -1,11 +1,10 @@
-﻿using AcrylicWindow.View;
+﻿using AcrylicWindow.Helpers;
+using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
 using AcrylicWindow.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace AcrylicWindow
 {
@@ -23,18 +22,24 @@ namespace AcrylicWindow
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<HomeViewModel>();
-            services.AddSingleton<Page, HomePage>(provider =>
-                new HomePage { DataContext = provider.GetService<HomeViewModel>() });
+            services.AddSingleton<ServiceManager>();
+            services.AddSingleton<MessageBus>();
 
-            services.AddSingleton<Page, OptionsPage>();
-            services.AddSingleton<Page, EmployeesPage>();
+            services.AddSingleton<HomeViewModel>();
+            services.AddSingletonView<ITab, HomeTab>(typeof(HomeViewModel));
+
+            services.AddSingleton<ITab, OptionsTab>();
+            services.AddSingleton<ITab, EmployeesTab>();
 
             services.AddScoped<MainWindow>();
-            services.AddScoped(provider => new MainWindowViewModel(nameof(HomePage),
-                provider.GetServices<Page>().ToDictionary(page => page.GetType().Name)));
+            services.AddScoped<MainWindowViewModel>();
 
-            services.AddScoped<LoginWindowViewModel>();
+            services.AddScopedView<MainPage>(typeof(MainPageViewModel));
+            services.AddScoped(provider => new MainPageViewModel(nameof(HomeTab),
+                provider.GetService<ServiceManager>().Pages));
+
+            services.AddScoped<LoginPageViewModel>();
+            services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
         }
 
         private void OnStartup(object sender, StartupEventArgs args)

@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using AcrylicWindow.Model;
+using AcrylicWindow.Services;
+using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IDictionary<string, Page> _pages;
+        private readonly ServiceManager _serviceManager;
+        private readonly MessageBus _messageBus;
 
         private Page _currentPage;
 
@@ -17,28 +18,20 @@ namespace AcrylicWindow.ViewModel
             set { Set(ref _currentPage, value); }
         }
 
-        private FrameworkElement _selectedElement;
-
-        public FrameworkElement SelectedElement
+        public MainWindowViewModel(ServiceManager manager, MessageBus messageBus)
         {
-            set
+            _serviceManager = manager;
+            _messageBus = messageBus;
+
+            _messageBus.Receive<LoginMessage>(this, async message => 
             {
-                if (_pages.TryGetValue(value.Name, out var page) &&
-                    Set(ref _selectedElement, value))
-                {
-                    CurrentPage = page;
-                }
-            }
-        }
+                var m = message.Password;
 
-        public ICommand CloseCommand { get; }
+                await Task.Delay(500);
+                CurrentPage = _serviceManager.MainPage;
+            });
 
-        public MainWindowViewModel(string startPage, IDictionary<string, Page> pages)
-        {
-            _pages = pages;
-
-            CurrentPage = _pages[startPage];
-            CloseCommand = new DelegateCommand(obj => (obj as Window).Close());
+            CurrentPage = manager.LoginPage;
         }
     }
 }

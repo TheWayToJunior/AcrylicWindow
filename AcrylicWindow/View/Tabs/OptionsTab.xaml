@@ -1,4 +1,4 @@
-﻿<Page x:Class="AcrylicWindow.View.Pages.OptionsPage"
+﻿<Page x:Class="AcrylicWindow.View.Pages.OptionsTab"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
