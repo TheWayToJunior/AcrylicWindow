@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage"
-        FontSize="15" FontFamily="Arial" >
+      FontSize="15" FontFamily="Arial">
 
     <Grid>
         <Grid>
@@ -97,10 +97,18 @@
                     </ListView>
                 </StackPanel>
             </Grid>
-            <Frame Grid.Column="1" Background="#FFFFFF"
-               NavigationUIVisibility="Hidden"
-               Content="{Binding CurrentPage}">
-            </Frame>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Frame Grid.Column="1" Background="#FFFFFF"
+                       Grid.Row="1"
+                       NavigationUIVisibility="Hidden"
+                       Content="{Binding CurrentPage}">
+                </Frame>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
 ﻿using AcrylicWindow.IContract;
+using System.Security;
 
 namespace AcrylicWindow.Model
 {
@@ -6,9 +7,9 @@ namespace AcrylicWindow.Model
     {
         public string Email { get; set; }
 
-        public string Password { get; set; }
+        public SecureString Password { get; set; }
 
-        public LoginMessage(string email, string password)
+        public LoginMessage(string email, SecureString password)
         {
             Email = email;
             Password = password;
