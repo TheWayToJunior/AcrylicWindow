@@ -1,16 +1,24 @@
-﻿using AcrylicWindow.Model;
-using AcrylicWindow.Services;
-using System.Net;
-using System.Security;
+﻿using AcrylicWindow.Helpers;
+using AcrylicWindow.IContract;
+using AcrylicWindow.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
 {
-    public class LoginPageViewModel : ViewModelBase
+    public class LoginPageViewModel<TResponse> : ViewModelBase
+        where TResponse : class, new()
     {
-        private readonly MessageBus _messageBus;
+        private readonly IAuthorizationService<TResponse> _authorizationService;
+        private readonly IMessageBus _messageBus;
+
+        private string _error;
+        public string Error
+        {
+            get { return _error; }
+            set { Set(ref _error, value); }
+        }
 
         private string _email;
 
@@ -24,21 +32,32 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public LoginPageViewModel(MessageBus messageBus)
+        public LoginPageViewModel(IAuthorizationService<TResponse> authorizationService, IMessageBus messageBus)
         {
-            _messageBus = messageBus;
+            _authorizationService = Has.NotNull(authorizationService);
+            _messageBus = Has.NotNull(messageBus);
 
-            LoginCommand = new DelegateCommand(Login);
-            CloseCommand = new DelegateCommand(_=> Application.Current.Shutdown());
+            LoginCommand = new DelegateCommand(Login, pb =>
+                !string.IsNullOrEmpty(Email) && (pb as PasswordBox).SecurePassword.Length > 0);
+
+            CloseCommand = new DelegateCommand(_ => Application.Current.Shutdown());
         }
 
         private async void Login(object obj)
         {
+            Error = string.Empty;
+
             var password = (obj as PasswordBox).SecurePassword;
 
-            /// TODO: Validate user information
+            var result = _authorizationService.Authorize(Email, password);
 
-            await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage(Email, password));
+            if(!result.IsSuccess)
+            {
+                Error = result.ErrorMessage;
+                return;
+            }
+
+            await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage("", null)); /// Set value
         }
     }
 }

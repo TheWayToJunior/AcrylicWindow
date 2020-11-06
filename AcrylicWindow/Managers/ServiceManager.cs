@@ -1,5 +1,4 @@
 ﻿using AcrylicWindow.View.Pages;
-using AcrylicWindow.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

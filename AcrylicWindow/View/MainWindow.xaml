@@ -5,7 +5,6 @@
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          mc:Ignorable="d"
          xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
          Height="600" Width="1080"
          fw:AcrylicWindow.Enabled="True"
          fw:AcrylicWindow.AcrylicWindowStyle="None"

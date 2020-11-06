@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Services
 {
-    public class MessageBus
+    public class MessageBus : IMessageBus
     {
         private readonly ConcurrentDictionary<MessageSubscriber, Func<IMessage, Task>> _consumers;
 

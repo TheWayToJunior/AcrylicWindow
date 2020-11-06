@@ -23,8 +23,7 @@
                                 Height="30"
                                 Margin="10"
                                 Style="{StaticResource MaterialDesignIconButton}"
-                                Command="{Binding CloseCommand}"
-                                Background="{x:Null}" BorderBrush="{x:Null}">
+                                Command="{Binding CloseCommand}">
                             <materialDesign:PackIcon Kind="ArrowLeft"
                                                      Width="15"
                                                      Height="15"/>

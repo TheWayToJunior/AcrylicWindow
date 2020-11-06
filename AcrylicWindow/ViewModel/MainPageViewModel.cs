@@ -1,4 +1,5 @@
-﻿using AcrylicWindow.Model;
+﻿using AcrylicWindow.IContract;
+using AcrylicWindow.Model;
 using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace AcrylicWindow.ViewModel
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private readonly MessageBus _messageBus;
+        private readonly IMessageBus _messageBus;
         private readonly IDictionary<string, Page> _pages;
 
         private Page _currentPage;
@@ -37,7 +38,7 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public MainPageViewModel(MessageBus messageBus, IDictionary<string, Page> pages)
+        public MainPageViewModel(IMessageBus messageBus, IDictionary<string, Page> pages)
         {
             _messageBus = messageBus;
             _pages = pages;

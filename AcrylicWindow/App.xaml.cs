@@ -1,4 +1,5 @@
 ﻿using AcrylicWindow.Helpers;
+using AcrylicWindow.IContract;
 using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
 using AcrylicWindow.ViewModel;
@@ -30,17 +31,18 @@ namespace AcrylicWindow
 
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
             services.AddScoped(provider => new MainPageViewModel(
-                provider.GetService<MessageBus>(),
+                provider.GetService<IMessageBus>(),
                 provider.GetService<ServiceManager>().Pages));
 
-            services.AddScoped<LoginPageViewModel>();
-            services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
+            services.AddScoped(typeof(LoginPageViewModel<>));
+            services.AddScopedView<LoginPage>(typeof(LoginPageViewModel<object>));
 
             services.AddScopedView<MainWindow>(typeof(MainWindowViewModel));
             services.AddScoped<MainWindowViewModel>();
 
             services.AddScoped<ServiceManager>();
-            services.AddScoped<MessageBus>();
+            services.AddScoped<IMessageBus, MessageBus>();
+            services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
         }
 
         private void OnStartup(object sender, StartupEventArgs args)

@@ -3,65 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:AcrylicWindow.View.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       FontSize="15" FontFamily="Arial"
       Title="LoginPage">
 
-    <Page.Resources>
-        <Style x:Key="PasswordBox" BasedOn="{StaticResource PasswordBoxRevealStyle}" TargetType="{x:Type PasswordBox}">
-            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type PasswordBox}">
-                        <Border x:Name="Bd" 
-                                        BorderBrush="{TemplateBinding BorderBrush}" 
-                                        BorderThickness="{TemplateBinding BorderThickness}" 
-                                        Background="{TemplateBinding Background}" 
-                                        SnapsToDevicePixels="true">
-                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="TextBox" BasedOn="{StaticResource TextBoxRevealStyle}" TargetType="{x:Type TextBox}">
-            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Border x:Name="Bd" 
-                                        BorderBrush="{TemplateBinding BorderBrush}" 
-                                        BorderThickness="{TemplateBinding BorderThickness}" 
-                                        Background="{TemplateBinding Background}" 
-                                        SnapsToDevicePixels="true">
-                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <Border Background="White"
-                Width="340"
-                Height="460">
+                Width="341"
+                CornerRadius="10"
+                Height="475">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
@@ -95,8 +46,10 @@
                                 Width="250"
                                 Height="120">
                         </materialDesign:PackIcon>
-                        <TextBlock Text="Login to Your Account" 
+                        <TextBlock Text="Login to Your Account"
                                    FontSize="18"
+                                   FontWeight="Medium"
+                                   Margin="10"
                                    Foreground="#727272"
                                    HorizontalAlignment="Center"/>
                     </StackPanel>
@@ -113,13 +66,20 @@
                                        FontSize="12"
                                        Foreground="#494949"/>
                             <TextBox Style="{StaticResource TextBox}"
-                                     Text="{Binding Email}"
                                      Padding="0 10 0 0"
                                      FontWeight="Medium"
-                                     Height="35"/>
+                                     Height="35">
+                                <TextBox.Text>
+                                    <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <Border Background="#C4C4C4"
                                     Height="0.7"
-                                    Margin="0 2 0 0"></Border>
+                                    Margin="0 1 0 0"></Border>
                         </StackPanel>
                         
                         
@@ -131,19 +91,22 @@
                                     Style="{StaticResource PasswordBox}"
                                     Name="pbPassword"
                                     Padding="0 10 0 0"
-                                    Height="35"/>
+                                    Height="35">
+                            </PasswordBox>
                             <Border Background="#C4C4C4"
                                     Height="0.7"></Border>
                         </StackPanel>
                     </Grid>
-
+                    <TextBlock Text="{Binding Error}"
+                               Grid.Row="2"
+                               FontSize="12"
+                               Foreground="Red"
+                               HorizontalAlignment="Center"/>
                     <Button
                         Grid.Row="2"
-                        Style="{StaticResource ButtonAccentRevealStyle}"
+                        Style="{StaticResource Button}"
                         Command="{Binding LoginCommand}"
                         CommandParameter="{Binding ElementName=pbPassword}"
-                        Background="#2E87D9"
-                        Foreground="White"
                         Height="45">
                         Login
                     </Button>
