@@ -24,10 +24,12 @@ namespace AcrylicWindow.ViewModel
             _serviceManager = Has.NotNull(manager);
             _messageBus = Has.NotNull(messageBus);
 
-            _messageBus.Receive<LoginMessage>(this, async message =>
+            _messageBus.Receive<UserMessage>(this, async message =>
             {
                 await Task.Delay(500);
                 CurrentPage = _serviceManager.MainPage;
+
+                await _messageBus.SendTo<MainPageViewModel>(message);
             });
 
             _messageBus.Receive<LogoutMessage>(this, async message =>

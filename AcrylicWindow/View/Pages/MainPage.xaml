@@ -28,7 +28,7 @@
                                                      Width="15"
                                                      Height="15"/>
                         </Button>
-                        <TextBlock Text="Выход" VerticalAlignment="Center" 
+                        <TextBlock Text="Рабочий стол" VerticalAlignment="Center" 
                                FontSize="12"
                                FontWeight="Regular"/>
                     </StackPanel>
@@ -98,11 +98,41 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0"></RowDefinition>
+                    <RowDefinition Height="45"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                
-                <Frame Grid.Column="1" Background="#FFFFFF"
+                <Grid Background="White">
+                    <StackPanel VerticalAlignment="Center" 
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0 0 15 0">
+                        <TextBlock Text="{Binding UserName}"
+                                   FontFamily="Arial"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Light"/>
+                        <materialDesign:PackIcon Kind="AccountCircle" 
+                                                 Foreground="#7D9AFF"
+                                                 Margin="10 0"
+                                                 Width="30"
+                                                 Height="30"
+                                                 VerticalAlignment="Center"/>
+                        <materialDesign:PopupBox
+                            PlacementMode="BottomAndAlignRightEdges" 
+                            StaysOpen="False">
+                            <StackPanel Width="150">
+                                <Button Content="Account"
+                                        FontWeight="Regular"/>
+                                <Button Content="Settings"
+                                        FontWeight="Regular"/>
+                                <Separator />
+                                <Button Content="Logout"
+                                        Command="{Binding LogoutCommand}"
+                                        FontWeight="Regular"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </StackPanel>
+                </Grid>
+                <Frame Grid.Column="1" Background="#F9F9F9"
                        Grid.Row="1"
                        NavigationUIVisibility="Hidden"
                        Content="{Binding CurrentPage}">

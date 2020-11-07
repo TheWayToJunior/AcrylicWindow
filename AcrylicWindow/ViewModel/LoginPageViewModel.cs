@@ -57,7 +57,7 @@ namespace AcrylicWindow.ViewModel
                 return;
             }
 
-            await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage("", null)); /// Set value
+            await _messageBus.SendTo<MainWindowViewModel>(new UserMessage(Email, Email));
         }
     }
 }

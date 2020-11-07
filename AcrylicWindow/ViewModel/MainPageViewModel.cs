@@ -3,6 +3,7 @@ using AcrylicWindow.Model;
 using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -36,6 +37,16 @@ namespace AcrylicWindow.ViewModel
             }
         }
 
+        private string _userName;
+
+        public string UserName
+        {
+            get { return _userName; }
+            set { Set(ref _userName, value); }
+        }
+
+        public ICommand LogoutCommand { get; }
+
         public ICommand CloseCommand { get; }
 
         public MainPageViewModel(IMessageBus messageBus, IDictionary<string, Page> pages)
@@ -43,13 +54,21 @@ namespace AcrylicWindow.ViewModel
             _messageBus = messageBus;
             _pages = pages;
 
+            _messageBus.Receive<UserMessage>(this, message =>
+            {
+                UserName = message.UserName;
+                return Task.CompletedTask;
+            });
+
             CurrentPage = _pages[nameof(HomeTab)];
-            CloseCommand = new DelegateCommand(Logout);
+
+            LogoutCommand = new DelegateCommand(Logout);
+            CloseCommand = new DelegateCommand(_ => Application.Current.Shutdown());
         }
 
         private async void Logout(object obj)
         {
-            await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage("UserName"));
+            await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
         }
     }
 }

@@ -3,16 +3,16 @@ using System.Security;
 
 namespace AcrylicWindow.Model
 {
-    public class LoginMessage : IMessage
+    public class UserMessage : IMessage
     {
         public string Email { get; set; }
 
-        public SecureString Password { get; set; }
+        public string UserName { get; set; }
 
-        public LoginMessage(string email, SecureString password)
+        public UserMessage(string userName, string email)
         {
+            UserName = userName;
             Email = email;
-            Password = password;
         }
     }
 

@@ -21,7 +21,7 @@ namespace AcrylicWindow.Services
             /// TODO: Authorize
             var passwordString = new NetworkCredential("", password).Password;
 
-            if (email != "admin" || passwordString != "0000")
+            if (email.Length < 4 || passwordString != "1932")
                 result.ErrorMessage = "Неверный логин или пароль";
             else
                 /// There must be a real DTO received from the API
