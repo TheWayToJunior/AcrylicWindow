@@ -34,8 +34,8 @@ namespace AcrylicWindow
                 provider.GetService<IMessageBus>(),
                 provider.GetService<ServiceManager>().Pages));
 
-            services.AddScoped(typeof(LoginPageViewModel<>));
-            services.AddScopedView<LoginPage>(typeof(LoginPageViewModel<object>));
+            services.AddScoped(typeof(LoginPageViewModel));
+            services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
 
             services.AddScopedView<MainWindow>(typeof(MainWindowViewModel));
             services.AddScoped<MainWindowViewModel>();

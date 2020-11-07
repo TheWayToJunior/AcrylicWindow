@@ -2,6 +2,7 @@
 using AcrylicWindow.Model;
 using System.Net;
 using System.Security;
+using System.Text.Json;
 
 namespace AcrylicWindow.Services
 {
@@ -23,7 +24,9 @@ namespace AcrylicWindow.Services
             if (email != "admin" || passwordString != "0000")
                 result.ErrorMessage = "Неверный логин или пароль";
             else
-                result.Response = new TResponse(); /// There must be a real DTO received from the API
+                /// There must be a real DTO received from the API
+                result.Response = JsonSerializer.Deserialize<TResponse>("{\"Text\": \"JsonText\"}",
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return result;
         }

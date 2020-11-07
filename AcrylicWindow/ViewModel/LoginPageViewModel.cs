@@ -7,13 +7,13 @@ using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
 {
-    public class LoginPageViewModel<TResponse> : ViewModelBase
-        where TResponse : class, new()
+    public class LoginPageViewModel : ViewModelBase
     {
-        private readonly IAuthorizationService<TResponse> _authorizationService;
+        private readonly IAuthorizationService<object> _authorizationService;
         private readonly IMessageBus _messageBus;
 
         private string _error;
+
         public string Error
         {
             get { return _error; }
@@ -32,7 +32,7 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public LoginPageViewModel(IAuthorizationService<TResponse> authorizationService, IMessageBus messageBus)
+        public LoginPageViewModel(IAuthorizationService<object> authorizationService, IMessageBus messageBus)
         {
             _authorizationService = Has.NotNull(authorizationService);
             _messageBus = Has.NotNull(messageBus);
