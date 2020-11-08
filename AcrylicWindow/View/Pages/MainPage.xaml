@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1080"
       Title="MainPage"
       FontSize="15" FontFamily="Arial">
 
@@ -98,7 +98,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Background="White">
@@ -106,16 +106,14 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0 0 15 0">
-                        <TextBlock Text="{Binding UserName}"
-                                   FontFamily="Arial"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Light"/>
-                        <materialDesign:PackIcon Kind="AccountCircle" 
-                                                 Foreground="#7D9AFF"
-                                                 Margin="10 0"
-                                                 Width="30"
-                                                 Height="30"
-                                                 VerticalAlignment="Center"/>
+                        
+                        <materialDesign:Chip
+                            IconBackground="#7D9AFF"
+                            Content="{Binding UserName, FallbackValue=UsetName}"
+                            Icon="{Binding Icon, FallbackValue=U}" 
+                            Margin="5 0">
+                        </materialDesign:Chip>
+
                         <materialDesign:PopupBox
                             PlacementMode="BottomAndAlignRightEdges" 
                             StaysOpen="False">
@@ -132,7 +130,7 @@
                         </materialDesign:PopupBox>
                     </StackPanel>
                 </Grid>
-                <Frame Grid.Column="1" Background="#F9F9F9"
+                <Frame Grid.Column="1" Background="#F8F8F8"
                        Grid.Row="1"
                        NavigationUIVisibility="Hidden"
                        Content="{Binding CurrentPage}">

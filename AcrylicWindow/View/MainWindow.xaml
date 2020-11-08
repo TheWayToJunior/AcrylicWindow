@@ -11,7 +11,8 @@
          fw:AcrylicWindow.TintOpacity="1"
          fw:AcrylicWindow.TintColor="#D1A5D3FD"
          fw:AcrylicWindow.FallbackColor="#D1A5D3FD"
-         FontSize="15" FontFamily="Arial" WindowStyle="None">
+         FontSize="15" FontFamily="Arial" WindowStyle="None"
+         ResizeMode="NoResize">
     <Grid>
         <Frame 
             MouseLeftButtonDown="Frame_MouseLeftButtonDown"

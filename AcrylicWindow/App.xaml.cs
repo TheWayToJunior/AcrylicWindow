@@ -27,7 +27,9 @@ namespace AcrylicWindow
             services.AddSingletonView<ITab, HomeTab>(typeof(HomeViewModel));
 
             services.AddSingleton<ITab, OptionsTab>();
-            services.AddSingleton<ITab, EmployeesTab>();
+
+            services.AddSingleton<EmployeeViewModel>();
+            services.AddSingletonView<ITab, EmployeesTab>(typeof(EmployeeViewModel));
 
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
             services.AddScoped(provider => new MainPageViewModel(

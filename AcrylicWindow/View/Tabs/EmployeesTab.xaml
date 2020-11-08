@@ -4,13 +4,189 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AcrylicWindow.View.Pages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      xmlns:acrylicwindow="clr-namespace:AcrylicWindow"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeesPage">
 
+    <Page.Resources>
+        <acrylicwindow:ImageConverter x:Key="ImageConverter"/>
+    </Page.Resources>
+
     <Grid>
-        <TextBlock Text="Employees" 
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+        <Border Background="White"
+                Margin="25"
+                CornerRadius="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Сотрудники"
+                                   FontSize="18"
+                                   FontWeight="Medium"
+                                   Margin="25 10"
+                                   Foreground="#727272"
+                                   HorizontalAlignment="Left"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0 5 0 0"
+                            HorizontalAlignment="Right">
+
+                    <materialDesign:ColorZone
+                        Background="White"
+                        VerticalAlignment="Center"
+                        BorderThickness="1"
+                        BorderBrush="#C4C4C4"
+                        CornerRadius="5"
+                        Padding="8 0"
+                        Margin="16 0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="Auto" />
+                                <ColumnDefinition
+                                     Width="*" />
+                                <ColumnDefinition
+                                     Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                Style="{DynamicResource MaterialDesignToolButton}">
+                                <materialDesign:PackIcon
+                                      Kind="Magnify"
+                                      Opacity=".56" />
+                            </Button>
+                            <TextBox
+                                Grid.Column="1"
+                                Margin="8 0 0 0"
+                                materialDesign:HintAssist.Hint="Search"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                BorderThickness="0"
+                                MinWidth="200"
+                                VerticalAlignment="Center" />
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </StackPanel>
+
+                <ListView
+                    Name="clubsGrid"
+                    Grid.Row="1"
+                    Background="White"
+                    ItemsSource="{Binding ListItems, Mode=TwoWay}"
+                    Grid.IsSharedSizeScope="False"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                    Value="True">
+                                    <Setter Property="Background"
+                                        Value="{x:Null}" />
+                                    <Setter Property="BorderBrush"
+                                        Value="{x:Null}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected"
+                                    Value="True">
+                                    <Setter Property="Background"
+                                        Value="{x:Null}" />
+                                    <Setter Property="BorderBrush"
+                                        Value="{x:Null}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn
+                                Width="35">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Check, UpdateSourceTrigger=PropertyChanged}"
+                                                  Background="#7D9AFF"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                                <GridViewColumnHeader IsHitTestVisible="False"/>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                Width="175">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Chip
+                                            Command="{Binding DataContext.ClickCommand, ElementName=clubsGrid}"
+                                            CommandParameter="{Binding Id}"
+                                            IconBackground="White"
+                                            Background="White"
+                                            Content="{Binding Name}">
+                                            <materialDesign:Chip.Icon>
+                                                <Image
+                                                    Width="42"
+                                                    Height="42"
+                                                    Source="{Binding Img, Converter={StaticResource ImageConverter}}"/>
+                                            </materialDesign:Chip.Icon>
+                                        </materialDesign:Chip>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                                <GridViewColumnHeader IsHitTestVisible="False">
+                                    NAME
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                DisplayMemberBinding="{Binding Position}"
+                                Width="Auto">
+                                <GridViewColumnHeader IsHitTestVisible="False">
+                                    POSITION
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                Width="Auto"
+                                DisplayMemberBinding="{Binding Phone}">
+                                <GridViewColumnHeader IsHitTestVisible="False">
+                                    NUMBER
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+                            <GridViewColumn
+                                Width="200"
+                                DisplayMemberBinding="{Binding Email}">
+                                <GridViewColumnHeader IsHitTestVisible="False">
+                                    EMAIL
+                                </GridViewColumnHeader>
+                            </GridViewColumn>
+
+                            <GridViewColumn
+                                Width="35">
+                                <GridViewColumnHeader IsHitTestVisible="False">
+                                </GridViewColumnHeader>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:PopupBox
+                                            PlacementMode="BottomAndAlignRightEdges" 
+                                            StaysOpen="False">
+                                            <materialDesign:PopupBox.ToggleContent>
+                                                <materialDesign:PackIcon Kind="DotsHorizontal" />
+                                            </materialDesign:PopupBox.ToggleContent>
+                                            <StackPanel Width="150">
+                                                <Button FontWeight="Regular">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <!--<materialDesign:PackIcon Kind="Edit" Margin="10 0"/>-->
+                                                        <TextBlock Text="Edit"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button FontWeight="Regular">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <!--<materialDesign:PackIcon Kind="Delete" Margin="10 0"/>-->
+                                                        <TextBlock Text="Delete"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

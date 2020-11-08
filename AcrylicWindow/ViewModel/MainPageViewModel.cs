@@ -1,8 +1,8 @@
 ﻿using AcrylicWindow.IContract;
 using AcrylicWindow.Model;
-using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,7 +42,19 @@ namespace AcrylicWindow.ViewModel
         public string UserName
         {
             get { return _userName; }
-            set { Set(ref _userName, value); }
+            set 
+            {
+                Set(ref _userName, value);
+                Icon = _userName.ToUpper().First();
+            }
+        }
+
+        private char _icon;
+
+        public char Icon 
+        {
+            get { return _icon; }
+            set { Set(ref _icon, value); }
         }
 
         public ICommand LogoutCommand { get; }
