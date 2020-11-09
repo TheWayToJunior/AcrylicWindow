@@ -29,8 +29,8 @@
                                                      Height="15"/>
                         </Button>
                         <TextBlock Text="Рабочий стол" VerticalAlignment="Center" 
-                               FontSize="12"
-                               FontWeight="Regular"/>
+                                   FontSize="12"
+                                   FontWeight="Regular"/>
                     </StackPanel>
                     <ListView SelectedItem="{Binding SelectedElement}">
                         <ListViewItem Padding="0" Name="HomeTab">
@@ -43,9 +43,9 @@
                         </ListViewItem>
                     </ListView>
                     <TextBlock Text="Таблицы" 
-                           FontSize="16" 
-                           FontWeight="Regular"
-                           Margin="15"/>
+                               FontSize="16" 
+                               FontWeight="Regular"
+                               Margin="15"/>
                     <ListView SelectedItem="{Binding SelectedElement}">
                         <ListViewItem Name="EmployeesTab">
                             <StackPanel Orientation="Horizontal">
@@ -107,16 +107,14 @@
                                 HorizontalAlignment="Right"
                                 Margin="0 0 15 0">
                         
-                        <materialDesign:Chip
-                            IconBackground="#7D9AFF"
-                            Content="{Binding UserName, FallbackValue=UsetName}"
-                            Icon="{Binding Icon, FallbackValue=U}" 
-                            Margin="5 0">
+                        <materialDesign:Chip IconBackground="#7D9AFF"
+                                             Content="{Binding UserName, FallbackValue=UsetName}"
+                                             Icon="{Binding Icon, FallbackValue=U}" 
+                                             Margin="5 0">
                         </materialDesign:Chip>
 
-                        <materialDesign:PopupBox
-                            PlacementMode="BottomAndAlignRightEdges" 
-                            StaysOpen="False">
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" 
+                                                 StaysOpen="False">
                             <StackPanel Width="150">
                                 <Button Content="Account"
                                         FontWeight="Regular"/>

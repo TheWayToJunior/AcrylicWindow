@@ -18,14 +18,13 @@
                     <RowDefinition Height="35"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button
-                    Command="{Binding CloseCommand}"
-                    Margin="0 0 5 0"
-                    HorizontalAlignment="Right"
-                    Width="30"
-                    Height="30"
-                    Foreground="Black"
-                    Style="{StaticResource MaterialDesignIconButton}">
+                <Button Command="{Binding CloseCommand}"
+                        Margin="0 0 5 0"
+                        HorizontalAlignment="Right"
+                        Width="30"
+                        Height="30"
+                        Foreground="Black"
+                        Style="{StaticResource MaterialDesignIconButton}">
                     <materialDesign:PackIcon Kind="Close"
                                              Width="15"/>
                 </Button>
@@ -38,13 +37,11 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel>
-                        <materialDesign:PackIcon 
-                                Foreground="#7D9AFF"
-                                Kind="AccountCircle"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Width="250"
-                                Height="120">
+                        <materialDesign:PackIcon Foreground="#7D9AFF"
+                                                 Kind="AccountCircle"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"
+                                                 Width="250" Height="120">
                         </materialDesign:PackIcon>
                         <TextBlock Text="Login to Your Account"
                                    FontSize="18"
@@ -70,7 +67,9 @@
                                      FontWeight="Medium"
                                      Height="35">
                                 <TextBox.Text>
-                                    <Binding Path="Email" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True">
+                                    <Binding Path="Email" 
+                                             UpdateSourceTrigger="PropertyChanged" 
+                                             NotifyOnValidationError="True">
                                         <Binding.ValidationRules>
                                             <DataErrorValidationRule/>
                                         </Binding.ValidationRules>
@@ -85,13 +84,12 @@
                         
                         <StackPanel Grid.Row="1">
                             <TextBlock FontSize="12"
-                                   Foreground="#494949"
-                                   Text="Password"/>
-                            <PasswordBox
-                                    Style="{StaticResource PasswordBox}"
-                                    Name="pbPassword"
-                                    Padding="0 10 0 0"
-                                    Height="35">
+                                       Foreground="#494949"
+                                       Text="Password"/>
+                            <PasswordBox Style="{StaticResource PasswordBox}"
+                                         Name="pbPassword"
+                                         Padding="0 10 0 0"
+                                         Height="35">
                             </PasswordBox>
                             <Border Background="#C4C4C4"
                                     Height="0.7"></Border>
@@ -102,12 +100,11 @@
                                FontSize="12"
                                Foreground="Red"
                                HorizontalAlignment="Center"/>
-                    <Button
-                        Grid.Row="2"
-                        Style="{StaticResource Button}"
-                        Command="{Binding LoginCommand}"
-                        CommandParameter="{Binding ElementName=pbPassword}"
-                        Height="45">
+                    <Button Grid.Row="2"
+                            Style="{StaticResource Button}"
+                            Command="{Binding LoginCommand}"
+                            CommandParameter="{Binding ElementName=pbPassword}"
+                            Height="45">
                         Login
                     </Button>
                 </Grid>

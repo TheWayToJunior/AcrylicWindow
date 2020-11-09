@@ -33,73 +33,64 @@
                 <StackPanel Orientation="Horizontal" Margin="0 5 0 0"
                             HorizontalAlignment="Right">
 
-                    <materialDesign:ColorZone
-                        Background="White"
-                        VerticalAlignment="Center"
-                        BorderThickness="1"
-                        BorderBrush="#C4C4C4"
-                        CornerRadius="5"
-                        Padding="8 0"
-                        Margin="16 0">
+                    <materialDesign:ColorZone Background="White"
+                                              VerticalAlignment="Center"
+                                              BorderThickness="1"
+                                              BorderBrush="#C4C4C4"
+                                              CornerRadius="5"
+                                              Padding="8 0"
+                                              Margin="16 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition
-                                    Width="Auto" />
-                                <ColumnDefinition
-                                     Width="*" />
-                                <ColumnDefinition
-                                     Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button
-                                Style="{DynamicResource MaterialDesignToolButton}">
-                                <materialDesign:PackIcon
-                                      Kind="Magnify"
-                                      Opacity=".56" />
+                            <Button Style="{DynamicResource MaterialDesignToolButton}">
+                                <materialDesign:PackIcon Kind="Magnify"
+                                                         Opacity=".56" />
                             </Button>
-                            <TextBox
-                                Grid.Column="1"
-                                Margin="8 0 0 0"
-                                materialDesign:HintAssist.Hint="Search"
-                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                BorderThickness="0"
-                                MinWidth="200"
-                                VerticalAlignment="Center" />
+                            <TextBox Grid.Column="1"
+                                     Margin="8 0 0 0"
+                                     materialDesign:HintAssist.Hint="Search"
+                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                     BorderThickness="0"
+                                     MinWidth="200"
+                                     VerticalAlignment="Center" />
                         </Grid>
                     </materialDesign:ColorZone>
                 </StackPanel>
 
-                <ListView
-                    Name="clubsGrid"
-                    Grid.Row="1"
-                    Background="White"
-                    ItemsSource="{Binding ListItems, Mode=TwoWay}"
-                    Grid.IsSharedSizeScope="False"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView Name="clubsGrid"
+                          Grid.Row="1"
+                          Background="White"
+                          ItemsSource="{Binding ListItems, Mode=TwoWay}"
+                          Grid.IsSharedSizeScope="False"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">    
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver"
-                                    Value="True">
+                                         Value="True">
                                     <Setter Property="Background"
-                                        Value="{x:Null}" />
+                                            Value="{x:Null}" />
                                     <Setter Property="BorderBrush"
-                                        Value="{x:Null}" />
+                                            Value="{x:Null}" />
                                 </Trigger>
                                 <Trigger Property="IsSelected"
-                                    Value="True">
+                                         Value="True">
                                     <Setter Property="Background"
-                                        Value="{x:Null}" />
+                                            Value="{x:Null}" />
                                     <Setter Property="BorderBrush"
-                                        Value="{x:Null}" />
+                                            Value="{x:Null}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn
-                                Width="35">
+                            <GridViewColumn Width="35">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Check, UpdateSourceTrigger=PropertyChanged}"
@@ -108,21 +99,18 @@
                                 </GridViewColumn.CellTemplate>
                                 <GridViewColumnHeader IsHitTestVisible="False"/>
                             </GridViewColumn>
-                            <GridViewColumn
-                                Width="175">
+                            <GridViewColumn Width="175">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Chip
-                                            Command="{Binding DataContext.ClickCommand, ElementName=clubsGrid}"
-                                            CommandParameter="{Binding Id}"
-                                            IconBackground="White"
-                                            Background="White"
-                                            Content="{Binding Name}">
+                                        <materialDesign:Chip Command="{Binding DataContext.ClickCommand, ElementName=clubsGrid}"
+                                                             CommandParameter="{Binding Id}"
+                                                             IconBackground="White"
+                                                             Background="White"
+                                                             Content="{Binding Name}">
                                             <materialDesign:Chip.Icon>
-                                                <Image
-                                                    Width="42"
-                                                    Height="42"
-                                                    Source="{Binding Img, Converter={StaticResource ImageConverter}}"/>
+                                                <Image Width="42"
+                                                       Height="42"
+                                                       Source="{Binding Img, Converter={StaticResource ImageConverter}}"/>
                                             </materialDesign:Chip.Icon>
                                         </materialDesign:Chip>
                                     </DataTemplate>
@@ -131,37 +119,32 @@
                                     NAME
                                 </GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn
-                                DisplayMemberBinding="{Binding Position}"
-                                Width="Auto">
+                            <GridViewColumn DisplayMemberBinding="{Binding Position}"
+                                            Width="Auto">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     POSITION
                                 </GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn
-                                Width="Auto"
-                                DisplayMemberBinding="{Binding Phone}">
+                            <GridViewColumn Width="Auto"
+                                            DisplayMemberBinding="{Binding Phone}">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     NUMBER
                                 </GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn
-                                Width="200"
-                                DisplayMemberBinding="{Binding Email}">
+                            <GridViewColumn Width="220"
+                                            DisplayMemberBinding="{Binding Email}">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     EMAIL
                                 </GridViewColumnHeader>
                             </GridViewColumn>
 
-                            <GridViewColumn
-                                Width="35">
+                            <GridViewColumn Width="35">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                 </GridViewColumnHeader>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:PopupBox
-                                            PlacementMode="BottomAndAlignRightEdges" 
-                                            StaysOpen="False">
+                                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" 
+                                                                 StaysOpen="False">
                                             <materialDesign:PopupBox.ToggleContent>
                                                 <materialDesign:PackIcon Kind="DotsHorizontal" />
                                             </materialDesign:PopupBox.ToggleContent>
