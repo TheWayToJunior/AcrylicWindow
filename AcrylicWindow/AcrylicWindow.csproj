@@ -104,21 +104,26 @@
     <Compile Include="Helpers\Has.cs" />
     <Compile Include="Helpers\ServiceCollectionExtensions.cs" />
     <Compile Include="IContract\IAuthorizationService.cs" />
+    <Compile Include="IContract\IEmployeeService.cs" />
     <Compile Include="IContract\IMessage.cs" />
     <Compile Include="IContract\IMessageBus.cs" />
+    <Compile Include="IContract\IModel.cs" />
     <Compile Include="IContract\ITab.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="Managers\ServiceManager.cs" />
     <Compile Include="Model\AuthorizationResult.cs" />
+    <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\MessageSubscriber.cs" />
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\MessageBus.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LoginPageViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\RowViewModel.cs" />
     <Compile Include="View\Tabs\EmployeesTab.xaml.cs">
       <DependentUpon>EmployeesTab.xaml</DependentUpon>
     </Compile>

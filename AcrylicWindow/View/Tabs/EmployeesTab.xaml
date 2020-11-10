@@ -61,12 +61,11 @@
                     </materialDesign:ColorZone>
                 </StackPanel>
 
-                <ListView Name="clubsGrid"
-                          Grid.Row="1"
+                <ListView Grid.Row="1"
                           Background="White"
                           ItemsSource="{Binding ListItems, Mode=TwoWay}"
                           Grid.IsSharedSizeScope="False"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto">    
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -90,27 +89,31 @@
                     </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="35">
+                            <GridViewColumn Width="45">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding Check, UpdateSourceTrigger=PropertyChanged}"
                                                   Background="#7D9AFF"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
-                                <GridViewColumnHeader IsHitTestVisible="False"/>
+                                <GridViewColumnHeader Padding="7">
+                                    <CheckBox Name="cbSelectAll" Command="{Binding SelectAllCommand}"
+                                              CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                              Background="#7D9AFF"/>
+                                </GridViewColumnHeader>
                             </GridViewColumn>
                             <GridViewColumn Width="175">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Chip Command="{Binding DataContext.ClickCommand, ElementName=clubsGrid}"
-                                                             CommandParameter="{Binding Id}"
+                                        <materialDesign:Chip Command="{Binding DataContext.ClickCommand, RelativeSource={RelativeSource Self}}"
+                                                             CommandParameter="{Binding Model.Id}"
                                                              IconBackground="White"
                                                              Background="White"
-                                                             Content="{Binding Name}">
+                                                             Content="{Binding Model.Name}">
                                             <materialDesign:Chip.Icon>
                                                 <Image Width="42"
                                                        Height="42"
-                                                       Source="{Binding Img, Converter={StaticResource ImageConverter}}"/>
+                                                       Source="{Binding Model.Img, Converter={StaticResource ImageConverter}}"/>
                                             </materialDesign:Chip.Icon>
                                         </materialDesign:Chip>
                                     </DataTemplate>
@@ -119,20 +122,20 @@
                                     NAME
                                 </GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Position}"
+                            <GridViewColumn DisplayMemberBinding="{Binding Model.Position}"
                                             Width="Auto">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     POSITION
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                             <GridViewColumn Width="Auto"
-                                            DisplayMemberBinding="{Binding Phone}">
+                                            DisplayMemberBinding="{Binding Model.Phone}">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     NUMBER
                                 </GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn Width="220"
-                                            DisplayMemberBinding="{Binding Email}">
+                            <GridViewColumn Width="210"
+                                            DisplayMemberBinding="{Binding Model.Email}">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     EMAIL
                                 </GridViewColumnHeader>

@@ -44,7 +44,8 @@ namespace AcrylicWindow
 
             services.AddScoped<ServiceManager>();
             services.AddScoped<IMessageBus, MessageBus>();
-            services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
         }
 
         private void OnStartup(object sender, StartupEventArgs args)
