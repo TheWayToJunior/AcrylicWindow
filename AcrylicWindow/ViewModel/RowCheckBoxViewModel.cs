@@ -3,8 +3,12 @@ using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
 {
-    public class RowCheckBoxViewModel<T> : ViewModelBase
-        where T : IModel
+    /// <summary>
+    /// Provides functionality for binding data to a checkbox in a table row
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
+    public class RowCheckBoxViewModel<TModel> : ViewModelBase
+        where TModel : IModel
     {
         private bool _check;
 
@@ -14,11 +18,11 @@ namespace AcrylicWindow.ViewModel
             set => Set(ref _check, value);
         }
 
-        public T Model { get; set; }
+        public TModel Model { get; set; }
 
         public ICommand ClickCommand { get; }
 
-        public RowCheckBoxViewModel(T model = default)
+        public RowCheckBoxViewModel(TModel model = default)
         {
             Model = model;
 

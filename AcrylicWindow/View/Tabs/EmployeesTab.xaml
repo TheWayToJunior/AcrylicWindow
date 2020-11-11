@@ -16,19 +16,20 @@
 
     <Grid>
         <Border Background="White"
-                Margin="25"
+                Margin="25 25 25 20"
                 CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition/>
+                    <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Сотрудники"
-                                   FontSize="18"
-                                   FontWeight="Medium"
-                                   Margin="25 10"
-                                   Foreground="#727272"
-                                   HorizontalAlignment="Left"/>
+                           FontSize="18"
+                           FontWeight="Medium"
+                           Margin="25 10"
+                           Foreground="#727272"
+                           HorizontalAlignment="Left"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0 5 0 0"
                             HorizontalAlignment="Right">
@@ -62,31 +63,11 @@
                 </StackPanel>
 
                 <ListView Grid.Row="1"
+                          x:Name="lvEmployees"
                           Background="White"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ItemsSource="{Binding ListItems, Mode=TwoWay}"
-                          Grid.IsSharedSizeScope="False"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignGridViewItem}">
-                            <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="True">
-                                    <Setter Property="Background"
-                                            Value="{x:Null}" />
-                                    <Setter Property="BorderBrush"
-                                            Value="{x:Null}" />
-                                </Trigger>
-                                <Trigger Property="IsSelected"
-                                         Value="True">
-                                    <Setter Property="Background"
-                                            Value="{x:Null}" />
-                                    <Setter Property="BorderBrush"
-                                            Value="{x:Null}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                          ItemContainerStyle="{StaticResource DisableHover}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="45">
@@ -97,7 +78,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                                 <GridViewColumnHeader Padding="7">
-                                    <CheckBox Name="cbSelectAll" Command="{Binding SelectAllCommand}"
+                                    <CheckBox Command="{Binding SelectAllCommand}"
                                               CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                                               Background="#7D9AFF"/>
                                 </GridViewColumnHeader>
@@ -107,8 +88,8 @@
                                     <DataTemplate>
                                         <materialDesign:Chip Command="{Binding DataContext.ClickCommand, RelativeSource={RelativeSource Self}}"
                                                              CommandParameter="{Binding Model.Id}"
-                                                             IconBackground="White"
-                                                             Background="White"
+                                                             IconBackground="Transparent"
+                                                             Background="Transparent"
                                                              Content="{Binding Model.Name}">
                                             <materialDesign:Chip.Icon>
                                                 <Image Width="42"
@@ -154,13 +135,13 @@
                                             <StackPanel Width="150">
                                                 <Button FontWeight="Regular">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <!--<materialDesign:PackIcon Kind="Edit" Margin="10 0"/>-->
                                                         <TextBlock Text="Edit"/>
                                                     </StackPanel>
                                                 </Button>
-                                                <Button FontWeight="Regular">
+                                                <Button FontWeight="Regular"
+                                                        Command="{Binding DataContext.DeleteCommand, ElementName=lvEmployees}"
+                                                        CommandParameter="{Binding Model.Id}">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <!--<materialDesign:PackIcon Kind="Delete" Margin="10 0"/>-->
                                                         <TextBlock Text="Delete"/>
                                                     </StackPanel>
                                                 </Button>
@@ -172,6 +153,14 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+
+                <StackPanel Grid.Row="2" Margin="25 0"
+                            Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SystemText}"
+                        Foreground="#494949">Показуется 1 из 5</TextBlock>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>

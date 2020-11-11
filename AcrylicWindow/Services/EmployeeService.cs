@@ -1,16 +1,15 @@
 ﻿using AcrylicWindow.IContract;
 using AcrylicWindow.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        public async Task<IEnumerable<Employee>> GetAll()
+        private List<Employee> _list = new List<Employee>()
         {
-            var list = new List<Employee>()
-            {
                 new Employee
                 {
                     Id = 1, Name = "Смоленский М.С",
@@ -36,10 +35,56 @@ namespace AcrylicWindow.Services
                     Phone = "071-316-11-17",
                     Email = "Roro.195623@mail.ru",
                     Img = "https://sun9-56.userapi.com/vr7-StutElseiY4lR19Lpuz43SkyPRHCJPICxg/5MWXrvYwhMQ.jpg"
+                 },
+
+                 new Employee
+                 {
+                    Id = 4, Name = "Мелиневский Р.В",
+                    Position = "Frontend",
+                    Phone = "071-316-11-17",
+                    Email = "Roro.195623@mail.ru",
+                    Img = "https://sun9-56.userapi.com/vr7-StutElseiY4lR19Lpuz43SkyPRHCJPICxg/5MWXrvYwhMQ.jpg"
+                 },
+
+                 new Employee
+                 {
+                    Id = 5, Name = "Мелиневский Р.В",
+                    Position = "Frontend",
+                    Phone = "071-316-11-17",
+                    Email = "Roro.195623@mail.ru",
+                    Img = "https://sun9-56.userapi.com/vr7-StutElseiY4lR19Lpuz43SkyPRHCJPICxg/5MWXrvYwhMQ.jpg"
+                 },
+
+                 new Employee
+                 {
+                    Id = 6, Name = "Филин Д.С",
+                    Position = "FullStack",
+                    Phone = "071-329-75-31",
+                    Email = "Dema.saw12q1wqsa@mail.ru",
+                    Img = "https://sun9-55.userapi.com/c841639/v841639638/399c0/r3jChpCwgAE.jpg"
+                 },
+
+                 new Employee
+                 {
+                    Id = 7, Name = "Мелиневский Р.В",
+                    Position = "Frontend",
+                    Phone = "071-316-11-17",
+                    Email = "Roro.195623@mail.ru",
+                    Img = "https://sun9-56.userapi.com/vr7-StutElseiY4lR19Lpuz43SkyPRHCJPICxg/5MWXrvYwhMQ.jpg"
                  }
             };
 
-            return await Task.FromResult(list);
+        public async Task<IEnumerable<Employee>> GetAllAsync()
+        {
+            return await Task.FromResult(_list);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var item = _list.Single(e => e.Id.Equals(id));
+            _list.Remove(item);
+
+            await Task.CompletedTask;
         }
     }
 }

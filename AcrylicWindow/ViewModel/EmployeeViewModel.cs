@@ -1,4 +1,5 @@
-﻿using AcrylicWindow.IContract;
+﻿using AcrylicWindow.Helpers;
+using AcrylicWindow.IContract;
 using AcrylicWindow.Model;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,24 +21,41 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand SelectAllCommand { get; }
 
+        public ICommand DeleteCommand { get; }
+
         public EmployeeViewModel(IEmployeeService service)
         {
-            _service = service;
+            _service = Has.NotNull(service, nameof(service));
 
             ListItems = new ObservableCollection<RowCheckBoxViewModel<Employee>>();
 
-            foreach (var item in _service.GetAll().Result)
-            {
-                ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
-            }
-
             SelectAllCommand = new DelegateCommand(SelectAll);
+
+            DeleteCommand = new DelegateCommand(Delete, obj => !_listItems.Any(i => i.Check));
+
+            ReceiveData();
+        }
+
+        private async void Delete(object id)
+        {
+            await _service.DeleteAsync((int)id);
+            ReceiveData();
         }
 
         private void SelectAll(object obj)
         {
             ListItems.Select(row => row.Click((bool)obj))
                  .ToList();
+        }
+
+        private void ReceiveData()
+        {
+            ListItems.Clear();
+
+            foreach (var item in _service.GetAllAsync().Result)
+            {
+                ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
+            }
         }
     }
 }

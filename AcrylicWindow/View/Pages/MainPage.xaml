@@ -29,8 +29,7 @@
                                                      Height="15"/>
                         </Button>
                         <TextBlock Text="Рабочий стол" VerticalAlignment="Center" 
-                                   FontSize="12"
-                                   FontWeight="Regular"/>
+                                    Style="{StaticResource SystemText}"/>
                     </StackPanel>
                     <ListView SelectedItem="{Binding SelectedElement}">
                         <ListViewItem Padding="0" Name="HomeTab">

@@ -6,6 +6,8 @@ namespace AcrylicWindow.IContract
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<Employee>> GetAll();
+        Task<IEnumerable<Employee>> GetAllAsync();
+
+        Task DeleteAsync(int id);
     }
 }

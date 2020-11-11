@@ -1,4 +1,5 @@
-﻿using AcrylicWindow.IContract;
+﻿using AcrylicWindow.Helpers;
+using AcrylicWindow.IContract;
 using AcrylicWindow.Model;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace AcrylicWindow.ViewModel
 
         public MainPageViewModel(IMessageBus messageBus, IDictionary<string, Page> pages)
         {
-            _messageBus = messageBus;
+            _messageBus = Has.NotNull(messageBus, nameof(messageBus));
             _pages = pages;
 
             _messageBus.Receive<UserMessage>(this, message =>

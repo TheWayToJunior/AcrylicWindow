@@ -42,8 +42,8 @@ namespace AcrylicWindow
             services.AddScopedView<MainWindow>(typeof(MainWindowViewModel));
             services.AddScoped<MainWindowViewModel>();
 
-            services.AddScoped<ServiceManager>();
-            services.AddScoped<IMessageBus, MessageBus>();
+            services.AddSingleton<IMessageBus, MessageBus>();
+            services.AddTransient<ServiceManager>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
         }
