@@ -30,8 +30,7 @@ namespace AcrylicWindow.ViewModel
             ListItems = new ObservableCollection<RowCheckBoxViewModel<Employee>>();
 
             SelectAllCommand = new DelegateCommand(SelectAll);
-
-            DeleteCommand = new DelegateCommand(Delete, obj => !_listItems.Any(i => i.Check));
+            DeleteCommand = new DelegateCommand(Delete, _=> !_listItems.Any(i => i.Check));
 
             ReceiveData();
         }

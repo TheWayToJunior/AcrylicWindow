@@ -159,7 +159,7 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource SystemText}"
-                        Foreground="#494949">Показуется 1 из 5</TextBlock>
+                        Foreground="#494949">Показывается 1 из 1</TextBlock>
                 </StackPanel>
             </Grid>
         </Border>
