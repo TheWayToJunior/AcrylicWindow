@@ -78,8 +78,8 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                                 <GridViewColumnHeader Padding="7">
-                                    <CheckBox Command="{Binding SelectAllCommand}"
-                                              CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                    <CheckBox Command="{Binding CheckAllCommand}"
+                                              IsChecked="{Binding CheckAll, UpdateSourceTrigger=PropertyChanged}"
                                               Background="#7D9AFF"/>
                                 </GridViewColumnHeader>
                             </GridViewColumn>

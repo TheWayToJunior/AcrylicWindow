@@ -1,7 +1,7 @@
 ﻿using AcrylicWindow.Helpers;
 using AcrylicWindow.IContract;
 using AcrylicWindow.Model;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
@@ -11,15 +11,23 @@ namespace AcrylicWindow.ViewModel
     {
         private readonly IEmployeeService _service;
 
-        public ObservableCollection<RowCheckBoxViewModel<Employee>> _listItems;
+        public BindingList<RowCheckBoxViewModel<Employee>> _listItems;
 
-        public ObservableCollection<RowCheckBoxViewModel<Employee>> ListItems
+        public BindingList<RowCheckBoxViewModel<Employee>> ListItems
         {
             get => _listItems;
             set => Set(ref _listItems, value);
         }
 
-        public ICommand SelectAllCommand { get; }
+        private bool _checkAll;
+
+        public bool CheckAll
+        {
+            get => _checkAll;
+            set => Set(ref _checkAll, value);
+        }
+
+        public ICommand CheckAllCommand { get; }
 
         public ICommand DeleteCommand { get; }
 
@@ -27,23 +35,31 @@ namespace AcrylicWindow.ViewModel
         {
             _service = Has.NotNull(service, nameof(service));
 
-            ListItems = new ObservableCollection<RowCheckBoxViewModel<Employee>>();
+            ListItems = new BindingList<RowCheckBoxViewModel<Employee>>();
+            ListItems.ListChanged += (s, e) =>
+            {
+                if(e.ListChangedType == ListChangedType.ItemChanged)
+                    CheckAll = !_listItems.Any(i => !i.Check);
+            };
 
-            SelectAllCommand = new DelegateCommand(SelectAll);
-            DeleteCommand = new DelegateCommand(Delete, _=> !_listItems.Any(i => i.Check));
+            CheckAllCommand = new DelegateCommand(Check);
+            DeleteCommand = new DelegateCommand(Delete, _ => !_listItems.Any(i => i.Check));
 
             ReceiveData();
         }
 
         private async void Delete(object id)
         {
-            await _service.DeleteAsync((int)id);
+            await _service.DeleteAsync(int.Parse(id.ToString()));
             ReceiveData();
         }
 
-        private void SelectAll(object obj)
+        private void Check(object obj)
         {
-            ListItems.Select(row => row.Click((bool)obj))
+            /// We save the value so that we don't lose it when the ListChanged event occurs
+            bool chack = CheckAll;
+
+            ListItems.Select(row => row.Click(chack))
                  .ToList();
         }
 
