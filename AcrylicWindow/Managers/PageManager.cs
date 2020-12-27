@@ -7,11 +7,11 @@ using System.Windows.Controls;
 
 namespace AcrylicWindow
 {
-    public class ServiceManager
+    public class PageManager
     {
         private readonly IServiceProvider _provider;
 
-        public ServiceManager(IServiceProvider provider)
+        public PageManager(IServiceProvider provider)
         {
             _provider = provider;
         }

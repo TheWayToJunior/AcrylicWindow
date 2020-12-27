@@ -8,7 +8,7 @@ namespace AcrylicWindow.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly ServiceManager _serviceManager;
+        private readonly PageManager _manager;
         private readonly IMessageBus _messageBus;
 
         private Page _currentPage;
@@ -19,15 +19,14 @@ namespace AcrylicWindow.ViewModel
             set { Set(ref _currentPage, value); }
         }
 
-        public MainWindowViewModel(IMessageBus messageBus, ServiceManager manager)
+        public MainWindowViewModel(IMessageBus messageBus, PageManager manager)
         {
-            _serviceManager = Has.NotNull(manager);
+            _manager = Has.NotNull(manager);
             _messageBus = Has.NotNull(messageBus);
 
             _messageBus.Receive<UserMessage>(this, async message =>
             {
-                await Task.Delay(500);
-                CurrentPage = _serviceManager.MainPage;
+                CurrentPage = _manager.MainPage;
 
                 await _messageBus.SendTo<MainPageViewModel>(message);
             });
@@ -35,7 +34,7 @@ namespace AcrylicWindow.ViewModel
             _messageBus.Receive<LogoutMessage>(this, async message =>
             {
                 await Task.Delay(500);
-                CurrentPage = _serviceManager.LoginPage;
+                CurrentPage = _manager.LoginPage;
             });
 
             CurrentPage = manager.LoginPage;

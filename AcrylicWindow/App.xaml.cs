@@ -34,7 +34,7 @@ namespace AcrylicWindow
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
             services.AddScoped(provider => new MainPageViewModel(
                 provider.GetService<IMessageBus>(),
-                provider.GetService<ServiceManager>().Pages));
+                provider.GetService<PageManager>().Pages));
 
             services.AddScoped(typeof(LoginPageViewModel));
             services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
@@ -43,7 +43,7 @@ namespace AcrylicWindow
             services.AddScoped<MainWindowViewModel>();
 
             services.AddSingleton<IMessageBus, MessageBus>();
-            services.AddTransient<ServiceManager>();
+            services.AddTransient<PageManager>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
         }
