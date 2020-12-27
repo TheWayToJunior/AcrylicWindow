@@ -1,32 +1,67 @@
 ﻿using AcrylicWindow.IContract;
 using AcrylicWindow.Model;
+using IdentityModel.Client;
+using System.Configuration;
 using System.Net;
+using System.Net.Http;
 using System.Security;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace AcrylicWindow.Services
 {
     public class AuthorizationService<TResponse> : IAuthorizationService<TResponse>
-        where TResponse: class, new()
+        where TResponse : class, new()
     {
-        public AuthorizationResult<TResponse> Authorize(UserInfo userInfo)
+        public async Task<AuthorizationResult<TResponse>> AuthorizeAsync(UserInfo userInfo)
         {
-            return Authorize(userInfo.Email, userInfo.Password);
+            return await AuthorizeAsync(userInfo.Email, userInfo.Password);
         }
 
-        public AuthorizationResult<TResponse> Authorize(string email, SecureString password)
+        /// <summary>
+        /// Performs authorization on a remote server using the Bearer authentication scheme based on OAuth 2.0
+        /// </summary>
+        /// <typeparam name="TResponse"></typeparam>
+        public async Task<AuthorizationResult<TResponse>> AuthorizeAsync(string email, SecureString password)
         {
+            HttpClient httpClient = new HttpClient();
+
+            var discoveryDocument = await httpClient.GetDiscoveryDocumentAsync(ConfigurationManager.AppSettings["Address"]);
+            var credential = new NetworkCredential(email, password);
+
+            var response = await httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
+            {
+                Address = discoveryDocument.TokenEndpoint,
+                ClientId = ConfigurationManager.AppSettings["ClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["ClientSecret"],
+                Scope = ConfigurationManager.AppSettings["Scope"],
+
+                /// Used Grant Types ResourceOwnerPassword
+                UserName = credential.UserName,
+                Password = credential.Password
+            });
+
+            httpClient.Dispose();
+
             var result = new AuthorizationResult<TResponse>();
 
-            /// TODO: Authorize
-            var passwordString = new NetworkCredential("", password).Password;
+            if (response.IsError)
+            {
+                result.ErrorMessage = string.IsNullOrEmpty(response.ErrorDescription) ?
+                    "No response from the server" :
+                    response.ErrorDescription;
 
-            if (email.Length < 4 || passwordString != "1932")
-                result.ErrorMessage = "Неверный логин или пароль";
-            else
-                /// There must be a real DTO received from the API
-                result.Response = JsonSerializer.Deserialize<TResponse>("{\"Text\": \"JsonText\"}",
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return result;
+            }
+
+            var responseString = await response.HttpResponse.Content.ReadAsStringAsync();
+
+            var deserializeResult = JsonSerializer.Deserialize<TResponse>(responseString, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            result.Response = deserializeResult;
 
             return result;
         }

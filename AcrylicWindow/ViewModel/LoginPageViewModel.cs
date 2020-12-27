@@ -9,7 +9,7 @@ namespace AcrylicWindow.ViewModel
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        private readonly IAuthorizationService<object> _authorizationService;
+        private readonly IAuthorizationService<JwtResponse> _authorizationService;
         private readonly IMessageBus _messageBus;
 
         private string _error;
@@ -32,7 +32,7 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public LoginPageViewModel(IAuthorizationService<object> authorizationService, IMessageBus messageBus)
+        public LoginPageViewModel(IAuthorizationService<JwtResponse> authorizationService, IMessageBus messageBus)
         {
             _authorizationService = Has.NotNull(authorizationService);
             _messageBus = Has.NotNull(messageBus);
@@ -49,7 +49,7 @@ namespace AcrylicWindow.ViewModel
 
             var password = (obj as PasswordBox).SecurePassword;
 
-            var result = _authorizationService.Authorize(Email, password);
+            var result = await _authorizationService.AuthorizeAsync(Email, password);
 
             if(!result.IsSuccess)
             {
