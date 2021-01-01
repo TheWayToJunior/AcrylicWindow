@@ -1,10 +1,13 @@
 ﻿using AcrylicWindow.Helpers;
 using AcrylicWindow.IContract;
+using AcrylicWindow.IContract.IProviders;
+using AcrylicWindow.Providers;
 using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
 using AcrylicWindow.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net.Http;
 using System.Windows;
 
 namespace AcrylicWindow
@@ -31,10 +34,8 @@ namespace AcrylicWindow
             services.AddSingleton<EmployeeViewModel>();
             services.AddSingletonView<ITab, EmployeesTab>(typeof(EmployeeViewModel));
 
+            services.AddScoped<MainPageViewModel>();
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
-            services.AddScoped(provider => new MainPageViewModel(
-                provider.GetService<IMessageBus>(),
-                provider.GetService<PageManager>().Pages));
 
             services.AddScoped(typeof(LoginPageViewModel));
             services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
@@ -45,7 +46,11 @@ namespace AcrylicWindow
             services.AddSingleton<IMessageBus, MessageBus>();
             services.AddTransient<PageManager>();
             services.AddTransient<IEmployeeService, EmployeeService>();
-            services.AddTransient(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
+
+            services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
+            services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
+
+            services.AddScoped<HttpClient>();
         }
 
         private void OnStartup(object sender, StartupEventArgs args)

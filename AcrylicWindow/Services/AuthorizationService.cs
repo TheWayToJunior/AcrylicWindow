@@ -13,6 +13,13 @@ namespace AcrylicWindow.Services
     public class AuthorizationService<TResponse> : IAuthorizationService<TResponse>
         where TResponse : class, new()
     {
+        private readonly HttpClient _httpClient;
+
+        public AuthorizationService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         public async Task<AuthorizationResult<TResponse>> AuthorizeAsync(UserInfo userInfo)
         {
             return await AuthorizeAsync(userInfo.Email, userInfo.Password);
@@ -24,12 +31,10 @@ namespace AcrylicWindow.Services
         /// <typeparam name="TResponse"></typeparam>
         public async Task<AuthorizationResult<TResponse>> AuthorizeAsync(string email, SecureString password)
         {
-            HttpClient httpClient = new HttpClient();
-
-            var discoveryDocument = await httpClient.GetDiscoveryDocumentAsync(ConfigurationManager.AppSettings["Address"]);
+            var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(ConfigurationManager.AppSettings["Address"]);
             var credential = new NetworkCredential(email, password);
 
-            var response = await httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
+            var response = await _httpClient.RequestPasswordTokenAsync(new PasswordTokenRequest()
             {
                 Address = discoveryDocument.TokenEndpoint,
                 ClientId = ConfigurationManager.AppSettings["ClientId"],
@@ -40,8 +45,6 @@ namespace AcrylicWindow.Services
                 UserName = credential.UserName,
                 Password = credential.Password
             });
-
-            httpClient.Dispose();
 
             var result = new AuthorizationResult<TResponse>();
 

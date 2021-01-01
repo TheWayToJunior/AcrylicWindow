@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Helpers;
 using AcrylicWindow.IContract;
+using AcrylicWindow.IContract.IProviders;
 using AcrylicWindow.Model;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace AcrylicWindow.ViewModel
     public class MainPageViewModel : ViewModelBase
     {
         private readonly IMessageBus _messageBus;
+        private readonly IAuthorizationProvider _authorizationProvider;
         private readonly IDictionary<string, Page> _pages;
 
         private Page _currentPage;
@@ -62,10 +64,11 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public MainPageViewModel(IMessageBus messageBus, IDictionary<string, Page> pages)
+        public MainPageViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus, PageManager pageManager)
         {
+            _authorizationProvider = Has.NotNull(authorizationProvider);
             _messageBus = Has.NotNull(messageBus, nameof(messageBus));
-            _pages = pages;
+            _pages = pageManager.Pages;
 
             _messageBus.Receive<UserMessage>(this, message =>
             {
@@ -81,6 +84,7 @@ namespace AcrylicWindow.ViewModel
 
         private async void Logout(object obj)
         {
+            await _authorizationProvider.Logout();
             await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
         }
     }

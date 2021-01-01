@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Helpers;
 using AcrylicWindow.IContract;
+using AcrylicWindow.IContract.IProviders;
 using AcrylicWindow.Model;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -19,8 +20,11 @@ namespace AcrylicWindow.ViewModel
             set { Set(ref _currentPage, value); }
         }
 
-        public MainWindowViewModel(IMessageBus messageBus, PageManager manager)
+        public MainWindowViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus, PageManager manager)
         {
+            /// ToDo : Create a new page for session confirmation
+            var state = authorizationProvider.GetAuthenticationStateAsync();
+
             _manager = Has.NotNull(manager);
             _messageBus = Has.NotNull(messageBus);
 

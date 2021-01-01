@@ -110,6 +110,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Helpers\Has.cs" />
     <Compile Include="Helpers\ServiceCollectionExtensions.cs" />
+    <Compile Include="IContract\IProviders\IAuthorizationProvider.cs" />
     <Compile Include="IContract\IServices\IAuthorizationService.cs" />
     <Compile Include="IContract\IServices\IEmployeeService.cs" />
     <Compile Include="IContract\IMessage.cs" />
@@ -118,12 +119,15 @@
     <Compile Include="IContract\ITab.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="Managers\PageManager.cs" />
+    <Compile Include="Model\AuthenticationState.cs" />
     <Compile Include="Model\AuthorizationResult.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\JwtResponse.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\MessageSubscriber.cs" />
     <Compile Include="Model\UserInfo.cs" />
+    <Compile Include="Model\UserSession.cs" />
+    <Compile Include="Providers\AuthorizationProvider.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\MessageBus.cs" />

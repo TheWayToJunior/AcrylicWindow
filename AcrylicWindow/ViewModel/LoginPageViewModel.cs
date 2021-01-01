@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Helpers;
 using AcrylicWindow.IContract;
+using AcrylicWindow.IContract.IProviders;
 using AcrylicWindow.Model;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +10,7 @@ namespace AcrylicWindow.ViewModel
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        private readonly IAuthorizationService<JwtResponse> _authorizationService;
+        private readonly IAuthorizationProvider _authorizationProvider;
         private readonly IMessageBus _messageBus;
 
         private string _error;
@@ -32,9 +33,9 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public LoginPageViewModel(IAuthorizationService<JwtResponse> authorizationService, IMessageBus messageBus)
+        public LoginPageViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus)
         {
-            _authorizationService = Has.NotNull(authorizationService);
+            _authorizationProvider = Has.NotNull(authorizationProvider);
             _messageBus = Has.NotNull(messageBus);
 
             LoginCommand = new DelegateCommand(Login, pb =>
@@ -49,15 +50,16 @@ namespace AcrylicWindow.ViewModel
 
             var password = (obj as PasswordBox).SecurePassword;
 
-            var result = await _authorizationService.AuthorizeAsync(Email, password);
+            var state = await _authorizationProvider.Login(Email, password);
 
-            if(!result.IsSuccess)
+            if (!state.IsAuthenticated)
             {
-                Error = result.ErrorMessage;
+                Error = state.ErrorMessage;
                 return;
             }
 
-            await _messageBus.SendTo<MainWindowViewModel>(new UserMessage(Email, Email));
+            var userName = state.GetClaim("sub");
+            await _messageBus.SendTo<MainWindowViewModel>(new UserMessage(userName, Email));
         }
     }
 }
