@@ -6,7 +6,7 @@ namespace AcrylicWindow.IContract.IProviders
 {
     public interface IAuthorizationProvider
     {
-        AuthenticationState GetAuthenticationStateAsync();
+        AuthenticationState GetAuthenticationState();
 
         Task<AuthenticationState> Login(string email, SecureString password);
 

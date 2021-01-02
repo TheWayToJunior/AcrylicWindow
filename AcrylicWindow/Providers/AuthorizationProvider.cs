@@ -31,7 +31,7 @@ namespace AcrylicWindow.Providers
         private string sessionPath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "session.json");
 
-        public AuthenticationState GetAuthenticationStateAsync()
+        public AuthenticationState GetAuthenticationState()
         {
             if (!_sessionService.TryRecover(sessionPath, out UserSession session))
             {

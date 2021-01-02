@@ -23,7 +23,7 @@ namespace AcrylicWindow.ViewModel
         public MainWindowViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus, PageManager manager)
         {
             /// ToDo : Create a new page for session confirmation
-            var state = authorizationProvider.GetAuthenticationStateAsync();
+            var state = authorizationProvider.GetAuthenticationState();
 
             _manager = Has.NotNull(manager);
             _messageBus = Has.NotNull(messageBus);
