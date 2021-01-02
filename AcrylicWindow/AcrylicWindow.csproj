@@ -110,6 +110,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Helpers\Has.cs" />
     <Compile Include="Helpers\ServiceCollectionExtensions.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="IContract\IProviders\IAuthorizationProvider.cs" />
     <Compile Include="IContract\IServices\IAuthorizationService.cs" />
     <Compile Include="IContract\IServices\IEmployeeService.cs" />
