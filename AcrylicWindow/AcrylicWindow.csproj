@@ -117,6 +117,7 @@
     <Compile Include="IContract\IMessage.cs" />
     <Compile Include="IContract\IServices\IMessageBus.cs" />
     <Compile Include="IContract\IModel.cs" />
+    <Compile Include="IContract\IServices\ISessionService.cs" />
     <Compile Include="IContract\ITab.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="Managers\PageManager.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\MessageBus.cs" />
+    <Compile Include="Services\UserSessionService.cs" />
     <Compile Include="ViewModel\EmployeeViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LoginPageViewModel.cs" />
