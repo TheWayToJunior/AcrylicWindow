@@ -8,7 +8,6 @@ using System.IO;
 using System.Net.Http;
 using System.Security;
 using System.Security.Claims;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Providers
@@ -16,13 +15,16 @@ namespace AcrylicWindow.Providers
     public class AuthorizationProvider : IAuthorizationProvider
     {
         private readonly IAuthorizationService<JwtResponse> _authorizationService;
+        private readonly ISessionService<UserSession> _sessionService;
         private readonly HttpClient _httpClient;
 
         private AuthenticationState Anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
-        public AuthorizationProvider(IAuthorizationService<JwtResponse> authorizationService, HttpClient httpClient)
+        public AuthorizationProvider(IAuthorizationService<JwtResponse> authorizationService, ISessionService<UserSession> sessionService,
+            HttpClient httpClient)
         {
             _authorizationService = Has.NotNull(authorizationService);
+            _sessionService = Has.NotNull(sessionService);
             _httpClient = Has.NotNull(httpClient);
         }
 
@@ -31,14 +33,12 @@ namespace AcrylicWindow.Providers
 
         public AuthenticationState GetAuthenticationStateAsync()
         {
-            if (!File.Exists(sessionPath))
+            if (!_sessionService.TryRecover(sessionPath, out UserSession session))
             {
                 return Anonymous;
             }
 
-            string token = JsonSerializer.Deserialize<UserSession>(File.ReadAllText(sessionPath)).Token;
-
-            return BuildAuthenticationState(token);
+            return BuildAuthenticationState(session.Token);
         }
 
         public async Task<AuthenticationState> Login(string email, SecureString password)
@@ -68,10 +68,7 @@ namespace AcrylicWindow.Providers
 
         private async Task AuthenticationStateChanged(string token)
         {
-            using (FileStream fs = new FileStream(sessionPath, FileMode.Create))
-            {
-                await JsonSerializer.SerializeAsync(fs, new UserSession { Token = token });
-            }
+            await _sessionService.SaveAsync(sessionPath, new UserSession { Token = token });
         }
 
         private AuthenticationState BuildAuthenticationState(string token)

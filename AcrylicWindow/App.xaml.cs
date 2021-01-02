@@ -1,6 +1,7 @@
 ﻿using AcrylicWindow.Helpers;
 using AcrylicWindow.IContract;
 using AcrylicWindow.IContract.IProviders;
+using AcrylicWindow.Model;
 using AcrylicWindow.Providers;
 using AcrylicWindow.Services;
 using AcrylicWindow.View.Pages;
@@ -49,6 +50,7 @@ namespace AcrylicWindow
 
             services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
             services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
+            services.AddScoped<ISessionService<UserSession>, UserSessionService>();
 
             services.AddScoped<HttpClient>();
         }
