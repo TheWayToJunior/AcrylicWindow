@@ -21,7 +21,9 @@ namespace AcrylicWindow
 
         public Page LoginPage => _provider.GetService<LoginPage>();
 
-        public IDictionary<string, Page> Pages => _provider.GetServices<ITab>()
+        public Page SessionPage => _provider.GetService<SessionPage>();
+
+        public IDictionary<string, Page> Tabs => _provider.GetServices<ITab>()
             .Cast<Page>()
             .ToDictionary(page => page.GetType().Name);
     }

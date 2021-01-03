@@ -4,7 +4,6 @@ using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -67,13 +66,11 @@ namespace AcrylicWindow.ViewModel
         {
             _authorizationProvider = Has.NotNull(authorizationProvider);
             _messageBus = Has.NotNull(messageBus, nameof(messageBus));
-            _pages = pageHalper.Pages;
+            _pages = pageHalper.Tabs;
 
-            _messageBus.Receive<UserMessage>(this, message =>
-            {
-                UserName = message.UserName;
-                return Task.CompletedTask;
-            });
+            UserName = authorizationProvider
+                .GetAuthenticationState()
+                .GetClaim("sub");
 
             CurrentPage = _pages[nameof(HomeTab)];
 

@@ -57,8 +57,7 @@ namespace AcrylicWindow.ViewModel
                 return;
             }
 
-            var userName = state.GetClaim("sub");
-            await _messageBus.SendTo<MainWindowViewModel>(new UserMessage(userName, Email));
+            await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage(state, Email));
         }
     }
 }

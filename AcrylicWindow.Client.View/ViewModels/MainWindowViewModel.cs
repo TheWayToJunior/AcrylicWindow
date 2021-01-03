@@ -21,17 +21,17 @@ namespace AcrylicWindow.ViewModel
 
         public MainWindowViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus, PageHalper pageHalper)
         {
-            /// ToDo : Create a new page for session confirmation
             var state = authorizationProvider.GetAuthenticationState();
 
             _pageHalper = Has.NotNull(pageHalper);
             _messageBus = Has.NotNull(messageBus);
 
-            _messageBus.Receive<UserMessage>(this, async message =>
+            _messageBus.Receive<LoginMessage>(this, message =>
             {
-                CurrentPage = _pageHalper.MainPage;
+                if (message.State.IsAuthenticated)
+                    CurrentPage = _pageHalper.MainPage;
 
-                await _messageBus.SendTo<MainPageViewModel>(message);
+                return Task.CompletedTask;
             });
 
             _messageBus.Receive<LogoutMessage>(this, async message =>
@@ -40,7 +40,13 @@ namespace AcrylicWindow.ViewModel
                 CurrentPage = _pageHalper.LoginPage;
             });
 
-            CurrentPage = pageHalper.LoginPage;
+            if (state.IsAuthenticated)
+            {
+                CurrentPage = _pageHalper.SessionPage;
+                return;
+            }
+
+            CurrentPage = _pageHalper.LoginPage;
         }
     }
 }

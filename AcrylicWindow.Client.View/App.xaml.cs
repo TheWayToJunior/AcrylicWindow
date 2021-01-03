@@ -31,6 +31,8 @@ namespace AcrylicWindow
 
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
             services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
+            services.AddScopedView<SessionPage>(typeof(SessionViewModel));
+
             services.AddScopedView<MainWindow>(typeof(MainWindowViewModel));
 
             services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
