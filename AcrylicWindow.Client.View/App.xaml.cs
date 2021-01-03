@@ -25,29 +25,20 @@ namespace AcrylicWindow
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<HomeViewModel>();
-            services.AddSingletonView<ITab, HomeTab>(typeof(HomeViewModel));
+            services.AddScopedView<ITab, HomeTab>(typeof(HomeViewModel));
+            services.AddScopedView<ITab, OptionsTab>(typeof(OptionViewModel));
+            services.AddScopedView<ITab, EmployeesTab>(typeof(EmployeeViewModel));
 
-            services.AddSingleton<ITab, OptionsTab>();
-
-            services.AddSingleton<EmployeeViewModel>();
-            services.AddSingletonView<ITab, EmployeesTab>(typeof(EmployeeViewModel));
-
-            services.AddScoped<MainPageViewModel>();
             services.AddScopedView<MainPage>(typeof(MainPageViewModel));
-
-            services.AddScoped(typeof(LoginPageViewModel));
             services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
-
             services.AddScopedView<MainWindow>(typeof(MainWindowViewModel));
-            services.AddScoped<MainWindowViewModel>();
 
-            services.AddSingleton<IMessageBus, MessageBus>();
-            services.AddTransient<IEmployeeService, EmployeeService>();
-
-            services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
             services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
             services.AddScoped<ISessionService<UserSession>, UserSessionService>();
+            services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
+
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IMessageBus, MessageBus>();
 
             services.AddScoped<HttpClient>();
             services.AddTransient<PageHalper>();

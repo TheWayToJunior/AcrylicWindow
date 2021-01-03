@@ -112,6 +112,7 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\OptionViewModel.cs" />
     <Compile Include="ViewModels\RowCheckBoxViewModel.cs" />
     <Compile Include="Views\Tabs\EmployeesTab.xaml.cs">
       <DependentUpon>EmployeesTab.xaml</DependentUpon>
