@@ -41,22 +41,14 @@ namespace AcrylicWindow.Client.Core.Services
                 Password = credential.Password
             });
 
-            var result = new AuthorizationResult<TResponse>();
-
-            if (response.IsError)
-            {
-                result.ErrorMessage = string.IsNullOrEmpty(response.ErrorDescription) ?
-                    "No response from the server" :
-                    response.ErrorDescription;
-
-                return result;
-            }
-
-            result.Response = await Deserialize(response.HttpResponse.Content);
-
-            return result;
+            return await CreateResult(response);
         }
 
+        /// <summary>
+        /// Executes a request on the remote server to update the access token
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <returns></returns>
         public async Task<AuthorizationResult<TResponse>> RefreshAsync(string refreshToken)
         {
             var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(ConfigurationManager.AppSettings["Address"]);
@@ -71,6 +63,11 @@ namespace AcrylicWindow.Client.Core.Services
                 RefreshToken = refreshToken
             });
 
+            return await CreateResult(response);
+        }
+
+        private async Task<AuthorizationResult<TResponse>> CreateResult(TokenResponse response)
+        {
             var result = new AuthorizationResult<TResponse>();
 
             if (response.IsError)
