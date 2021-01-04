@@ -52,16 +52,51 @@ namespace AcrylicWindow.Client.Core.Services
                 return result;
             }
 
-            var responseString = await response.HttpResponse.Content.ReadAsStringAsync();
+            result.Response = await Deserialize(response.HttpResponse.Content);
+
+            return result;
+        }
+
+        public async Task<AuthorizationResult<TResponse>> RefreshAsync(string refreshToken)
+        {
+            var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(ConfigurationManager.AppSettings["Address"]);
+
+            var response = await _httpClient.RequestRefreshTokenAsync(new RefreshTokenRequest 
+            {
+                Address = discoveryDocument.TokenEndpoint,
+                ClientId = ConfigurationManager.AppSettings["ClientId"],
+                ClientSecret = ConfigurationManager.AppSettings["ClientSecret"],
+                Scope = ConfigurationManager.AppSettings["Scope"],
+
+                RefreshToken = refreshToken
+            });
+
+            var result = new AuthorizationResult<TResponse>();
+
+            if (response.IsError)
+            {
+                result.ErrorMessage = string.IsNullOrEmpty(response.ErrorDescription) ?
+                    "No response from the server" :
+                    response.ErrorDescription;
+
+                return result;
+            }
+
+            result.Response = await Deserialize(response.HttpResponse.Content);
+
+            return result;
+        }
+
+        private async Task<TResponse> Deserialize(HttpContent content)
+        {
+            var responseString = await content.ReadAsStringAsync();
 
             var deserializeResult = JsonSerializer.Deserialize<TResponse>(responseString, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
-            result.Response = deserializeResult;
-
-            return result;
+            return deserializeResult;
         }
     }
 }

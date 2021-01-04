@@ -17,10 +17,14 @@ namespace AcrylicWindow.Client.Core.Providers
         private readonly ISessionService<UserSession> _sessionService;
         private readonly HttpClient _httpClient;
 
-        private readonly string sessionPath =
+        private readonly string _sessionPath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "session.json");
 
         private AuthenticationState Anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+        private string RefreshToken { get; set; }
+
+        private AuthenticationState _authenticationState;
+        public AuthenticationState AuthenticationState => _authenticationState ?? GetAuthenticationState();
 
         public AuthorizationProvider(IAuthorizationService<JwtResponse> authorizationService, ISessionService<UserSession> sessionService,
             HttpClient httpClient)
@@ -30,56 +34,76 @@ namespace AcrylicWindow.Client.Core.Providers
             _httpClient = Has.NotNull(httpClient);
         }
 
-        public AuthenticationState GetAuthenticationState()
-        {
-            if (!_sessionService.TryRecover(sessionPath, out UserSession session))
-            {
-                return Anonymous;
-            }
-
-            return BuildAuthenticationState(session.Token);
-        }
-
         public async Task<AuthenticationState> Login(string email, SecureString password)
         {
             AuthorizationResult<JwtResponse> result = await _authorizationService.AuthorizeAsync(email, password);
 
-            if (!result.IsSuccess)
-            {
-                AuthenticationState anonymous = Anonymous;
-                anonymous.ErrorMessage = result.ErrorMessage;
+            return await SignInAsync(result);
+        }
 
-                return anonymous;
-            }
+        public async Task<AuthenticationState> ExtendSession()
+        {
+            AuthorizationResult<JwtResponse> response = await _authorizationService.RefreshAsync(RefreshToken);
 
-            string token = result.Response.AccessToken;
-            await AuthenticationStateChanged(token);
-
-            return BuildAuthenticationState(token);
+            return await SignInAsync(response);
         }
 
         public async Task Logout()
         {
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
-            await AuthenticationStateChanged(token: string.Empty);
+            await AuthenticationStateChangedAsync(accessToken: string.Empty, refreshToken: string.Empty);
         }
 
-        private async Task AuthenticationStateChanged(string token)
+        private AuthenticationState GetAuthenticationState()
         {
-            await _sessionService.SaveAsync(sessionPath, new UserSession { Token = token });
+            if (!_sessionService.TryRecover(_sessionPath, out UserSession session))
+            {
+                return Anonymous;
+            }
+
+            RefreshToken = session.RefreshToken;
+            return BuildAuthenticationState(session.AccessToken);
+        }
+
+        private async Task<AuthenticationState> SignInAsync(AuthorizationResult<JwtResponse> authorization) 
+        {
+            if (!authorization.IsSuccess)
+            {
+                AuthenticationState anonymous = Anonymous;
+                anonymous.ErrorMessage = authorization.ErrorMessage;
+
+                return anonymous;
+            }
+
+            string token = authorization.Response.AccessToken;
+
+            return await AuthenticationStateChangedAsync(token, authorization.Response.RefreshToken);
+        }
+
+        private async Task<AuthenticationState> AuthenticationStateChangedAsync(string accessToken, string refreshToken)
+        {
+            RefreshToken = refreshToken;
+
+            await _sessionService.SaveAsync(_sessionPath, new UserSession 
+            {
+                AccessToken = accessToken, 
+                RefreshToken = refreshToken 
+            });
+
+            return BuildAuthenticationState(accessToken);
         }
 
         private AuthenticationState BuildAuthenticationState(string token)
         {
             if (string.IsNullOrEmpty(token))
             {
-                return Anonymous;
+                return _authenticationState = Anonymous;
             }
 
             _httpClient.SetBearerToken(token);
 
-            return new AuthenticationState(
+            return _authenticationState = new AuthenticationState(
                 new ClaimsPrincipal(new ClaimsIdentity(token.ParseClaimsFromJwt(), "jwt")));
         }
     }

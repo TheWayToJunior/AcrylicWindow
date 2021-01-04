@@ -44,5 +44,13 @@ namespace AcrylicWindow
                 .AddScoped<TView, TImplementation>(provider => 
                     new TImplementation { DataContext = provider.GetService(viewModelType) });
         }
+
+        public static IServiceCollection AddTransientView<TView>(this IServiceCollection services, Type viewModelType)
+            where TView : FrameworkElement, new()
+        {
+            return services
+                .AddTransient(viewModelType)
+                .AddTransient(provider => new TView { DataContext = provider.GetService(viewModelType) });
+        }
     }
 }

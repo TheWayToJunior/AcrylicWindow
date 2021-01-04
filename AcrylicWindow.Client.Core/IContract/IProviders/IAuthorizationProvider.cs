@@ -6,9 +6,11 @@ namespace AcrylicWindow.Client.Core.IContract
 {
     public interface IAuthorizationProvider
     {
-        AuthenticationState GetAuthenticationState();
+        AuthenticationState AuthenticationState { get; }
 
         Task<AuthenticationState> Login(string email, SecureString password);
+
+        Task<AuthenticationState> ExtendSession();
 
         Task Logout();
     }

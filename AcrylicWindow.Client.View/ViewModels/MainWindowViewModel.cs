@@ -21,24 +21,25 @@ namespace AcrylicWindow.ViewModel
 
         public MainWindowViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus, PageHalper pageHalper)
         {
-            var state = authorizationProvider.GetAuthenticationState();
-
             _pageHalper = Has.NotNull(pageHalper);
             _messageBus = Has.NotNull(messageBus);
 
-            _messageBus.Receive<LoginMessage>(this, message =>
+            _messageBus.Receive<LoginMessage>(this, async message =>
             {
                 if (message.State.IsAuthenticated)
                     CurrentPage = _pageHalper.MainPage;
 
-                return Task.CompletedTask;
+                await messageBus.SendTo<MainPageViewModel>(new UserMessage(authorizationProvider.AuthenticationState
+                    .GetClaim("sub")));
             });
 
             _messageBus.Receive<LogoutMessage>(this, async message =>
             {
-                await Task.Delay(500);
+                await authorizationProvider.Logout();
                 CurrentPage = _pageHalper.LoginPage;
             });
+
+            var state = authorizationProvider.AuthenticationState;
 
             if (state.IsAuthenticated)
             {

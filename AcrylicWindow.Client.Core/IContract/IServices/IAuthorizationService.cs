@@ -8,5 +8,7 @@ namespace AcrylicWindow.Client.Core.IContract
         where TResult : class, new()
     {
         Task<AuthorizationResult<TResult>> AuthorizeAsync(string email, SecureString password);
+
+        Task<AuthorizationResult<TResult>> RefreshAsync(string refreshToken);
     }
 }

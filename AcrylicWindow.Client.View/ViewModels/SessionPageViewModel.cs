@@ -41,8 +41,7 @@ namespace AcrylicWindow.ViewModel
             _authorizationProvider = Has.NotNull(authorizationProvider);
             _messageBus = Has.NotNull(messageBus);
 
-            UserName = authorizationProvider
-                .GetAuthenticationState()
+            UserName = authorizationProvider.AuthenticationState
                 .GetClaim("sub");
 
             LoginCommand  = new DelegateCommand(Login);
@@ -53,9 +52,7 @@ namespace AcrylicWindow.ViewModel
 
         private async void Login(object obj)
         {
-            /// ToDo: Сheck the connection to the server
-
-            var state = _authorizationProvider.GetAuthenticationState();
+            var state = await _authorizationProvider.ExtendSession();
 
             if (!state.IsAuthenticated)
             {
@@ -67,7 +64,6 @@ namespace AcrylicWindow.ViewModel
 
         private async void Logout(object obj)
         {
-            await _authorizationProvider.Logout();
             await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
         }
     }

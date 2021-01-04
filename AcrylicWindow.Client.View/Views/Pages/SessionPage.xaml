@@ -51,6 +51,9 @@
 
                         <materialDesign:Chip Content="{Binding UserName, FallbackValue=Test@email.com}"
                                              IsDeletable="True"
+                                             Foreground="#494949"
+                                             FontSize="14"
+                                             FontWeight="Light"
                                              ToolTip="The name of your account"
                                              HorizontalAlignment="Center"
                                              DeleteCommand="{Binding LogoutCommand}">
@@ -79,7 +82,7 @@
                             Style="{StaticResource Button}"
                             Command="{Binding LoginCommand}"
                             Height="45">
-                            Continue
+                            Login
                         </Button>
                     </Grid>
                 </Grid>

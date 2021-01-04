@@ -4,6 +4,7 @@ using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,7 +14,6 @@ namespace AcrylicWindow.ViewModel
     public class MainPageViewModel : ViewModelBase
     {
         private readonly IMessageBus _messageBus;
-        private readonly IAuthorizationProvider _authorizationProvider;
         private readonly IDictionary<string, Page> _pages;
 
         private Page _currentPage;
@@ -62,15 +62,16 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public MainPageViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus, PageHalper pageHalper)
+        public MainPageViewModel(IMessageBus messageBus, PageHalper pageHalper)
         {
-            _authorizationProvider = Has.NotNull(authorizationProvider);
             _messageBus = Has.NotNull(messageBus, nameof(messageBus));
             _pages = pageHalper.Tabs;
 
-            UserName = authorizationProvider
-                .GetAuthenticationState()
-                .GetClaim("sub");
+            _messageBus.Receive<UserMessage>(this, message =>
+            {
+                UserName = message.UserName;
+                return Task.CompletedTask;
+            });
 
             CurrentPage = _pages[nameof(HomeTab)];
 
@@ -80,7 +81,6 @@ namespace AcrylicWindow.ViewModel
 
         private async void Logout(object obj)
         {
-            await _authorizationProvider.Logout();
             await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
         }
     }
