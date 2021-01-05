@@ -20,8 +20,8 @@ namespace AcrylicWindow.Client.Core.Providers
         private readonly string _sessionPath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "session.json");
 
-        private AuthenticationState Anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         private string RefreshToken { get; set; }
+        private AuthenticationState Anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
         private AuthenticationState _authenticationState;
         public AuthenticationState AuthenticationState => _authenticationState ?? GetAuthenticationState();

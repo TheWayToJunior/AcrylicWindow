@@ -24,10 +24,7 @@ namespace AcrylicWindow.ViewModel
         public string UserName
         {
             get { return _userName; }
-            set
-            {
-                Set(ref _userName, value);
-            }
+            set { Set(ref _userName, value); }
         }
 
         public ICommand LoginCommand { get; }
@@ -56,7 +53,8 @@ namespace AcrylicWindow.ViewModel
 
             if (!state.IsAuthenticated)
             {
-                Logout(null);
+                Error = state.ErrorMessage;
+                return;
             }
 
             await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage(state, UserName));
