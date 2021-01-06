@@ -2,11 +2,12 @@
 using AcrylicWindow.Client.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.Services
 {
-    public class EmployeeService : IEmployeeService
+    public class EmployeeService : BaseApiService, IEmployeeService
     {
         private List<Employee> _list = new List<Employee>()
         {
@@ -74,6 +75,12 @@ namespace AcrylicWindow.Client.Core.Services
                  }
             };
 
+
+        public EmployeeService(ITokenStorage tokenStorage, HttpClient httpClient)
+            : base(tokenStorage, httpClient)
+        {
+        }
+
         public async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await Task.FromResult(_list);
@@ -81,6 +88,8 @@ namespace AcrylicWindow.Client.Core.Services
 
         public async Task DeleteAsync(int id)
         {
+            var s = HttpClient.DefaultRequestHeaders;
+
             var item = _list.Single(e => e.Id.Equals(id));
             _list.Remove(item);
 

@@ -1,10 +1,8 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.Model;
-using IdentityModel.Client;
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,23 +13,22 @@ namespace AcrylicWindow.Client.Core.Providers
     {
         private readonly IAuthorizationService<JwtResponse> _authorizationService;
         private readonly ISessionService<UserSession> _sessionService;
-        private readonly HttpClient _httpClient;
+        private readonly ITokenStorage _tokenStorage;
 
         private readonly string _sessionPath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "session.json");
 
-        private string RefreshToken { get; set; }
         private AuthenticationState Anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
         private AuthenticationState _authenticationState;
         public AuthenticationState AuthenticationState => _authenticationState ?? GetAuthenticationState();
 
         public AuthorizationProvider(IAuthorizationService<JwtResponse> authorizationService, ISessionService<UserSession> sessionService,
-            HttpClient httpClient)
+            ITokenStorage tokenStorage)
         {
             _authorizationService = Has.NotNull(authorizationService);
             _sessionService = Has.NotNull(sessionService);
-            _httpClient = Has.NotNull(httpClient);
+            _tokenStorage = Has.NotNull(tokenStorage);
         }
 
         public async Task<AuthenticationState> Login(string email, SecureString password)
@@ -43,16 +40,15 @@ namespace AcrylicWindow.Client.Core.Providers
 
         public async Task<AuthenticationState> ExtendSession()
         {
-            AuthorizationResult<JwtResponse> response = await _authorizationService.RefreshAsync(RefreshToken);
+            AuthorizationResult<JwtResponse> response = await _authorizationService.RefreshAsync(_tokenStorage[Tokens.Refresh]);
 
             return await SignInAsync(response);
         }
 
         public async Task Logout()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = null;
-
             await AuthenticationStateChangedAsync(accessToken: string.Empty, refreshToken: string.Empty);
+            _tokenStorage.RemoveAll();
         }
 
         private AuthenticationState GetAuthenticationState()
@@ -62,11 +58,11 @@ namespace AcrylicWindow.Client.Core.Providers
                 return Anonymous;
             }
 
-            RefreshToken = session.RefreshToken;
-            return BuildAuthenticationState(session.AccessToken);
+            return AuthenticationStateChangedAsync(session.AccessToken, session.RefreshToken, saveSession: false)
+                .Result;
         }
 
-        private async Task<AuthenticationState> SignInAsync(AuthorizationResult<JwtResponse> authorization) 
+        private async Task<AuthenticationState> SignInAsync(AuthorizationResult<JwtResponse> authorization)
         {
             if (!authorization.IsSuccess)
             {
@@ -76,20 +72,31 @@ namespace AcrylicWindow.Client.Core.Providers
                 return anonymous;
             }
 
-            string token = authorization.Response.AccessToken;
-
-            return await AuthenticationStateChangedAsync(token, authorization.Response.RefreshToken);
+            var response = authorization.Response;
+            return await AuthenticationStateChangedAsync(response.AccessToken, response.RefreshToken);
         }
 
-        private async Task<AuthenticationState> AuthenticationStateChangedAsync(string accessToken, string refreshToken)
+        /// <summary>
+        /// Updates the authorization status and saves it to a session file on the local disk
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="refreshToken"></param>
+        /// <param name="saveSession">Flag indicating whether the session will be overwritten in the session file</param>
+        /// <returns></returns>
+        private async Task<AuthenticationState> AuthenticationStateChangedAsync(string accessToken, string refreshToken,
+            bool saveSession = true)
         {
-            RefreshToken = refreshToken;
+            _tokenStorage[Tokens.Access] = accessToken;
+            _tokenStorage[Tokens.Refresh] = refreshToken;
 
-            await _sessionService.SaveAsync(_sessionPath, new UserSession 
+            if (saveSession)
             {
-                AccessToken = accessToken, 
-                RefreshToken = refreshToken 
-            });
+                await _sessionService.SaveAsync(_sessionPath, new UserSession
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken
+                });
+            }
 
             return BuildAuthenticationState(accessToken);
         }
@@ -100,8 +107,6 @@ namespace AcrylicWindow.Client.Core.Providers
             {
                 return _authenticationState = Anonymous;
             }
-
-            _httpClient.SetBearerToken(token);
 
             return _authenticationState = new AuthenticationState(
                 new ClaimsPrincipal(new ClaimsIdentity(token.ParseClaimsFromJwt(), "jwt")));

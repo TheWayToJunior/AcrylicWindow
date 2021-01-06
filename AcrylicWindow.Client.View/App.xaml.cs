@@ -1,4 +1,5 @@
-﻿using AcrylicWindow.Client.Core.IContract;
+﻿using AcrylicWindow.Client.Core;
+using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
@@ -40,6 +41,8 @@ namespace AcrylicWindow
             services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
 
             services.AddTransient<IEmployeeService, EmployeeService>();
+
+            services.AddSingleton<ITokenStorage, InMemoryTokenStorage>();
             services.AddSingleton<IMessageBus, MessageBus>();
 
             services.AddScoped<HttpClient>();
