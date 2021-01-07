@@ -5,7 +5,7 @@ using System.Windows;
 namespace AcrylicWindow
 {
     /// <summary>
-    /// Registers a View paired with ViewModel
+    /// Registers a view paired with a ViewModel and sets the required Lifetime
     /// </summary>
     public static class ServiceCollectionExtensions
     {
@@ -51,6 +51,16 @@ namespace AcrylicWindow
             return services
                 .AddTransient(viewModelType)
                 .AddTransient(provider => new TView { DataContext = provider.GetService(viewModelType) });
+        }
+
+        public static IServiceCollection AddTransientView<TView, TImplementation>(this IServiceCollection services, Type viewModelType)
+            where TImplementation : FrameworkElement, TView, new()
+            where TView : class
+        {
+            return services
+                .AddTransient(viewModelType)
+                .AddTransient<TView, TImplementation>(provider =>
+                    new TImplementation { DataContext = provider.GetService(viewModelType) });
         }
     }
 }

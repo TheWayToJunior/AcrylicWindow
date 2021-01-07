@@ -26,11 +26,11 @@ namespace AcrylicWindow
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddScopedView<ITab, HomeTab>(typeof(HomeViewModel));
-            services.AddScopedView<ITab, OptionsTab>(typeof(OptionViewModel));
-            services.AddScopedView<ITab, EmployeesTab>(typeof(EmployeeViewModel));
+            services.AddTransientView<ITab, HomeTab>(typeof(HomeViewModel));
+            services.AddTransientView<ITab, OptionsTab>(typeof(OptionViewModel));
+            services.AddTransientView<ITab, EmployeesTab>(typeof(EmployeeViewModel));
 
-            services.AddScopedView<MainPage>(typeof(MainPageViewModel));
+            services.AddTransientView<MainPage>(typeof(MainPageViewModel));
             services.AddScopedView<LoginPage>(typeof(LoginPageViewModel));
             services.AddScopedView<SessionPage>(typeof(SessionViewModel));
 
@@ -40,7 +40,7 @@ namespace AcrylicWindow
             services.AddScoped<ISessionService<UserSession>, UserSessionService>();
             services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
 
-            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
             services.AddSingleton<ITokenStorage, InMemoryTokenStorage>();
             services.AddSingleton<IMessageBus, MessageBus>();
