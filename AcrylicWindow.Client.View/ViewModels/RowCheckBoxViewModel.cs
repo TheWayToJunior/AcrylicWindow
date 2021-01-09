@@ -26,7 +26,7 @@ namespace AcrylicWindow.ViewModel
         {
             Model = model;
 
-            ClickCommand = new DelegateCommand(_ => Click(Check));
+            ClickCommand = new DelegateCommand(_ => Click(!Check));
         }
 
         public bool Click(bool value)

@@ -2,6 +2,7 @@
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.View.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +12,11 @@ using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : ViewModelBase, IDisposable
     {
         private readonly IMessageBus _messageBus;
         private readonly IDictionary<string, Page> _pages;
+        private IDisposable _subscription;
 
         private Page _currentPage;
 
@@ -67,7 +69,7 @@ namespace AcrylicWindow.ViewModel
             _messageBus = Has.NotNull(messageBus, nameof(messageBus));
             _pages = pageHalper.Tabs;
 
-            _messageBus.Receive<UserMessage>(this, message =>
+            _subscription = _messageBus.Receive<UserMessage>(this, message =>
             {
                 UserName = message.UserName;
                 return Task.CompletedTask;
@@ -82,6 +84,11 @@ namespace AcrylicWindow.ViewModel
         private async void Logout(object obj)
         {
             await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
+        }
+
+        public void Dispose()
+        {
+            _subscription.Dispose();
         }
     }
 }

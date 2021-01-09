@@ -1,6 +1,7 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.Model;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -27,15 +28,19 @@ namespace AcrylicWindow.ViewModel
             _messageBus.Receive<LoginMessage>(this, async message =>
             {
                 if (message.State.IsAuthenticated)
+                {
                     CurrentPage = _pageHalper.MainPage;
 
-                await messageBus.SendTo<MainPageViewModel>(new UserMessage(authorizationProvider.AuthenticationState
-                    .GetClaim("sub")));
+                    await messageBus.SendTo<MainPageViewModel>(new UserMessage(authorizationProvider.AuthenticationState
+                        .GetClaim("sub")));
+                }    
             });
 
             _messageBus.Receive<LogoutMessage>(this, async message =>
             {
                 await authorizationProvider.Logout();
+
+                (CurrentPage.DataContext as IDisposable)?.Dispose();
                 CurrentPage = _pageHalper.LoginPage;
             });
 

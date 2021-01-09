@@ -1,11 +1,12 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
 using IdentityModel.Client;
+using System;
 using System.Net.Http;
 
 namespace AcrylicWindow.Client.Core.Services
 {
-    public abstract class BaseApiService
+    public abstract class BaseApiService : IDisposable
     {
         private readonly ITokenStorage _tokenStorage;
 
@@ -26,6 +27,10 @@ namespace AcrylicWindow.Client.Core.Services
 
             _tokenStorage.Cleared += (s, e) => 
                 HttpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
