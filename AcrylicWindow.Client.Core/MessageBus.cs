@@ -31,9 +31,10 @@ namespace AcrylicWindow.Client.Core.Services
         public IDisposable Receive<TMessage>(object receiver, Func<TMessage, Task> handler)
             where TMessage : IMessage
         {
-            var sub = new MessageSubscriber(receiver.GetType(), typeof(TMessage), s => _consumers.TryRemove(s, out var _));
+            var sub = new MessageSubscriber(receiver.GetType(), typeof(TMessage), s => 
+                _consumers.TryRemove(s, out var _));
 
-            _consumers.TryAdd(sub, (@event) => handler((TMessage)@event));
+            _consumers.TryAdd(sub, (e) => handler((TMessage)e));
 
             return sub;
         }

@@ -12,7 +12,8 @@
          fw:AcrylicWindow.TintColor="#D1A5D3FD"
          fw:AcrylicWindow.FallbackColor="#D1A5D3FD"
          FontSize="15" FontFamily="Arial" WindowStyle="None"
-         ResizeMode="NoResize" Foreground="Black">
+         ResizeMode="NoResize" Foreground="Black"
+         DataContext="{Binding MainWindow, Source={StaticResource ViewModelLocator}}">
     <Grid>
         <Frame 
             MouseLeftButtonDown="Frame_MouseLeftButtonDown"

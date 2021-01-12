@@ -1,30 +1,22 @@
-﻿using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.View.Pages;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using AcrylicWindow.View.Pages;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Controls;
 
 namespace AcrylicWindow
 {
-    public class PageHalper
+    public static class PageHalper
     {
-        private readonly IServiceProvider _provider;
+        public static Page MainPage => new MainPage();
 
-        public PageHalper(IServiceProvider provider)
+        public static Page LoginPage => new LoginPage();
+
+        public static Page SessionPage => new SessionPage();
+
+        public static IDictionary<string, Page> Tabs => new Dictionary<string, Page>()
         {
-            _provider = provider;
-        }
-
-        public Page MainPage => _provider.GetService<MainPage>();
-
-        public Page LoginPage => _provider.GetService<LoginPage>();
-
-        public Page SessionPage => _provider.GetService<SessionPage>();
-
-        public IDictionary<string, Page> Tabs => _provider.GetServices<ITab>()
-            .Cast<Page>()
-            .ToDictionary(page => page.GetType().Name);
+            [nameof(HomeTab)] = new HomeTab(),
+            [nameof(EmployeesTab)] = new EmployeesTab(),
+            [nameof(OptionsTab)] = new OptionsTab()
+        };
     }
 }

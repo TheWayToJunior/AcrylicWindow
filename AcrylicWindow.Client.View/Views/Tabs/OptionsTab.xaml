@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:AcrylicWindow.View.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OptionsPage">
+      Title="OptionsPage"
+      DataContext="{Binding Option, Source={StaticResource ViewModelLocator}}">
 
     <Grid>
         <TextBlock Text="Options" 

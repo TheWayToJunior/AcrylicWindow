@@ -1,22 +1,21 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.View.Services;
 using AcrylicWindow.View.Pages;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
 {
-    public class MainPageViewModel : ViewModelBase, IDisposable
+    public class MainPageViewModel : ViewModelBase
     {
-        private readonly IMessageBus _messageBus;
+        private readonly IAuthorizationProvider _authorizationProvider;
+        private readonly NavigationPageService _pageService;
+
         private readonly IDictionary<string, Page> _pages;
-        private IDisposable _subscription;
 
         private Page _currentPage;
 
@@ -64,16 +63,14 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public MainPageViewModel(IMessageBus messageBus, PageHalper pageHalper)
+        public MainPageViewModel(IAuthorizationProvider authorizationProvider, NavigationPageService pageService)
         {
-            _messageBus = Has.NotNull(messageBus, nameof(messageBus));
-            _pages = pageHalper.Tabs;
+            _authorizationProvider = Has.NotNull(authorizationProvider);
+            _pageService = Has.NotNull(pageService);
 
-            _subscription = _messageBus.Receive<UserMessage>(this, message =>
-            {
-                UserName = message.UserName;
-                return Task.CompletedTask;
-            });
+            _pages = PageHalper.Tabs;
+
+            UserName = _authorizationProvider.AuthenticationState.GetClaim("sub");
 
             CurrentPage = _pages[nameof(HomeTab)];
 
@@ -83,12 +80,9 @@ namespace AcrylicWindow.ViewModel
 
         private async void Logout(object obj)
         {
-            await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
-        }
+            await _authorizationProvider.Logout();
 
-        public void Dispose()
-        {
-            _subscription.Dispose();
+            _pageService.NavigateTo(PageHalper.LoginPage);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.View.Services;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,7 +10,7 @@ namespace AcrylicWindow.ViewModel
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IAuthorizationProvider _authorizationProvider;
-        private readonly IMessageBus _messageBus;
+        private readonly NavigationPageService _pageService;
 
         private string _error;
 
@@ -32,13 +32,13 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public LoginPageViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus)
+        public LoginPageViewModel(IAuthorizationProvider authorizationProvider, NavigationPageService pageService)
         {
             _authorizationProvider = Has.NotNull(authorizationProvider);
-            _messageBus = Has.NotNull(messageBus);
+            _pageService = Has.NotNull(pageService);
 
             LoginCommand = new DelegateCommand(Login, pb =>
-                !string.IsNullOrEmpty(Email) && (pb as PasswordBox).SecurePassword.Length > 0);
+                !string.IsNullOrEmpty(Email) && (pb as PasswordBox)?.SecurePassword.Length > 0);
 
             CloseCommand = new DelegateCommand(_ => Application.Current.Shutdown());
         }
@@ -57,7 +57,7 @@ namespace AcrylicWindow.ViewModel
                 return;
             }
 
-            await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage(state, Email));
+            _pageService.NavigateTo(PageHalper.MainPage);
         }
     }
 }

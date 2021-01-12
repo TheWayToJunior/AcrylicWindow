@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.View.Services;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,7 +9,7 @@ namespace AcrylicWindow.ViewModel
     public class SessionViewModel : ViewModelBase
     {
         private readonly IAuthorizationProvider _authorizationProvider;
-        private readonly IMessageBus _messageBus;
+        private readonly NavigationPageService _pageService;
 
         private string _error;
 
@@ -33,15 +33,15 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CloseCommand { get; }
 
-        public SessionViewModel(IAuthorizationProvider authorizationProvider, IMessageBus messageBus)
+        public SessionViewModel(IAuthorizationProvider authorizationProvider, NavigationPageService pageService)
         {
             _authorizationProvider = Has.NotNull(authorizationProvider);
-            _messageBus = Has.NotNull(messageBus);
+            _pageService = Has.NotNull(pageService);
 
             UserName = authorizationProvider.AuthenticationState
                 .GetClaim("sub");
 
-            LoginCommand  = new DelegateCommand(Login);
+            LoginCommand = new DelegateCommand(Login);
             LogoutCommand = new DelegateCommand(Logout);
 
             CloseCommand = new DelegateCommand(_ => Application.Current.Shutdown());
@@ -57,12 +57,14 @@ namespace AcrylicWindow.ViewModel
                 return;
             }
 
-            await _messageBus.SendTo<MainWindowViewModel>(new LoginMessage(state, UserName));
+            _pageService.NavigateTo(PageHalper.MainPage);
         }
 
         private async void Logout(object obj)
         {
-            await _messageBus.SendTo<MainWindowViewModel>(new LogoutMessage(UserName));
+            await _authorizationProvider.Logout();
+
+            _pageService.NavigateTo(PageHalper.LoginPage);
         }
     }
 }

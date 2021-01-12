@@ -6,7 +6,8 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       FontSize="15" FontFamily="Arial"
-      Title="SessionPage">
+      Title="SessionPage"
+      DataContext="{Binding Session, Source={StaticResource ViewModelLocator}}">
 
     <Grid>
         <Border Background="White"

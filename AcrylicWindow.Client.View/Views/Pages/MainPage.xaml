@@ -7,7 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1080"
       Title="MainPage"
-      FontSize="15" FontFamily="Arial">
+      FontSize="15" FontFamily="Arial"
+      DataContext="{Binding MainPage, Source={StaticResource ViewModelLocator}}">
 
     <Grid>
         <Grid>
