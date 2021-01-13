@@ -2,6 +2,7 @@
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.View.Navigation;
 using AcrylicWindow.View.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -83,10 +84,10 @@ namespace AcrylicWindow.ViewModel
             await _authorizationProvider.Logout();
             _pageService.NavigateTo(PageHalper.LoginPage);
 
-            Dispose(false);
+            Dispose(true);
         }
 
-        public override void Dispose(bool disposing)
+        public override void Dispose(bool collect)
         {
             foreach (var item in _pages)
             {
@@ -96,7 +97,7 @@ namespace AcrylicWindow.ViewModel
             _pages.Clear();
             _currentPage = null;
 
-            base.Dispose(disposing);
+            base.Dispose(collect);
         }
     }
 }

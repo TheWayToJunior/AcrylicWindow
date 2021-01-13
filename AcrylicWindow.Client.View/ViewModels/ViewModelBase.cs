@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace AcrylicWindow.ViewModel
@@ -27,19 +28,23 @@ namespace AcrylicWindow.ViewModel
             OnPropertyChanged(propertyName);
             return true;
         }
-        
-        ~ViewModelBase() => Dispose(false);
 
         /// <summary>
         /// All transient IDisposable instances, as long as this area is alive,
         /// will accumulate, and we will get a form of memory leak when services
         /// remain alive far beyond their need.
         /// </summary>
-        public virtual void Dispose(bool disposing) 
+        public virtual void Dispose(bool collect) 
         {
             if (_disposed)
             {
                 return;
+            }
+
+            if(collect)
+            {
+                /// Trying to clear resources. Does not guarantee deletion
+                GC.Collect();
             }
 
             _disposed = true;

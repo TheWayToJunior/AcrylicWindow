@@ -75,12 +75,12 @@ namespace AcrylicWindow.ViewModel
             }
         }
 
-        public override void Dispose(bool disposing)
+        public override void Dispose(bool collect)
         {
             ListItems.ListChanged -= OnListChanged;
             ListItems.Clear();
 
-            base.Dispose(disposing);
+            base.Dispose(collect);
         }
     }
 }
