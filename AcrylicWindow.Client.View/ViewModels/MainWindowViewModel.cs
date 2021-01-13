@@ -1,5 +1,5 @@
 ﻿using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.View.Services;
+using AcrylicWindow.Client.View.Navigation;
 using System.Windows.Controls;
 
 namespace AcrylicWindow.ViewModel

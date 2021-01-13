@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Navigation;
 
-namespace AcrylicWindow.Client.View.Services
+namespace AcrylicWindow.Client.View.Navigation
 {
     public class NavigationPageService
     {

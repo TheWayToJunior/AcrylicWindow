@@ -36,16 +36,18 @@ namespace AcrylicWindow.ViewModel
             _service = Has.NotNull(service, nameof(service));
 
             ListItems = new BindingList<RowCheckBoxViewModel<Employee>>();
-            ListItems.ListChanged += (s, e) =>
-            {
-                if (e.ListChangedType == ListChangedType.ItemChanged)
-                    CheckAll = !_listItems.Any(i => !i.Check);
-            };
+            ListItems.ListChanged += OnListChanged;
 
             CheckAllCommand = new DelegateCommand(Check);
             DeleteCommand = new DelegateCommand(Delete, _ => !_listItems.Any(i => i.Check));
 
             ReceiveData();
+        }
+
+        private void OnListChanged(object s, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemChanged)
+                CheckAll = !_listItems.Any(i => !i.Check);
         }
 
         private async void Delete(object id)
@@ -71,6 +73,14 @@ namespace AcrylicWindow.ViewModel
             {
                 ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
             }
+        }
+
+        public override void Dispose(bool disposing)
+        {
+            ListItems.ListChanged -= OnListChanged;
+            ListItems.Clear();
+
+            base.Dispose(disposing);
         }
     }
 }

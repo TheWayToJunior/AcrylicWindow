@@ -3,7 +3,7 @@ using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
-using AcrylicWindow.Client.View.Services;
+using AcrylicWindow.Client.View.Navigation;
 using AcrylicWindow.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;

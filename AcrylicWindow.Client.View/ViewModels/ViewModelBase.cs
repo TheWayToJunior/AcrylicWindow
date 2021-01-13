@@ -3,8 +3,10 @@ using System.Runtime.CompilerServices;
 
 namespace AcrylicWindow.ViewModel
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        private bool _disposed = false;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -24,6 +26,23 @@ namespace AcrylicWindow.ViewModel
 
             OnPropertyChanged(propertyName);
             return true;
+        }
+        
+        ~ViewModelBase() => Dispose(false);
+
+        /// <summary>
+        /// All transient IDisposable instances, as long as this area is alive,
+        /// will accumulate, and we will get a form of memory leak when services
+        /// remain alive far beyond their need.
+        /// </summary>
+        public virtual void Dispose(bool disposing) 
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _disposed = true;
         }
     }
 }

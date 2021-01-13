@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.View.Services;
+using AcrylicWindow.Client.View.Navigation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

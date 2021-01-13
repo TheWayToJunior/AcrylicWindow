@@ -128,7 +128,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Helpers\PageHalper.cs" />
-    <Compile Include="Services\NavigationPageService.cs" />
+    <Compile Include="Navigation\NavigationPageService.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
