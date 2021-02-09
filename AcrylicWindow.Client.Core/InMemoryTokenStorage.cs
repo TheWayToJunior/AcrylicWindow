@@ -7,7 +7,7 @@ namespace AcrylicWindow.Client.Core
 {
     public class InMemoryTokenStorage : ITokenStorage
     {
-        public event EventHandler<TokenEventArgs> TokenStateChanged;
+        public event EventHandler<TokenEventArgs> Changed;
         public event EventHandler Cleared;
 
         private readonly ConcurrentDictionary<string, string> _tokens;
@@ -27,7 +27,7 @@ namespace AcrylicWindow.Client.Core
         {
             var oldToken = _tokens.AddOrUpdate(key, value, (k, oldValue) => oldValue);
 
-            TokenStateChanged?.Invoke(this, new TokenEventArgs(key, value, oldToken));
+            Changed?.Invoke(this, new TokenEventArgs(key, value, oldToken));
             return this[key];
         }
 

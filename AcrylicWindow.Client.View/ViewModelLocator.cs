@@ -25,24 +25,30 @@ namespace AcrylicWindow
 
         private static void ConfigureServices(IServiceCollection services)
         {
+            /// Pages
             services.AddTransient<MainPageViewModel>();
             services.AddScoped<LoginPageViewModel>();
             services.AddScoped<SessionViewModel>();
 
+            /// Tabs
             services.AddTransient<HomeViewModel>();
             services.AddTransient<OptionViewModel>();
             services.AddTransient<EmployeeViewModel>();
 
+            /// Windows
             services.AddSingleton<MainWindowViewModel>();
 
+            /// Authorization
             services.AddScoped(typeof(IAuthorizationService<>), typeof(AuthorizationService<>));
             services.AddScoped<ISessionService<UserSession>, UserSessionService>();
             services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
 
+            /// Infrastructure
             services.AddScoped<IEmployeeService, EmployeeService>();
 
-            services.AddSingleton<ITokenStorage, InMemoryTokenStorage>();
             services.AddSingleton<NavigationPageService>();
+            services.AddSingleton<ITokenStorage, InMemoryTokenStorage>()
+                .AddTransient<IReaderTokenStore>(p => p.GetService<ITokenStorage>());
 
             services.AddScoped<HttpClient>();
         }

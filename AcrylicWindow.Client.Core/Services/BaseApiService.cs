@@ -11,18 +11,18 @@ namespace AcrylicWindow.Client.Core.Services
     {
         private bool _disposed = false;
 
-        private readonly ITokenStorage _tokenStorage;
+        private readonly IReaderTokenStore _tokenStorage;
 
         protected readonly HttpClient HttpClient;
 
-        public BaseApiService(ITokenStorage tokenStorage, HttpClient httpClient)
+        public BaseApiService(IReaderTokenStore tokenStorage, HttpClient httpClient)
         {
             _tokenStorage = Has.NotNull(tokenStorage);
             HttpClient = Has.NotNull(httpClient);
 
             HttpClient.SetBearerToken(_tokenStorage[Tokens.Access]);
 
-            _tokenStorage.TokenStateChanged += OnTokentChanged;
+            _tokenStorage.Changed += OnTokentChanged;
             _tokenStorage.Cleared += OnCleared;
         }
 
@@ -55,7 +55,7 @@ namespace AcrylicWindow.Client.Core.Services
                 // TODO: dispose managed state (managed objects).
             }
 
-            _tokenStorage.TokenStateChanged -= OnTokentChanged;
+            _tokenStorage.Changed -= OnTokentChanged;
             _tokenStorage.Cleared -= OnCleared;
             _disposed = true;
         }

@@ -1,19 +1,21 @@
 ﻿using AcrylicWindow.Client.Core.Models;
-using System;
 
 namespace AcrylicWindow.Client.Core.IContract
 {
-    public interface ITokenStorage
+    public interface IReaderTokenStore : IChangeable<TokenEventArgs>, IClearable
     {
-        event EventHandler<TokenEventArgs> TokenStateChanged;
-        event EventHandler Cleared;
-
         string this[string key] { get; set; }
 
-        string AddOrUpdate(string key, string value);
-
         string GetValue(string key);
+    }
 
+    public interface IWriterTokenStore : IChangeable<TokenEventArgs>, IClearable
+    {
+        string AddOrUpdate(string key, string value);
+    }
+
+    public interface ITokenStorage : IReaderTokenStore, IWriterTokenStore
+    {
         bool TryRemove(string key, out string value);
 
         void RemoveAll();
