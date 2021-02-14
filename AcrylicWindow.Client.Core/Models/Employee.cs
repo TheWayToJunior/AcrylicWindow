@@ -1,10 +1,11 @@
 ﻿using AcrylicWindow.Client.Core.IContract;
+using System;
 
 namespace AcrylicWindow.Client.Core.Model
 {
     public class Employee : IModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

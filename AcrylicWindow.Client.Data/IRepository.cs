@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Data
@@ -6,14 +8,16 @@ namespace AcrylicWindow.Client.Data
     public interface IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
     {
-        Task<IEnumerable<TEntity>> GetAllAsync(string table);
+        Task DeleteAsync(TKey id);
 
-        Task<TEntity> GetByIdAsync(string table, TKey id);
+        Task<IEnumerable<TModel>> GetAllAsync<TModel>(int page, int pageSize);
 
-        Task InsertAsync(string table, TEntity entity);
+        Task<TModel> GetByIdAsync<TModel>(TKey id);
 
-        Task UpdateAsync(string table, TKey id, IEntity<TKey> entity);
+        Task InsertAsync<TModel>(TModel model);
 
-        Task DeleteAsync(string table, TKey id);
+        Task UpdateAsync<TModel>(TKey id, TModel model);
+
+        Task<TModel> FindAsync<TModel, TValue>(Expression<Func<TModel, TValue>> expression, TValue value);
     }
 }

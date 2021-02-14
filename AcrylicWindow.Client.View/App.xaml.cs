@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using AcrylicWindow.Client.Data;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 
 namespace AcrylicWindow
 {
@@ -7,6 +9,11 @@ namespace AcrylicWindow
         public App()
         {
             ViewModelLocator.Initialize();
+
+            InitializeDatabase.Initialize(ViewModelLocator.Provider
+                .GetRequiredService<IDataProvider>())
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }

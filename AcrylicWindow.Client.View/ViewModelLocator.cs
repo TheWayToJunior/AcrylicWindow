@@ -4,23 +4,25 @@ using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
 using AcrylicWindow.Client.View.Navigation;
+using AcrylicWindow.Extensions;
 using AcrylicWindow.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Configuration;
 using System.Net.Http;
 
 namespace AcrylicWindow
 {
-    public class ViewModelLocator
+    internal class ViewModelLocator
     {
-        public static IServiceProvider _provider;
+        public static IServiceProvider Provider { get; private set; }
 
         public static void Initialize()
         {
             var services = new ServiceCollection();
             ConfigureServices(services);
 
-            _provider = services.BuildServiceProvider();
+            Provider = services.BuildServiceProvider();
         }
 
         private static void ConfigureServices(IServiceCollection services)
@@ -44,34 +46,35 @@ namespace AcrylicWindow
             services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
 
             /// Infrastructure
-            services.AddScoped<IEmployeeService, EmployeeService>();
-
+            services.AddScoped<HttpClient>();
             services.AddSingleton<NavigationPageService>();
             services.AddSingleton<ITokenStorage, InMemoryTokenStorage>()
                 .AddTransient<IReaderTokenStore>(p => p.GetService<ITokenStorage>());
 
-            services.AddScoped<HttpClient>();
+            /// Data
+            var connection = ConfigurationManager.ConnectionStrings["acrylicdb"];
+            services.AddMongoProvider(connection.ConnectionString, connection.Name);
         }
 
-        public MainWindowViewModel MainWindow => 
-            _provider.GetRequiredService<MainWindowViewModel>();
+        public MainWindowViewModel MainWindow =>
+            Provider.GetRequiredService<MainWindowViewModel>();
 
         public MainPageViewModel MainPage =>
-            _provider.GetRequiredService<MainPageViewModel>();
+            Provider.GetRequiredService<MainPageViewModel>();
 
         public LoginPageViewModel LoginPage =>
-            _provider.GetService<LoginPageViewModel>();
+            Provider.GetService<LoginPageViewModel>();
 
-        public SessionViewModel Session => 
-            _provider.GetRequiredService<SessionViewModel>();
+        public SessionViewModel Session =>
+            Provider.GetRequiredService<SessionViewModel>();
 
         public EmployeeViewModel Employee =>
-            _provider.GetRequiredService<EmployeeViewModel>();
+            Provider.GetRequiredService<EmployeeViewModel>();
 
         public HomeViewModel Home =>
-            _provider.GetRequiredService<HomeViewModel>();
+            Provider.GetRequiredService<HomeViewModel>();
 
         public OptionViewModel Option =>
-            _provider.GetRequiredService<OptionViewModel>();
+            Provider.GetRequiredService<OptionViewModel>();
     }
 }
