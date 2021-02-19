@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Data
 {
-    public interface IRepository<TEntity, TKey>
+    public interface IRepository<out TEntity, TKey>
         where TEntity : class, IEntity<TKey>
     {
         Task DeleteAsync(TKey id);

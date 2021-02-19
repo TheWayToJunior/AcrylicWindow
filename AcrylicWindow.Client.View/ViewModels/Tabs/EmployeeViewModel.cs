@@ -1,6 +1,9 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.Client.Data;
+using AcrylicWindow.ViewModels;
+using AcrylicWindow.Views.Dialogs;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -30,6 +33,10 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand CheckAllCommand { get; }
 
+        public ICommand RefreshCommand { get; }
+
+        public ICommand AddCommand { get; }
+
         public ICommand DeleteCommand { get; }
 
         public EmployeeViewModel(IDataProvider provider)
@@ -40,9 +47,28 @@ namespace AcrylicWindow.ViewModel
             ListItems.ListChanged += OnListChanged;
 
             CheckAllCommand = new DelegateCommand(Check);
+            AddCommand = new DelegateCommand(RunDialog);
+
+            RefreshCommand = new DelegateCommand(_ => ReceiveData());
             DeleteCommand = new DelegateCommand(Delete, _ => !_listItems.Any(i => i.Check));
 
             ReceiveData();
+        }
+
+        private async void RunDialog(object obj)
+        {
+            var view = new AddDialog
+            {
+                DataContext = new AddDialogViewModel<Employee>()
+            };
+
+            var result = await DialogHost.Show(view, "RootDialog");
+
+            if (result is Employee employee)
+            {
+                await _service.InsertAsync(employee);
+                ReceiveData();
+            }
         }
 
         private void OnListChanged(object s, ListChangedEventArgs e)

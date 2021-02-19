@@ -18,6 +18,10 @@ namespace AcrylicWindow.ViewModel
             set => Set(ref _check, value);
         }
 
+        public string DefaultImg => 
+            "Profile.png";
+
+
         public TModel Model { get; set; }
 
         public ICommand ClickCommand { get; }

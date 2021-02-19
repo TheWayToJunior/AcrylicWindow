@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Data;
+using AcrylicWindow.Client.Data.Entities;
 using AutoMapper;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace AcrylicWindow.Client.DAL.Repositories
 {
     public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>
+        where TEntity : EntityBase<TKey>
     {
         private readonly string _tableName;
 
@@ -55,6 +56,9 @@ namespace AcrylicWindow.Client.DAL.Repositories
         {
             var collection = Database.GetCollection<TEntity>(_tableName);
             var entity = _mapper.Map<TModel, TEntity>(model);
+
+            entity.CreatedBy = DateTime.Now;
+            entity.UpdatedBy = DateTime.Now;
 
             await collection.InsertOneAsync(entity);
         }

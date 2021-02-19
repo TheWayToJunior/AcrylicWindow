@@ -10,6 +10,7 @@
                     <local:ViewModelLocator x:Key="ViewModelLocator"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="Styles.xaml"/>
+                <ResourceDictionary Source="ImageDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

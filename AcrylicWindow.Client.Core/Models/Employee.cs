@@ -5,8 +5,10 @@ namespace AcrylicWindow.Client.Core.Model
 {
     public class Employee : IModel
     {
+        [DisplayIgnore]
         public Guid Id { get; set; }
 
+        [Displayed("Full name")]
         public string Name { get; set; }
 
         public string Position { get; set; }
@@ -15,6 +17,7 @@ namespace AcrylicWindow.Client.Core.Model
 
         public string Email { get; set; }
 
+        [Displayed("Image")]
         public string Img { get; set; }
     }
 }

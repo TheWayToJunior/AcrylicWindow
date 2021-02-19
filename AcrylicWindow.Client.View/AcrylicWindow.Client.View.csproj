@@ -194,6 +194,7 @@
     <Compile Include="InitializeDatabase.cs" />
     <Compile Include="Navigation\NavigationPageService.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="ViewModels\AddDialogViewModel.cs" />
     <Compile Include="ViewModels\Tabs\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Tabs\HomeViewModel.cs" />
     <Compile Include="ViewModels\Pages\LoginPageViewModel.cs" />
@@ -201,6 +202,10 @@
     <Compile Include="ViewModels\Tabs\OptionViewModel.cs" />
     <Compile Include="ViewModels\RowCheckBoxViewModel.cs" />
     <Compile Include="ViewModels\Pages\SessionPageViewModel.cs" />
+    <Compile Include="ViewModels\TextBoxViewModel.cs" />
+    <Compile Include="Views\Dialogs\AddDialog.xaml.cs">
+      <DependentUpon>AddDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\SessionPage.xaml.cs">
       <DependentUpon>SessionPage.xaml</DependentUpon>
     </Compile>
@@ -219,7 +224,15 @@
     <Compile Include="Views\Tabs\OptionsTab.xaml.cs">
       <DependentUpon>OptionsTab.xaml</DependentUpon>
     </Compile>
+    <Page Include="ImageDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

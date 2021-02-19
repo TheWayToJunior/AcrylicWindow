@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AcrylicWindow
 {
@@ -12,7 +13,13 @@ namespace AcrylicWindow
         {
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(value.ToString());
+
+            var created = Uri.TryCreate(value?.ToString(), UriKind.Absolute, out var uri);
+
+            if (!created)
+                return App.Current.Resources["DefaultImage"] as BitmapImage;
+
+            bitmap.UriSource = uri;
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.DecodePixelHeight = 50;
             bitmap.EndInit();

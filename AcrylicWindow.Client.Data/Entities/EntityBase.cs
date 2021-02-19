@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace AcrylicWindow.Client.Data.Entities
 {
@@ -6,5 +7,9 @@ namespace AcrylicWindow.Client.Data.Entities
     {
         [BsonId]
         public TKey Id { get; set; }
+
+        public DateTime CreatedBy { get; set; }
+
+        public DateTime UpdatedBy { get; set; }
     }
 }

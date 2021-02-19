@@ -5,6 +5,8 @@
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          mc:Ignorable="d"
          xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+         xmlns:system="clr-namespace:System;assembly=mscorlib"
          Height="600" Width="1080"
          fw:AcrylicWindow.Enabled="True"
          fw:AcrylicWindow.AcrylicWindowStyle="None"
@@ -14,11 +16,17 @@
          FontSize="15" FontFamily="Arial" WindowStyle="None"
          ResizeMode="NoResize" Foreground="Black"
          DataContext="{Binding MainWindow, Source={StaticResource ViewModelLocator}}">
-    <Grid>
-        <Frame 
-            MouseLeftButtonDown="Frame_MouseLeftButtonDown"
-            NavigationUIVisibility="Hidden"
-            Content="{Binding CurrentPage}">
-        </Frame>
-    </Grid>
+
+    <materialDesign:DialogHost Identifier="RootDialog"
+                               CloseOnClickAway="True">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel></StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Frame  MouseLeftButtonDown="Frame_MouseLeftButtonDown"
+                    NavigationUIVisibility="Hidden"
+                    Content="{Binding CurrentPage}">
+            </Frame>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>
