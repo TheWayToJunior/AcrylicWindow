@@ -311,15 +311,16 @@
       <Project>{a22bda0d-b9fb-4012-b8b5-a0670379789d}</Project>
       <Name>AcrylicWindow.Client.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AcrylicWindow.Client.Data\AcrylicWindow.Client.Data.csproj">
-      <Project>{2b7ada5e-5e60-4000-bfd6-61544e2c142a}</Project>
-      <Name>AcrylicWindow.Client.Data</Name>
+    <ProjectReference Include="..\AcrylicWindow.Client.Entity\AcrylicWindow.Client.Entity.csproj">
+      <Project>{dc286ef4-1cf1-474d-acec-60431bf7796f}</Project>
+      <Name>AcrylicWindow.Client.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\Compression\Snappy\lib\win\snappy32.dll" />
     <Content Include="Core\Compression\Snappy\lib\win\snappy64.dll" />
     <Content Include="Core\Compression\Zstandard\lib\win\libzstd.dll" />
+    <Resource Include="Images\DefaultImage.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

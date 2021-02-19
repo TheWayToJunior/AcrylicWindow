@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AcrylicWindow.Client.Core\AcrylicWindow.Client.Core.csproj" />
+    <ProjectReference Include="..\AcrylicWindow.Client.Entity\AcrylicWindow.Client.Entity.csproj" />
   </ItemGroup>
 
 </Project>

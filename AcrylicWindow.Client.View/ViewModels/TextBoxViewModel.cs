@@ -4,7 +4,7 @@ namespace AcrylicWindow.ViewModels
 {
     public class TextBoxViewModel : ViewModelBase
     {
-        private string _name = "";
+        private string _name = string.Empty;
 
         public string Name
         {
@@ -12,7 +12,7 @@ namespace AcrylicWindow.ViewModels
             set { Set(ref _name, value); }
         }
 
-        private string _text = "";
+        private string _text = string.Empty;
 
         public string Text
         {

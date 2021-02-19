@@ -19,6 +19,7 @@ namespace AcrylicWindow
             if (!created)
                 return App.Current.Resources["DefaultImage"] as BitmapImage;
 
+
             bitmap.UriSource = uri;
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.DecodePixelHeight = 50;
