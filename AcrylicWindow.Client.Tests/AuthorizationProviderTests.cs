@@ -8,7 +8,7 @@ using Xunit;
 
 namespace AcrylicWindow.Client.Tests
 {
-    public class TestAuthorizationProvider
+    public class AuthorizationProviderTests
     {
         #region The inconvenience
         /// Failed to mock extension method for jwt parsing, perhaps in the future the implementation will be changed

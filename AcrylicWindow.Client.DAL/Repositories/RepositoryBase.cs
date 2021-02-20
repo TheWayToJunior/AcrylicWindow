@@ -2,7 +2,6 @@
 using AcrylicWindow.Client.Data;
 using AcrylicWindow.Client.Data.Entities;
 using AutoMapper;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
         {
             var collection = Database.GetCollection<TEntity>(_tableName);
 
-            using (var entiteis = await collection.FindAsync(new BsonDocument()))
+            using (var entiteis = await collection.FindAsync(Builders<TEntity>.Filter.Empty))
             {
                 return entiteis.ToList()
                     .Skip((page - 1) * pageSize)
@@ -57,8 +56,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
             var collection = Database.GetCollection<TEntity>(_tableName);
             var entity = _mapper.Map<TModel, TEntity>(model);
 
-            entity.CreatedBy = DateTime.Now;
-            entity.UpdatedBy = DateTime.Now;
+            entity.CreatedBy = entity.UpdatedBy = DateTime.Now;
 
             await collection.InsertOneAsync(entity);
         }
