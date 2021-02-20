@@ -4,12 +4,15 @@ using AutoMapper;
 
 namespace AcrylicWindow
 {
-    internal class ApplicatinProfile : Profile
+    public class ApplicatinProfile : Profile
     {
         public ApplicatinProfile()
         {
             CreateMap<EmployeeEntity, Employee>();
-            CreateMap<Employee, EmployeeEntity>();
+
+            CreateMap<Employee, EmployeeEntity>()
+                .ForMember(p => p.CreatedBy, opt => opt.Ignore())
+                .ForMember(p => p.UpdatedBy, opt => opt.Ignore());
         }
     }
 }
