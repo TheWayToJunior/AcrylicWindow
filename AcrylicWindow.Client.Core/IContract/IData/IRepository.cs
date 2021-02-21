@@ -18,6 +18,6 @@ namespace AcrylicWindow.Client.Data
 
         Task UpdateAsync<TModel>(TKey id, TModel model);
 
-        Task<TModel> FindAsync<TModel, TValue>(Expression<Func<TModel, TValue>> expression, TValue value);
+        Task<IEnumerable<TModel>> FindAsync<TModel, TValue>(Expression<Func<TModel, TValue>> expression, TValue value);
     }
 }

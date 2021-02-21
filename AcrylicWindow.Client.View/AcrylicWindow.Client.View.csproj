@@ -191,7 +191,6 @@
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Extensions\MongoExtensions.cs" />
     <Compile Include="Helpers\PageHalper.cs" />
-    <Compile Include="InitializeDatabase.cs" />
     <Compile Include="Navigation\NavigationPageService.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\AddDialogViewModel.cs" />
