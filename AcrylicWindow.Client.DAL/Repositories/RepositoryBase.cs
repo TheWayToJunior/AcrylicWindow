@@ -1,7 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Data;
 using AcrylicWindow.Client.Data.Entities;
-using AutoMapper;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -12,19 +11,17 @@ using System.Threading.Tasks;
 namespace AcrylicWindow.Client.DAL.Repositories
 {
     public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
-        where TEntity : EntityBase<TKey>
+        where TEntity : EntityBase<TKey>, new()
     {
         private readonly string _tableName;
 
         protected readonly IMongoDatabase Database;
-        private readonly IMapper _mapper;
 
-        public RepositoryBase(IMongoDatabase database, IMapper mapper, string tableName)
+        public RepositoryBase(IMongoDatabase database, string tableName)
         {
-            _tableName = Has.NotNullOrEmpty(tableName);
-            _mapper = Has.NotNull(mapper);
-
             Database = Has.NotNull(database);
+
+            _tableName = Has.NotNullOrEmpty(tableName);
         }
 
         /// <summary>
@@ -34,7 +31,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
         /// <param name="page">Page number</param>
         /// <param name="pageSize">Number of entries per page</param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<TModel>> GetAllAsync<TModel>(int page, int pageSize)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize)
         {
             var collection = Database.GetCollection<TEntity>(_tableName);
 
@@ -43,18 +40,11 @@ namespace AcrylicWindow.Client.DAL.Repositories
                 /// Divides the selected records by page
                 return entiteis.ToList()
                     .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .Select(e => _mapper.Map<TEntity, TModel>(e));
+                    .Take(pageSize);
             }
         }
 
-        public virtual async Task<TModel> GetByIdAsync<TModel>(TKey id) => 
-            _mapper.Map<TEntity, TModel>(
-                await GetByIdAsync(id) 
-                ?? throw new InvalidOperationException($"Object with this id: {id}, was not found"));
-        
-
-        private async Task<TEntity> GetByIdAsync(TKey id)
+        public async Task<TEntity> GetByIdAsync(TKey id)
         {
             var collection = Database.GetCollection<TEntity>(_tableName);
             var filter = Builders<TEntity>.Filter.Eq("Id", id);
@@ -65,11 +55,9 @@ namespace AcrylicWindow.Client.DAL.Repositories
             }
         }
 
-        public virtual async Task InsertAsync<TModel>(TModel model)
+        public virtual async Task InsertAsync(TEntity entity)
         {
             var collection = Database.GetCollection<TEntity>(_tableName);
-            var entity = _mapper.Map<TModel, TEntity>(model);
-
             entity.CreatedBy = entity.UpdatedBy = DateTime.Now;
 
             await collection.InsertOneAsync(entity);
@@ -79,23 +67,23 @@ namespace AcrylicWindow.Client.DAL.Repositories
         /// Updates a record in the database,
         /// if the record cannot be found by the specified id, a new one will be added
         /// </summary>
-        public virtual async Task UpdateAsync<TModel>(TKey id, TModel model)
+        public virtual async Task UpdateAsync(TKey id, TEntity entity)
         {
             var collection = Database.GetCollection<TEntity>(_tableName);
             var filter = Builders<TEntity>.Filter.Eq("Id", id);
 
             /// We need to update all the files except CreatedBy, which is not possible at the database level.
             /// Let's do it manually
-            var entity = await GetByIdAsync(id);
-            var map = _mapper.Map(model, entity);
+            var foundEntity = await GetByIdAsync(id);
 
             /// If the record was not found in the database, it will be created again
-            if (entity == null)
-                map.CreatedBy = DateTime.Now;
+            entity.CreatedBy = foundEntity == null
+                ? DateTime.Now
+                : foundEntity.CreatedBy;
 
-            map.UpdatedBy = DateTime.Now;
+            entity.UpdatedBy = DateTime.Now;
 
-            var result = await collection.ReplaceOneAsync(filter, map, 
+            var result = await collection.ReplaceOneAsync(filter, entity,
                 new ReplaceOptions { IsUpsert = true });
         }
 
@@ -112,7 +100,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
         /// </summary>
         /// <param name="expression">An expression that specifies the property that will be searched for</param>
         /// <param name="value">The value to search for</param>
-        public virtual async Task<IEnumerable<TModel>> FindAsync<TModel, TValue>(Expression<Func<TModel, TValue>> expression, TValue value)
+        public virtual async Task<IEnumerable<TEntity>> FindAsync<TValue>(Expression<Func<TEntity, TValue>> expression, TValue value)
         {
             var memberExpression = expression.Body as MemberExpression;
 
@@ -124,8 +112,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
 
             using (var entiteis = await collection.FindAsync(filter))
             {
-                return entiteis.ToList()
-                    .Select(e => _mapper.Map<TEntity, TModel>(e));
+                return entiteis.ToList();
             }
         }
     }

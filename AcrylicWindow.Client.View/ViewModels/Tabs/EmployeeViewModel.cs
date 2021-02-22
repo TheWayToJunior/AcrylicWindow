@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
+using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Model;
-using AcrylicWindow.Client.Data;
 using AcrylicWindow.ViewModels;
 using AcrylicWindow.Views.Dialogs;
 using MaterialDesignThemes.Wpf;
@@ -13,7 +13,7 @@ namespace AcrylicWindow.ViewModel
 {
     public class EmployeeViewModel : ViewModelBase
     {
-        private readonly IEmployeeRepository _service;
+        private readonly IEmployeeService _service;
 
         public BindingList<RowCheckBoxViewModel<Employee>> _listItems;
 
@@ -39,9 +39,9 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand DeleteCommand { get; }
 
-        public EmployeeViewModel(IDataProvider provider)
+        public EmployeeViewModel(IEmployeeService service)
         {
-            _service = Has.NotNull(provider, nameof(provider)).Employees;
+            _service = Has.NotNull(service, nameof(service));
 
             ListItems = new BindingList<RowCheckBoxViewModel<Employee>>();
             ListItems.ListChanged += OnListChanged;
@@ -96,7 +96,7 @@ namespace AcrylicWindow.ViewModel
         {
             ListItems.Clear();
 
-            foreach (var item in await _service.GetAllAsync<Employee>(1, 7))
+            foreach (var item in await _service.GetAllAsync(1, 7))
             {
                 ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
             }

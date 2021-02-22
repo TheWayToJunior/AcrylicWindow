@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Data
 {
-    public interface IRepository<out TEntity, TKey>
+    public interface IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
     {
         Task DeleteAsync(TKey id);
 
-        Task<IEnumerable<TModel>> GetAllAsync<TModel>(int page, int pageSize);
+        Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize);
 
-        Task<TModel> GetByIdAsync<TModel>(TKey id);
+        Task<TEntity> GetByIdAsync(TKey id);
 
-        Task InsertAsync<TModel>(TModel model);
+        Task InsertAsync(TEntity model);
 
-        Task UpdateAsync<TModel>(TKey id, TModel model);
+        Task UpdateAsync(TKey id, TEntity model);
 
-        Task<IEnumerable<TModel>> FindAsync<TModel, TValue>(Expression<Func<TModel, TValue>> expression, TValue value);
+        Task<IEnumerable<TEntity>> FindAsync<TValue>(Expression<Func<TEntity, TValue>> expression, TValue value);
     }
 }

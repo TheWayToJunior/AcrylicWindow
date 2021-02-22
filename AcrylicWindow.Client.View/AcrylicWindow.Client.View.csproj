@@ -189,6 +189,7 @@
     <Compile Include="ApplicatinProfile.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
+    <Compile Include="Extensions\AutoMapperExtentions.cs" />
     <Compile Include="Extensions\MongoExtensions.cs" />
     <Compile Include="Helpers\PageHalper.cs" />
     <Compile Include="Navigation\NavigationPageService.cs" />

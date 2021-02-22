@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Client.Core;
 using AcrylicWindow.Client.Core.IContract;
+using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
@@ -8,7 +9,6 @@ using AcrylicWindow.Extensions;
 using AcrylicWindow.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Configuration;
 using System.Net.Http;
 
 namespace AcrylicWindow
@@ -46,14 +46,16 @@ namespace AcrylicWindow
             services.AddScoped<IAuthorizationProvider, AuthorizationProvider>();
 
             /// Infrastructure
+            services.AddAutoMapper();
             services.AddScoped<HttpClient>();
             services.AddSingleton<NavigationPageService>();
             services.AddSingleton<ITokenStorage, InMemoryTokenStorage>()
                 .AddTransient<IReaderTokenStore>(p => p.GetService<ITokenStorage>());
 
+            services.AddScoped<IEmployeeService, EmployeeService>();
+
             /// Data
-            var connection = ConfigurationManager.ConnectionStrings["acrylicdb"];
-            services.AddMongoProvider(connection.ConnectionString, connection.Name);
+            services.AddMongoProvider();
         }
 
         public MainWindowViewModel MainWindow =>

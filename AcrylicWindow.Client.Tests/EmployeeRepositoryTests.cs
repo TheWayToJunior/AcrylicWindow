@@ -1,7 +1,5 @@
-﻿using AcrylicWindow.Client.Core.Model;
-using AcrylicWindow.Client.DAL.Repositories;
+﻿using AcrylicWindow.Client.DAL.Repositories;
 using AcrylicWindow.Client.Data.Entities;
-using AutoMapper;
 using MongoDB.Driver;
 using Moq;
 using System.Linq;
@@ -15,11 +13,6 @@ namespace AcrylicWindow.Client.Tests
         [Fact]
         public async Task GetAllOnPage()
         {
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new ApplicatinProfile());
-            });
-
             var mockMongoDatabase = new Mock<IMongoDatabase>();
 
             var asyncCursor = new Mock<IAsyncCursor<EmployeeEntity>>();
@@ -39,9 +32,9 @@ namespace AcrylicWindow.Client.Tests
             mockMongoDatabase.Setup(mdb => mdb.GetCollection<EmployeeEntity>("Employees", null))
                 .Returns(mockCollection.Object);
 
-            var repository = new EmployeeRepository(mockMongoDatabase.Object, mapper.CreateMapper());
+            var repository = new EmployeeRepository(mockMongoDatabase.Object);
 
-            var res = await repository.GetAllAsync<Employee>(2, 1);
+            var res = await repository.GetAllAsync(2, 1);
 
             Assert.True(res.Any());
             Assert.Equal("2", res.First().Name);
@@ -50,11 +43,6 @@ namespace AcrylicWindow.Client.Tests
         [Fact]
         public async Task FindByName()
         {
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new ApplicatinProfile());
-            });
-
             var mockMongoDatabase = new Mock<IMongoDatabase>();
 
             var asyncCursor = new Mock<IAsyncCursor<EmployeeEntity>>();
@@ -74,12 +62,12 @@ namespace AcrylicWindow.Client.Tests
             mockMongoDatabase.Setup(mdb => mdb.GetCollection<EmployeeEntity>("Employees", null))
                 .Returns(mockCollection.Object);
 
-            var repository = new EmployeeRepository(mockMongoDatabase.Object, mapper.CreateMapper());
+            var repository = new EmployeeRepository(mockMongoDatabase.Object);
 
-            var res = await repository.FindAsync<Employee, string>(e => e.Name, "2");
+            var res = await repository.FindAsync<string>(e => e.Name, "2");
 
             Assert.True(res.Any());
-            Assert.IsType<Employee>(res.First());
+            Assert.IsType<EmployeeEntity>(res.First());
             Assert.Equal("2", res.First().Name);
         }
     }
