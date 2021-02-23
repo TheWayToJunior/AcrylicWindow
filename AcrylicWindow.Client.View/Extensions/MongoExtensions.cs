@@ -11,8 +11,8 @@ namespace AcrylicWindow.Extensions
         {
             var connection = ConfigurationManager.ConnectionStrings["acrylicdb"];
 
-            return services.AddScoped<IDataProvider, DataProvider>(p =>
-                new DataProvider(connection.ConnectionString, connection.Name));
+            return services.AddScoped<IUnitOfWork, UnitOfWork>(p =>
+                new UnitOfWork(connection.ConnectionString, connection.Name));
         }
     }
 }

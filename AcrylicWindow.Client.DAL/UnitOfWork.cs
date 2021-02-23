@@ -1,15 +1,14 @@
 ﻿using AcrylicWindow.Client.DAL.Repositories;
 using AcrylicWindow.Client.Data;
-using AutoMapper;
 using MongoDB.Driver;
 
 namespace AcrylicWindow.Client.DAL
 {
-    public class DataProvider : IDataProvider
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly IMongoDatabase _database;
 
-        public DataProvider(string connectionString, string databaseName)
+        public UnitOfWork(string connectionString, string databaseName)
         {
             var client = new MongoClient(connectionString);
             _database = client.GetDatabase(databaseName);

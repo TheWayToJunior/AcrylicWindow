@@ -16,7 +16,7 @@ namespace AcrylicWindow.Client.Core.Services
         private readonly IEmployeeRepository _repository;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IDataProvider dataProvider, IMapper mapper)
+        public EmployeeService(IUnitOfWork dataProvider, IMapper mapper)
         {
             _repository = Has.NotNull(dataProvider).Employees;
             _mapper = Has.NotNull(mapper);

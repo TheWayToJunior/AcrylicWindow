@@ -1,6 +1,6 @@
 ﻿namespace AcrylicWindow.Client.Data
 {
-    public interface IDataProvider
+    public interface IUnitOfWork
     {
         IEmployeeRepository Employees { get; }
     }

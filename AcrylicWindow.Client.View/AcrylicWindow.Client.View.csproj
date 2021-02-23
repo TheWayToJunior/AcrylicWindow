@@ -317,9 +317,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Core\Compression\Snappy\lib\win\snappy32.dll" />
-    <Content Include="Core\Compression\Snappy\lib\win\snappy64.dll" />
-    <Content Include="Core\Compression\Zstandard\lib\win\libzstd.dll" />
     <Resource Include="Images\DefaultImage.png" />
   </ItemGroup>
   <ItemGroup />
