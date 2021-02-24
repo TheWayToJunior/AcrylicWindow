@@ -12,7 +12,7 @@ namespace AcrylicWindow
 
         public static Page SessionPage => new SessionPage();
 
-        public static IDictionary<string, Page> Tabs => new Dictionary<string, Page>()
+        public  static IDictionary<string, Page> Tabs => new Dictionary<string, Page>()
         {
             [nameof(HomeTab)] = new HomeTab(),
             [nameof(EmployeesTab)] = new EmployeesTab(),

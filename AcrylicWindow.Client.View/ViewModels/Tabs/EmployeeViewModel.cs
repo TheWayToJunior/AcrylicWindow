@@ -13,22 +13,21 @@ namespace AcrylicWindow.ViewModel
 {
     public class EmployeeViewModel : ViewModelBase
     {
+        private const int PageSize = 7;
         private readonly IEmployeeService _service;
 
-        public BindingList<RowCheckBoxViewModel<Employee>> _listItems;
+        public BindingList<RowCheckBoxViewModel<Employee>> ListItems { get; set; }
 
-        public BindingList<RowCheckBoxViewModel<Employee>> ListItems
+        public PaginationViewModel Pagination { get; set; }
+
+        public bool IsAnyCheck => !ListItems.Any(i => i.Check);
+
+        private bool _isCheckAll;
+
+        public bool IsCheckAll
         {
-            get => _listItems;
-            set => Set(ref _listItems, value);
-        }
-
-        private bool _checkAll;
-
-        public bool CheckAll
-        {
-            get => _checkAll;
-            set => Set(ref _checkAll, value);
+            get => _isCheckAll;
+            set => Set(ref _isCheckAll, value);
         }
 
         public ICommand CheckAllCommand { get; }
@@ -46,60 +45,70 @@ namespace AcrylicWindow.ViewModel
             ListItems = new BindingList<RowCheckBoxViewModel<Employee>>();
             ListItems.ListChanged += OnListChanged;
 
+            Pagination = new PaginationViewModel(ReceiveData, PageSize);
+
+            RefreshCommand = new DelegateCommand(_ => ReceiveData(Pagination.Index, PageSize));
+            DeleteCommand = new DelegateCommand(Delete, _ => IsAnyCheck);
+            AddCommand = new DelegateCommand(RunDialog, _ => IsAnyCheck);
+
             CheckAllCommand = new DelegateCommand(Check);
-            AddCommand = new DelegateCommand(RunDialog);
 
-            RefreshCommand = new DelegateCommand(_ => ReceiveData());
-            DeleteCommand = new DelegateCommand(Delete, _ => !_listItems.Any(i => i.Check));
-
-            ReceiveData();
+            ReceiveData(Pagination.Index);
         }
+
+        private AddDialog _addDialog = new AddDialog();
 
         private async void RunDialog(object obj)
         {
-            var view = new AddDialog
-            {
-                DataContext = new AddDialogViewModel<Employee>()
-            };
-
-            var result = await DialogHost.Show(view, "RootDialog");
+            _addDialog.DataContext = new AddDialogViewModel<Employee>();
+            var result = await DialogHost.Show(_addDialog, "RootDialog");
 
             if (result is Employee employee)
             {
                 await _service.InsertAsync(employee);
-                ReceiveData();
+                ReceiveData(Pagination.Index);
             }
         }
 
         private void OnListChanged(object s, ListChangedEventArgs e)
         {
-            if (e.ListChangedType == ListChangedType.ItemChanged)
-                CheckAll = !_listItems.Any(i => !i.Check);
+            var hasFlag = (ListChangedType.ItemAdded | ListChangedType.ItemChanged);
+
+            if (hasFlag.HasFlag(e.ListChangedType) && e.ListChangedType != ListChangedType.Reset)
+            {
+                IsCheckAll = !ListItems.Any(i => !i.Check);
+            }
         }
 
         private async void Delete(object id)
         {
             await _service.DeleteAsync(new Guid(id.ToString()));
-            ReceiveData();
+
+            if (ListItems.Count == 1 && Pagination.Index > 1)
+                Pagination.Index -= 1;
+
+            ReceiveData(Pagination.Index);
         }
 
         private void Check(object obj)
         {
             /// We save the value so that we don't lose it when the ListChanged event occurs
-            bool chack = CheckAll;
+            bool chack = IsCheckAll;
 
             ListItems.Select(row => row.Click(chack))
                  .ToList();
         }
 
-        private async void ReceiveData()
+        private async void ReceiveData(int page, int pageSize = PageSize)
         {
             ListItems.Clear();
 
-            foreach (var item in await _service.GetAllAsync(1, 7))
+            foreach (var item in await _service.GetAllAsync(page, pageSize))
             {
                 ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
             }
+
+            Pagination.SetCount(await _service.CountAsync());
         }
 
         public override void Dispose(bool collect)

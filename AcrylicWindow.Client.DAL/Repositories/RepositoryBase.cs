@@ -24,6 +24,9 @@ namespace AcrylicWindow.Client.DAL.Repositories
             _tableName = Has.NotNullOrEmpty(tableName);
         }
 
+        public virtual async Task<long> CountAsync() => 
+            await Database.GetCollection<TEntity>(_tableName).CountDocumentsAsync(Builders<TEntity>.Filter.Empty);
+
         /// <summary>
         /// Gets a record in the data database divided by pages
         /// </summary>

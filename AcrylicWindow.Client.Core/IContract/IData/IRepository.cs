@@ -8,6 +8,8 @@ namespace AcrylicWindow.Client.Data
     public interface IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
     {
+        Task<long> CountAsync();
+
         Task DeleteAsync(TKey id);
 
         Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize);

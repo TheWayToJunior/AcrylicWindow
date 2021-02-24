@@ -16,7 +16,7 @@ namespace AcrylicWindow.Client.DAL
 
         private IEmployeeRepository _employees;
 
-        public IEmployeeRepository Employees => _employees ?? new EmployeeRepository(_database);
+        public IEmployeeRepository Employees => _employees ?? (_employees =  new EmployeeRepository(_database));
 
     }
 }

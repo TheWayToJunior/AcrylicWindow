@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="AcrylicWindow.Views.Controls.PaginationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AcrylicWindow.Views.Controls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding LeftCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="0 0 10 0">
+                <materialDesign:PackIcon Kind="ChevronLeft" />
+            </Button>
+
+            <TextBlock VerticalAlignment="Center"
+                       Style="{StaticResource SystemText}"
+                       Foreground="#494949">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Показывается {0} из {1}">
+                        <Binding Path="Index" />
+                        <Binding Path="PageCount" UpdateSourceTrigger="PropertyChanged"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <Button Command="{Binding RightCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="10 0 0 0">
+                <materialDesign:PackIcon Kind="ChevronRight" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

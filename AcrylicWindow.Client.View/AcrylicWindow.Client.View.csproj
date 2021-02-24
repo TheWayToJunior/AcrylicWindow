@@ -188,6 +188,10 @@
     </ApplicationDefinition>
     <Compile Include="ApplicatinProfile.cs" />
     <Compile Include="Command\DelegateCommand.cs" />
+    <Compile Include="ViewModels\PaginationViewModel.cs" />
+    <Compile Include="Views\Controls\PaginationControl.xaml.cs">
+      <DependentUpon>PaginationControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ImageConverter.cs" />
     <Compile Include="Extensions\AutoMapperExtentions.cs" />
     <Compile Include="Extensions\MongoExtensions.cs" />
@@ -224,6 +228,10 @@
     <Compile Include="Views\Tabs\OptionsTab.xaml.cs">
       <DependentUpon>OptionsTab.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Controls\PaginationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImageDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -319,7 +327,6 @@
   <ItemGroup>
     <Resource Include="Images\DefaultImage.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

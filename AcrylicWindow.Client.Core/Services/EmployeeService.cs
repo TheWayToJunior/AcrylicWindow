@@ -22,6 +22,8 @@ namespace AcrylicWindow.Client.Core.Services
             _mapper = Has.NotNull(mapper);
         }
 
+        public async Task<long> CountAsync() => await _repository.CountAsync();
+
         public async Task<IEnumerable<Employee>> GetAllAsync(int page, int pageSize) =>
             (await _repository
                 .GetAllAsync(page, pageSize))
