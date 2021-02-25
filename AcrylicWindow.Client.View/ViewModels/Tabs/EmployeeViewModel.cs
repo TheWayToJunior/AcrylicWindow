@@ -84,8 +84,8 @@ namespace AcrylicWindow.ViewModel
         {
             await _service.DeleteAsync(new Guid(id.ToString()));
 
-            if (ListItems.Count == 1 && Pagination.Index > 1)
-                Pagination.Index -= 1;
+            if (ListItems.Count == 1)
+                Pagination.Previous();
 
             ReceiveData(Pagination.Index);
         }

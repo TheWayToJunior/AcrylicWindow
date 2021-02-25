@@ -29,12 +29,14 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <TextBox Style="{StaticResource OverTextBox}"
-                                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding Text, ValidatesOnExceptions=True, 
+                                                UpdateSourceTrigger=PropertyChanged}"
                                  Margin="15"
                                  Height="45"
                                  Width="250"
                                  VerticalAlignment="Top"
-                                 wpf:HintAssist.Hint="{Binding Name}"/>
+                                 wpf:HintAssist.Hint="{Binding Name}">
+                        </TextBox>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

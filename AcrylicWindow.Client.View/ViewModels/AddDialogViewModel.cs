@@ -8,12 +8,12 @@ using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModels
 {
-    public class AddDialogViewModel<T> : ViewModelBase
-        where T : class, new()
+    public class AddDialogViewModel<TModel> : ViewModelBase
+        where TModel : class, new()
     {
-        public BindingList<TextBoxViewModel> _someCollection;
+        public BindingList<TextBoxViewModel<TModel>> _someCollection;
 
-        public BindingList<TextBoxViewModel> SomeCollection
+        public BindingList<TextBoxViewModel<TModel>> SomeCollection
         {
             get => _someCollection;
             set => Set(ref _someCollection, value);
@@ -23,23 +23,23 @@ namespace AcrylicWindow.ViewModels
 
         public AddDialogViewModel()
         {
-            _someCollection = new BindingList<TextBoxViewModel>();
+            _someCollection = new BindingList<TextBoxViewModel<TModel>>();
 
             /// ToDo: Refactoring
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(TModel).GetProperties();
 
             foreach (var item in properties)
             {
                 var attributes = item.GetCustomAttributes(false);
                 var isIgnore = attributes.Any(a => a is DisplayIgnoreAttribute);
 
-                if (isIgnore) 
+                if (isIgnore)
                     continue;
 
                 string name = (attributes
                     .FirstOrDefault(a => a is DisplayedAttribute) as DisplayedAttribute)?.Name ?? item.Name;
 
-                SomeCollection.Add(new TextBoxViewModel
+                SomeCollection.Add(new TextBoxViewModel<TModel>(item.Name)
                 {
                     Name = name
                 });
@@ -48,7 +48,7 @@ namespace AcrylicWindow.ViewModels
             TestCommand = new DelegateCommand(p =>
             {
                 /// ToDo: Refactoring
-                var result = new T();
+                var result = new TModel();
                 var type = result.GetType();
 
                 string propertyName = string.Empty;
@@ -60,7 +60,7 @@ namespace AcrylicWindow.ViewModels
 
                     if (property == null)
                     {
-                        propertyName = type.GetProperties().FirstOrDefault(prop => 
+                        propertyName = type.GetProperties().FirstOrDefault(prop =>
                         {
                             var attribure = prop.GetCustomAttribute(typeof(DisplayedAttribute), true);
                             return (attribure as DisplayedAttribute)?.Name?.Equals(item.Name) ?? false;
@@ -74,7 +74,7 @@ namespace AcrylicWindow.ViewModels
                 }
 
                 DialogHost.CloseDialogCommand.Execute(result, null);
-            });
+            }, _ => !_someCollection.Any(i => !i.IsValid));
         }
     }
 }

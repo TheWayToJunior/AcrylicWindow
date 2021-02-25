@@ -12,7 +12,7 @@ namespace AcrylicWindow.ViewModels
         public int Index
         {
             get => _index;
-            set => Set(ref _index, value);
+            private set => Set(ref _index, value);
         }
 
         private int _count;
@@ -20,7 +20,7 @@ namespace AcrylicWindow.ViewModels
         public int PageCount
         {
             get => _count;
-            set => Set(ref _count, value);
+            private set => Set(ref _count, value);
         }
 
         public ICommand LeftCommand { get; }
@@ -31,8 +31,28 @@ namespace AcrylicWindow.ViewModels
         {
             _pageSize = pageSize;
 
-            LeftCommand  = new DelegateCommand(_ => action?.Invoke(--Index, pageSize), _ => 1 < Index);
-            RightCommand = new DelegateCommand(_ => action?.Invoke(++Index, pageSize), _ => Index < PageCount);
+            LeftCommand  = new DelegateCommand(_ => action?.Invoke(Previous(), pageSize), _ => PreviousRules);
+            RightCommand = new DelegateCommand(_ => action?.Invoke(Next(),     pageSize), _ => NextRules);
+        }
+
+        private bool PreviousRules => Index > 1;
+
+        private bool NextRules => Index < PageCount;
+
+        public int Previous()
+        {
+            if (PreviousRules)
+                Index -= 1;
+
+            return Index;
+        }
+
+        public int Next()
+        {
+            if(NextRules) 
+                Index += 1;
+
+            return Index;
         }
 
         public void SetCount(long value) =>
