@@ -11,9 +11,9 @@ namespace AcrylicWindow.ViewModels
     public class AddDialogViewModel<TModel> : ViewModelBase
         where TModel : class, new()
     {
-        public BindingList<TextBoxViewModel<TModel>> _someCollection;
+        public BindingList<PropertyViewModel<TModel>> _someCollection;
 
-        public BindingList<TextBoxViewModel<TModel>> SomeCollection
+        public BindingList<PropertyViewModel<TModel>> SomeCollection
         {
             get => _someCollection;
             set => Set(ref _someCollection, value);
@@ -23,7 +23,7 @@ namespace AcrylicWindow.ViewModels
 
         public AddDialogViewModel()
         {
-            _someCollection = new BindingList<TextBoxViewModel<TModel>>();
+            _someCollection = new BindingList<PropertyViewModel<TModel>>();
 
             /// ToDo: Refactoring
             var properties = typeof(TModel).GetProperties();
@@ -39,7 +39,7 @@ namespace AcrylicWindow.ViewModels
                 string name = (attributes
                     .FirstOrDefault(a => a is DisplayedAttribute) as DisplayedAttribute)?.Name ?? item.Name;
 
-                SomeCollection.Add(new TextBoxViewModel<TModel>(item.Name)
+                SomeCollection.Add(new PropertyViewModel<TModel>(item.Name)
                 {
                     Name = name
                 });

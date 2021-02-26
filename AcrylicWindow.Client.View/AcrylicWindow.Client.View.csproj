@@ -210,7 +210,7 @@
     <Compile Include="ViewModels\Tabs\OptionViewModel.cs" />
     <Compile Include="ViewModels\RowCheckBoxViewModel.cs" />
     <Compile Include="ViewModels\Pages\SessionPageViewModel.cs" />
-    <Compile Include="ViewModels\TextBoxViewModel.cs" />
+    <Compile Include="ViewModels\PropertyViewModel.cs" />
     <Compile Include="Views\Dialogs\AddDialog.xaml.cs">
       <DependentUpon>AddDialog.xaml</DependentUpon>
     </Compile>

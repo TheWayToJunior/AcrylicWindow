@@ -20,7 +20,7 @@ namespace AcrylicWindow.ViewModel
 
         public PaginationViewModel Pagination { get; set; }
 
-        public bool IsAnyCheck => !ListItems.Any(i => i.Check);
+        public bool IsAnyCheck => ListItems.Any(i => i.Check);
 
         private bool _isCheckAll;
 
@@ -48,8 +48,8 @@ namespace AcrylicWindow.ViewModel
             Pagination = new PaginationViewModel(ReceiveData, PageSize);
 
             RefreshCommand = new DelegateCommand(_ => ReceiveData(Pagination.Index, PageSize));
-            DeleteCommand = new DelegateCommand(Delete, _ => IsAnyCheck);
-            AddCommand = new DelegateCommand(RunDialog, _ => IsAnyCheck);
+            DeleteCommand = new DelegateCommand(Delete, _ => !IsAnyCheck);
+            AddCommand = new DelegateCommand(RunDialog, _ => !IsAnyCheck);
 
             CheckAllCommand = new DelegateCommand(Check);
 
@@ -76,7 +76,7 @@ namespace AcrylicWindow.ViewModel
 
             if (hasFlag.HasFlag(e.ListChangedType) && e.ListChangedType != ListChangedType.Reset)
             {
-                IsCheckAll = !ListItems.Any(i => !i.Check);
+                IsCheckAll = ListItems.All(i => i.Check);
             }
         }
 

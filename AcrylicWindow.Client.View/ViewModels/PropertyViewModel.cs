@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AcrylicWindow.ViewModels
 {
-    public class TextBoxViewModel<TModel> : ViewModelBase
+    public class PropertyViewModel<TModel> : ViewModelBase
         where TModel : new()
     {
-        public TextBoxViewModel(string nameProperty)
+        public PropertyViewModel(string nameProperty)
         {
             NameProperty = nameProperty;
         }
@@ -31,8 +31,8 @@ namespace AcrylicWindow.ViewModels
             get { return _text; }
             set 
             {
-                Set(ref _text, value);
                 ValidateProperty(value, NameProperty);
+                Set(ref _text, value);
             }
         }
 
@@ -52,7 +52,6 @@ namespace AcrylicWindow.ViewModels
                 IsValid = false;
                 throw;
             }
-
         }
     }
 }
