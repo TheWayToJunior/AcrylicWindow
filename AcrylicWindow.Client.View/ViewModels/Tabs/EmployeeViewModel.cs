@@ -36,7 +36,11 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand AddCommand { get; }
 
+        public ICommand UpdateCommand { get; }
+
         public ICommand DeleteCommand { get; }
+
+        public ICommand DeleteManyCommand { get; }
 
         public EmployeeViewModel(IEmployeeService service)
         {
@@ -48,8 +52,11 @@ namespace AcrylicWindow.ViewModel
             Pagination = new PaginationViewModel(ReceiveData, PageSize);
 
             RefreshCommand = new DelegateCommand(_ => ReceiveData(Pagination.Index, PageSize));
+            AddCommand = new DelegateCommand(RunAddDialog);
+            UpdateCommand = new DelegateCommand(RunUpdateDialog);
+
             DeleteCommand = new DelegateCommand(Delete, _ => !IsAnyCheck);
-            AddCommand = new DelegateCommand(RunDialog, _ => !IsAnyCheck);
+            DeleteManyCommand = new DelegateCommand(DeleteMany, _ => IsAnyCheck);
 
             CheckAllCommand = new DelegateCommand(Check);
 
@@ -58,7 +65,7 @@ namespace AcrylicWindow.ViewModel
 
         private AddDialog _addDialog = new AddDialog();
 
-        private async void RunDialog(object obj)
+        private async void RunAddDialog(object obj)
         {
             _addDialog.DataContext = new AddDialogViewModel<Employee>();
             var result = await DialogHost.Show(_addDialog, "RootDialog");
@@ -66,6 +73,22 @@ namespace AcrylicWindow.ViewModel
             if (result is Employee employee)
             {
                 await _service.InsertAsync(employee);
+                ReceiveData(Pagination.Index);
+            }
+        }
+
+        private UpdateDialog _updateDialog = new UpdateDialog();
+
+        private async void RunUpdateDialog(object obj)
+        {
+            var employee = await _service.GetByIdAsync(Guid.Parse(obj.ToString()));
+
+            _updateDialog.DataContext = new UpdateDialogViewModel<Employee>(employee);
+            var result = await DialogHost.Show(_updateDialog, "RootDialog");
+
+            if (result is Employee model)
+            {
+                await _service.UpdateAsync(Guid.Parse(obj.ToString()), model);
                 ReceiveData(Pagination.Index);
             }
         }
@@ -89,6 +112,23 @@ namespace AcrylicWindow.ViewModel
 
             ReceiveData(Pagination.Index);
         }
+
+
+        private async void DeleteMany(object obj)
+        {
+            var ckeckItems = ListItems.Where(i => i.Check);
+
+            foreach (var item in ckeckItems)
+            {
+                await _service.DeleteAsync(item.Model.Id);
+            }
+
+            if (ListItems.Count == ckeckItems.Count())
+                Pagination.Previous();
+
+            ReceiveData(Pagination.Index);
+        }
+
 
         private void Check(object obj)
         {

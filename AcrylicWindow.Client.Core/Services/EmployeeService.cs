@@ -44,7 +44,7 @@ namespace AcrylicWindow.Client.Core.Services
         public async Task UpdateAsync(Guid id, Employee model)
         {
             var entity = _mapper.Map<EmployeeEntity>(Has.NotNull(model));
-            await _repository.InsertAsync(entity);
+            await _repository.UpdateAsync(id, entity);
         }
 
         public async Task DeleteAsync(Guid id) => await _repository.DeleteAsync(id);

@@ -16,12 +16,12 @@ namespace AcrylicWindow.ViewModels
 
         public string NameProperty { get; }
 
-        private string _name = string.Empty;
+        private string _title = string.Empty;
 
-        public string Name
+        public string Title
         {
-            get { return _name; }
-            set { Set(ref _name, value); }
+            get { return _title; }
+            set { Set(ref _title, value); }
         }
 
         private string _text = string.Empty;

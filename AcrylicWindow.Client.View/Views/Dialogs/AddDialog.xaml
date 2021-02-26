@@ -35,7 +35,7 @@
                                  Height="45"
                                  Width="250"
                                  VerticalAlignment="Top"
-                                 wpf:HintAssist.Hint="{Binding Name}">
+                                 wpf:HintAssist.Hint="{Binding Title}">
                         </TextBox>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -49,7 +49,7 @@
                     Width="auto"
                     Foreground="#7D9AFF"
                     Style="{DynamicResource MaterialDesignFlatButton}"
-                    Command="{Binding TestCommand}">
+                    Command="{Binding AddCommand}">
                 ACCEPT
             </Button>
 

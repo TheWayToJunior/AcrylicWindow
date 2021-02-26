@@ -79,6 +79,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
             /// Let's do it manually
             var foundEntity = await GetByIdAsync(id);
 
+            entity.Id = id;
             /// If the record was not found in the database, it will be created again
             entity.CreatedBy = foundEntity?.CreatedBy ?? DateTime.Now;
             entity.UpdatedBy = DateTime.Now;

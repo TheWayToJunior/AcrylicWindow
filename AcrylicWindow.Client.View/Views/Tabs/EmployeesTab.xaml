@@ -36,6 +36,12 @@
                 <StackPanel Orientation="Horizontal" Margin="0 5 0 0"
                             HorizontalAlignment="Right">
 
+                    <Button Command="{Binding DeleteManyCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="0 0 5 0">
+                        <materialDesign:PackIcon Kind="AccountMultipleRemove" />
+                    </Button>
+                    
                     <Button Command="{Binding AddCommand}"
                             Style="{DynamicResource MaterialDesignToolButton}"
                             Margin="0 0 5 0">
@@ -99,7 +105,8 @@
                             <GridViewColumn Width="175">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Chip Command="{Binding DataContext.ClickCommand, RelativeSource={RelativeSource Self}}"
+                                        <materialDesign:Chip Command="{Binding DataContext.UpdateCommand, 
+                                            ElementName=lvEmployees}"
                                                              CommandParameter="{Binding Model.Id}"
                                                              IconBackground="Transparent"
                                                              Background="Transparent"
@@ -148,7 +155,10 @@
                                                 <materialDesign:PackIcon Kind="DotsHorizontal" />
                                             </materialDesign:PopupBox.ToggleContent>
                                             <StackPanel Width="150">
-                                                <Button FontWeight="Regular">
+                                                <Button FontWeight="Regular"
+                                                        Command="{Binding DataContext.UpdateCommand, 
+                                                        ElementName=lvEmployees}"
+                                                        CommandParameter="{Binding Model.Id}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="Edit"/>
                                                     </StackPanel>
@@ -171,29 +181,6 @@
 
                 <StackPanel Grid.Row="2" Margin="25 0"
                             Orientation="Horizontal">
-                    <!--<Button Command="{Binding LeftCommand}"
-                            Style="{DynamicResource MaterialDesignToolButton}"
-                            Margin="0 0 10 0">
-                        <materialDesign:PackIcon Kind="ChevronLeft" />
-                    </Button>
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Style="{StaticResource SystemText}"
-                        Foreground="#494949">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="Показывается {0} из {1}">
-                                <Binding Path="Page" />
-                                <Binding Path="PageCount" UpdateSourceTrigger="PropertyChanged"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <Button Command="{Binding RightCommand}"
-                            Style="{DynamicResource MaterialDesignToolButton}"
-                            Margin="10 0 0 0">
-                        <materialDesign:PackIcon Kind="ChevronRight" />
-                    </Button>-->
-
                     <local:PaginationControl DataContext="{Binding Pagination}"/>
                 </StackPanel>
             </Grid>
