@@ -2,11 +2,10 @@
 using AcrylicWindow.Client.Data;
 using AcrylicWindow.Client.Data.Entities;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using MongoDB.Driver.Linq;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.DAL.Repositories
@@ -72,7 +71,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
             entity.CreatedBy = foundEntity?.CreatedBy ?? DateTime.Now;
             entity.UpdatedBy = DateTime.Now;
 
-            await _collection.ReplaceOneAsync(filter, entity, 
+            await _collection.ReplaceOneAsync(filter, entity,
                 new ReplaceOptions { IsUpsert = true });
         }
 

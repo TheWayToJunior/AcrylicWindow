@@ -27,7 +27,6 @@ namespace AcrylicWindow.Client.Core.Services
                 await _repository.GetByIdAsync(id)
                 ?? throw new InvalidOperationException($"Object with this id: {id}, was not found"));
 
-
         /// <summary>
         /// Will give records, dividing them into pages and filtering them if necessary
         /// </summary>

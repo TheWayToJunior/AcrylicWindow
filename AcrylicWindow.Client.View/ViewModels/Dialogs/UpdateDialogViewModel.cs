@@ -1,6 +1,4 @@
-﻿using AcrylicWindow.Client.Core;
-using AcrylicWindow.Client.Core.Model;
-using AcrylicWindow.ViewModel;
+﻿using AcrylicWindow.ViewModel;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.ComponentModel;
@@ -11,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace AcrylicWindow.ViewModels
 {
     public class UpdateDialogViewModel<TModel> : ViewModelBase
-        where TModel: class, new()
+        where TModel : class, new()
     {
         private BindingList<PropertyViewModel<TModel>> _someCollection;
 
@@ -42,8 +40,8 @@ namespace AcrylicWindow.ViewModels
 
             var created = Uri.TryCreate(img, UriKind.Absolute, out var uri);
 
-            Image = created ? new BitmapImage(uri) 
-                : App.Current.Resources["ImageNotFound"] as BitmapImage;
+            if (created)
+                Image = new BitmapImage(uri);
 
             UpdateCommand = new DelegateCommand(
                 _ => DialogHost.CloseDialogCommand.Execute(ModelCreator.Create(_someCollection), null),

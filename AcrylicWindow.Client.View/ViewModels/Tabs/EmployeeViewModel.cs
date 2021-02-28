@@ -71,8 +71,10 @@ namespace AcrylicWindow.ViewModel
 
             RefreshCommand = new DelegateCommand(_ => 
             {
+                if(!string.IsNullOrEmpty(Filter))
+                    Pagination.Reset();
+
                 Filter = string.Empty;
-                Pagination.Reset();
                 ReceiveData(Pagination.Index, PageSize);
             });
 

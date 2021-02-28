@@ -14,7 +14,8 @@
         </Grid.ColumnDefinitions>
 
         <Image HorizontalAlignment="Center" 
-                Stretch="UniformToFill" Source="{Binding Image}"/>
+                Stretch="UniformToFill" Source="{Binding Image, FallbackValue={StaticResource ImageNotFound},
+                    TargetNullValue={StaticResource ImageNotFound}}"/>
 
         <StackPanel Grid.Column="1"
                     Background="#F8F8F8">
