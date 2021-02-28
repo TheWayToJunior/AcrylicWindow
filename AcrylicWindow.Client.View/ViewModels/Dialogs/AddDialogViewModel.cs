@@ -25,7 +25,7 @@ namespace AcrylicWindow.ViewModels
             _someCollection = new BindingList<PropertyViewModel<TModel>>(properties.ToList());
 
             AddCommand = new DelegateCommand(
-                _ => DialogHost.CloseDialogCommand.Execute(ModelCreater.Create(_someCollection), null),
+                _ => DialogHost.CloseDialogCommand.Execute(ModelCreator.Create(_someCollection), null),
                 _ => _someCollection.All(i => i.IsValid));
         }
     }

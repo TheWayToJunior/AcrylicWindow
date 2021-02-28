@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using MongoDB.Driver.Linq;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.DAL.Repositories
@@ -13,19 +14,13 @@ namespace AcrylicWindow.Client.DAL.Repositories
     public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         where TEntity : EntityBase<TKey>, new()
     {
-        private readonly string _tableName;
-
-        protected readonly IMongoDatabase Database;
+        protected readonly IMongoCollection<TEntity> _collection;
 
         public RepositoryBase(IMongoDatabase database, string tableName)
         {
-            Database = Has.NotNull(database);
-
-            _tableName = Has.NotNullOrEmpty(tableName);
+            _collection = Has.NotNull(database).GetCollection<TEntity>(tableName);
+            CreateIndex();
         }
-
-        public virtual async Task<long> CountAsync() => 
-            await Database.GetCollection<TEntity>(_tableName).CountDocumentsAsync(Builders<TEntity>.Filter.Empty);
 
         /// <summary>
         /// Gets a record in the data database divided by pages
@@ -34,36 +29,32 @@ namespace AcrylicWindow.Client.DAL.Repositories
         /// <param name="page">Page number</param>
         /// <param name="pageSize">Number of entries per page</param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize)
-        {
-            var collection = Database.GetCollection<TEntity>(_tableName);
+        public virtual IQueryable<TEntity> GetAll() => _collection.AsQueryable();
 
-            using (var entiteis = await collection.FindAsync(Builders<TEntity>.Filter.Empty))
-            {
-                /// Divides the selected records by page
-                return entiteis.ToList()
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize);
-            }
+        public virtual async Task<IEnumerable<TEntity>> SearchAsync(string search)
+        {
+            var filter = Builders<TEntity>.Filter.Text(search);
+
+            return (await _collection.FindAsync(filter))
+                .ToList();
         }
 
-        public async Task<TEntity> GetByIdAsync(TKey id)
+        /// <summary>
+        /// Returns a single element by the specified Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
-            var collection = Database.GetCollection<TEntity>(_tableName);
-            var filter = Builders<TEntity>.Filter.Eq("Id", id);
-
-            using (var entiteis = await collection.FindAsync(filter))
-            {
-                return await entiteis.FirstOrDefaultAsync();
-            }
+            return await _collection.AsQueryable()
+                .SingleAsync(entity => entity.Id.Equals(id));
         }
+        
 
         public virtual async Task InsertAsync(TEntity entity)
         {
-            var collection = Database.GetCollection<TEntity>(_tableName);
             entity.CreatedBy = entity.UpdatedBy = DateTime.Now;
-
-            await collection.InsertOneAsync(entity);
+            await _collection.InsertOneAsync(entity);
         }
 
         /// <summary>
@@ -72,7 +63,6 @@ namespace AcrylicWindow.Client.DAL.Repositories
         /// </summary>
         public virtual async Task UpdateAsync(TKey id, TEntity entity)
         {
-            var collection = Database.GetCollection<TEntity>(_tableName);
             var filter = Builders<TEntity>.Filter.Eq("Id", id);
 
             /// We need to update all the files except CreatedBy, which is not possible at the database level.
@@ -84,37 +74,39 @@ namespace AcrylicWindow.Client.DAL.Repositories
             entity.CreatedBy = foundEntity?.CreatedBy ?? DateTime.Now;
             entity.UpdatedBy = DateTime.Now;
 
-            var result = await collection.ReplaceOneAsync(filter, entity,
+            await _collection.ReplaceOneAsync(filter, entity, 
                 new ReplaceOptions { IsUpsert = true });
         }
 
         public virtual async Task DeleteAsync(TKey id)
         {
-            var collection = Database.GetCollection<TEntity>(_tableName);
             var filter = Builders<TEntity>.Filter.Eq("Id", id);
+            await _collection.DeleteOneAsync(filter);
+        }
 
-            await collection.DeleteOneAsync(filter);
+
+        public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
+        {
+            return _collection.AsQueryable()
+                .Where(expression);
         }
 
         /// <summary>
-        /// Searches for records by the specified property
+        /// MongoDB provides text indexes to support text search queries on string content.
+        /// Text indexes can include any field whose value is a string or an array of string elements.
         /// </summary>
-        /// <param name="expression">An expression that specifies the property that will be searched for</param>
-        /// <param name="value">The value to search for</param>
-        public virtual async Task<IEnumerable<TEntity>> FindAsync<TValue>(Expression<Func<TEntity, TValue>> expression, TValue value)
+        public virtual void CreateIndex()
         {
-            var memberExpression = expression.Body as MemberExpression;
+            var filter = Builders<TEntity>.IndexKeys.Text("$**");
+            var indexModel = new CreateIndexModel<TEntity>(filter);
 
-            if (memberExpression == null)
-                throw new InvalidOperationException();
+            _collection.Indexes.CreateOne(indexModel);
+        }
 
-            var collection = Database.GetCollection<TEntity>(_tableName);
-            var filter = Builders<TEntity>.Filter.Eq(memberExpression.Member.Name, value);
-
-            using (var entiteis = await collection.FindAsync(filter))
-            {
-                return entiteis.ToList();
-            }
+        public virtual async Task<long> CountAsync()
+        {
+            var filter = Builders<TEntity>.Filter.Empty;
+            return await _collection.CountDocumentsAsync(filter);
         }
     }
 }

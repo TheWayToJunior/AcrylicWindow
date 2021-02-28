@@ -39,6 +39,8 @@ namespace AcrylicWindow.ViewModels
 
         private bool NextRules => Index < PageCount;
 
+        public void Reset() => Index = 1;
+
         public int Previous()
         {
             if (PreviousRules)
@@ -55,7 +57,10 @@ namespace AcrylicWindow.ViewModels
             return Index;
         }
 
-        public void SetCount(long value) =>
-            PageCount = Convert.ToInt32(Math.Ceiling((double)value / _pageSize));
+        public void SetCount(long value) 
+        {
+            var count = Convert.ToInt32(Math.Ceiling((double)value / _pageSize));
+            PageCount =  count < 1 ? 1 : count;
+        }
     }
 }

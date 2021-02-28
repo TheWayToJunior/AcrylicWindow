@@ -66,11 +66,13 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button Style="{DynamicResource MaterialDesignToolButton}">
+                            <Button Style="{DynamicResource MaterialDesignToolButton}"
+                                    Command="{Binding SearchCommand}">
                                 <materialDesign:PackIcon Kind="Magnify"
                                                          Opacity=".56" />
                             </Button>
                             <TextBox Grid.Column="1"
+                                     Text="{Binding Filter}"
                                      Margin="8 0 0 0"
                                      materialDesign:HintAssist.Hint="Search"
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
@@ -126,7 +128,7 @@
                                 </GridViewColumnHeader>
                             </GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding Model.Position}"
-                                            Width="Auto">
+                                            Width="130">
                                 <GridViewColumnHeader IsHitTestVisible="False">
                                     POSITION
                                 </GridViewColumnHeader>

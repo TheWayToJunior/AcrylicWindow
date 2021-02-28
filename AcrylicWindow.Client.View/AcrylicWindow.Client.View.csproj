@@ -191,10 +191,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\DelegateCommand.cs" />
-    <Compile Include="Helpers\ModelCreater.cs" />
+    <Compile Include="Helpers\ModelCreator.cs" />
     <Compile Include="Helpers\PropertyCreator.cs" />
     <Compile Include="ViewModels\PaginationViewModel.cs" />
-    <Compile Include="ViewModels\UpdateDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\UpdateDialogViewModel.cs" />
     <Compile Include="Views\Controls\PaginationControl.xaml.cs">
       <DependentUpon>PaginationControl.xaml</DependentUpon>
     </Compile>
@@ -204,7 +204,7 @@
     <Compile Include="Helpers\PageHalper.cs" />
     <Compile Include="Navigation\NavigationPageService.cs" />
     <Compile Include="ViewModelLocator.cs" />
-    <Compile Include="ViewModels\AddDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AddDialogViewModel.cs" />
     <Compile Include="ViewModels\Tabs\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Tabs\HomeViewModel.cs" />
     <Compile Include="ViewModels\Pages\LoginPageViewModel.cs" />

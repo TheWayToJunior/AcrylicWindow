@@ -30,6 +30,14 @@ namespace AcrylicWindow.ViewModel
             set => Set(ref _isCheckAll, value);
         }
 
+        private string _filter;
+
+        public string Filter
+        {
+            get => _filter;
+            set => Set(ref _filter, value);
+        }
+
         public ICommand CheckAllCommand { get; }
 
         public ICommand RefreshCommand { get; }
@@ -42,6 +50,8 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand DeleteManyCommand { get; }
 
+        public ICommand SearchCommand { get; }
+
         public EmployeeViewModel(IEmployeeService service)
         {
             _service = Has.NotNull(service, nameof(service));
@@ -49,16 +59,28 @@ namespace AcrylicWindow.ViewModel
             ListItems = new BindingList<RowCheckBoxViewModel<Employee>>();
             ListItems.ListChanged += OnListChanged;
 
-            Pagination = new PaginationViewModel(ReceiveData, PageSize);
-
-            RefreshCommand = new DelegateCommand(_ => ReceiveData(Pagination.Index, PageSize));
+            /// CRUD Command
             AddCommand = new DelegateCommand(RunAddDialog);
             UpdateCommand = new DelegateCommand(RunUpdateDialog);
-
             DeleteCommand = new DelegateCommand(Delete, _ => !IsAnyCheck);
             DeleteManyCommand = new DelegateCommand(DeleteMany, _ => IsAnyCheck);
 
+            /// Additional commands
+            Pagination = new PaginationViewModel(ReceiveData, PageSize);
             CheckAllCommand = new DelegateCommand(Check);
+
+            RefreshCommand = new DelegateCommand(_ => 
+            {
+                Filter = string.Empty;
+                Pagination.Reset();
+                ReceiveData(Pagination.Index, PageSize);
+            });
+
+            SearchCommand = new DelegateCommand(_ => 
+            {
+                Pagination.Reset();
+                ReceiveData(Pagination.Index, PageSize);
+            });
 
             ReceiveData(Pagination.Index);
         }
@@ -93,16 +115,6 @@ namespace AcrylicWindow.ViewModel
             }
         }
 
-        private void OnListChanged(object s, ListChangedEventArgs e)
-        {
-            var hasFlag = (ListChangedType.ItemAdded | ListChangedType.ItemChanged);
-
-            if (hasFlag.HasFlag(e.ListChangedType) && e.ListChangedType != ListChangedType.Reset)
-            {
-                IsCheckAll = ListItems.All(i => i.Check);
-            }
-        }
-
         private async void Delete(object id)
         {
             await _service.DeleteAsync(new Guid(id.ToString()));
@@ -112,7 +124,6 @@ namespace AcrylicWindow.ViewModel
 
             ReceiveData(Pagination.Index);
         }
-
 
         private async void DeleteMany(object obj)
         {
@@ -129,6 +140,22 @@ namespace AcrylicWindow.ViewModel
             ReceiveData(Pagination.Index);
         }
 
+        /// <summary>
+        /// Fills the list with the records received from the service in accordance with the parameters
+        /// </summary>
+        private async void ReceiveData(int page, int pageSize = PageSize)
+        {
+            ListItems.Clear();
+
+            var result = await _service.GetAll(page, pageSize, Filter);
+
+            foreach (var item in result.Values)
+            {
+                ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
+            }
+
+            Pagination.SetCount(result.TotalCount);
+        }
 
         private void Check(object obj)
         {
@@ -139,16 +166,14 @@ namespace AcrylicWindow.ViewModel
                  .ToList();
         }
 
-        private async void ReceiveData(int page, int pageSize = PageSize)
+        private void OnListChanged(object s, ListChangedEventArgs e)
         {
-            ListItems.Clear();
+            var hasFlag = (ListChangedType.ItemAdded | ListChangedType.ItemChanged);
 
-            foreach (var item in await _service.GetAllAsync(page, pageSize))
+            if (hasFlag.HasFlag(e.ListChangedType) && e.ListChangedType != ListChangedType.Reset)
             {
-                ListItems.Add(new RowCheckBoxViewModel<Employee>(item));
+                IsCheckAll = ListItems.All(i => i.Check);
             }
-
-            Pagination.SetCount(await _service.CountAsync());
         }
 
         public override void Dispose(bool collect)

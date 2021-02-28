@@ -1,15 +1,13 @@
 ﻿using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.IContract.IServices
 {
     public interface IEmployeeService
     {
-        Task<long> CountAsync();
-
-        Task<IEnumerable<Employee>> GetAllAsync(int page, int pageSize);
+        Task<PaginationResult<Employee>> GetAll(int page, int pageSize, string filter = null);
 
         Task<Employee> GetByIdAsync(Guid id);
 
@@ -18,5 +16,7 @@ namespace AcrylicWindow.Client.Core.IContract.IServices
         Task UpdateAsync(Guid id, Employee model);
 
         Task DeleteAsync(Guid id);
+
+        Task<long> CountAsync();
     }
 }

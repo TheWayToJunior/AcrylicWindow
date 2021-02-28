@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace AcrylicWindow
 {
-    public sealed class ModelCreater
+    public sealed class ModelCreator
     {
         public static TModel Create<TModel>(IEnumerable<PropertyViewModel<TModel>> properties)
             where TModel : class, new()

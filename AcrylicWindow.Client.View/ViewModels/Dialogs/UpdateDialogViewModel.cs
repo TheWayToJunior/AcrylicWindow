@@ -46,7 +46,7 @@ namespace AcrylicWindow.ViewModels
                 : App.Current.Resources["ImageNotFound"] as BitmapImage;
 
             UpdateCommand = new DelegateCommand(
-                _ => DialogHost.CloseDialogCommand.Execute(ModelCreater.Create(_someCollection), null),
+                _ => DialogHost.CloseDialogCommand.Execute(ModelCreator.Create(_someCollection), null),
                 _ => _someCollection.All(i => i.IsValid));
         }
     }

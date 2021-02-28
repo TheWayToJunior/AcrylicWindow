@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace AcrylicWindow.Client.Data
 
         Task DeleteAsync(TKey id);
 
-        Task<IEnumerable<TEntity>> GetAllAsync(int page, int pageSize);
+        IQueryable<TEntity> GetAll();
 
         Task<TEntity> GetByIdAsync(TKey id);
 
@@ -20,6 +21,8 @@ namespace AcrylicWindow.Client.Data
 
         Task UpdateAsync(TKey id, TEntity model);
 
-        Task<IEnumerable<TEntity>> FindAsync<TValue>(Expression<Func<TEntity, TValue>> expression, TValue value);
+        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);
+
+        Task<IEnumerable<TEntity>> SearchAsync(string search);
     }
 }
