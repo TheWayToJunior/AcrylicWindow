@@ -34,7 +34,6 @@ namespace AcrylicWindow.Client.DAL.Repositories
         public virtual async Task<IEnumerable<TEntity>> SearchAsync(string search)
         {
             var filter = Builders<TEntity>.Filter.Text(search);
-
             return (await _collection.FindAsync(filter))
                 .ToList();
         }
@@ -49,7 +48,6 @@ namespace AcrylicWindow.Client.DAL.Repositories
             return await _collection.AsQueryable()
                 .SingleAsync(entity => entity.Id.Equals(id));
         }
-        
 
         public virtual async Task InsertAsync(TEntity entity)
         {
@@ -82,13 +80,6 @@ namespace AcrylicWindow.Client.DAL.Repositories
         {
             var filter = Builders<TEntity>.Filter.Eq("Id", id);
             await _collection.DeleteOneAsync(filter);
-        }
-
-
-        public virtual IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
-        {
-            return _collection.AsQueryable()
-                .Where(expression);
         }
 
         /// <summary>

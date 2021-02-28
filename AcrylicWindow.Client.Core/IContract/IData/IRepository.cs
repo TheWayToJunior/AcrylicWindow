@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Data
@@ -20,8 +18,6 @@ namespace AcrylicWindow.Client.Data
         Task InsertAsync(TEntity model);
 
         Task UpdateAsync(TKey id, TEntity model);
-
-        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression);
 
         Task<IEnumerable<TEntity>> SearchAsync(string search);
     }

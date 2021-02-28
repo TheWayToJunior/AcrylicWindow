@@ -29,7 +29,7 @@ namespace AcrylicWindow.Client.Core.Services
 
 
         /// <summary>
-        /// Retrieves records from the database by disdainfully paginating them and filtering them if necessary
+        /// Will give records, dividing them into pages and filtering them if necessary
         /// </summary>
         /// <param name="page">The number of the desired page</param>
         /// <param name="pageSize">Number of entries per page</param>
