@@ -1,0 +1,131 @@
+2021-03-01 20:16:12.522 +03:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.102\
+2021-03-01 20:16:12.557 +03:00 [INF] Registered 1 extensions:
+	Default extension
+2021-03-01 20:16:23.564 +03:00 [INF] Initializing upgrade step Select an entrypoint
+2021-03-01 20:19:01.679 +03:00 [INF] Applying upgrade step Select an entrypoint
+2021-03-01 20:19:46.403 +03:00 [INF] Upgrade step Select an entrypoint applied successfully
+2021-03-01 20:20:07.934 +03:00 [INF] Initializing upgrade step Select project to upgrade
+2021-03-01 20:22:14.197 +03:00 [INF] Applying upgrade step Select project to upgrade
+2021-03-01 20:22:30.587 +03:00 [INF] Upgrade step Select project to upgrade applied successfully
+2021-03-01 20:22:41.640 +03:00 [INF] Initializing upgrade step Back up project
+2021-03-01 20:23:08.419 +03:00 [INF] Applying upgrade step Back up project
+2021-03-01 20:24:09.302 +03:00 [INF] Backing up C:\Users\mihas\Desktop\AcrylicWindow\AcrylicWindow.Client.View to C:\Users\mihas\Desktop\AcrylicWindw.Backup
+2021-03-01 20:24:11.698 +03:00 [INF] Project backed up to C:\Users\mihas\Desktop\AcrylicWindw.Backup
+2021-03-01 20:24:11.700 +03:00 [INF] Upgrade step Back up project applied successfully
+2021-03-01 20:24:26.716 +03:00 [INF] Initializing upgrade step Convert project file to SDK style
+2021-03-01 20:24:40.450 +03:00 [INF] Applying upgrade step Convert project file to SDK style
+2021-03-01 20:24:40.453 +03:00 [INF] Converting project file format with try-convert
+2021-03-01 20:24:41.432 +03:00 [INF] [try-convert] C:\Users\mihas\Desktop\AcrylicWindow\AcrylicWindow.Client.View\AcrylicWindow.Client.View.csproj contains an App.config file. App.config is replaced by appsettings.json in .NET Core. You will need to delete App.config and migrate to appsettings.json if it's applicable to your project.
+2021-03-01 20:24:43.165 +03:00 [INF] [try-convert] This project has an unrecognized custom import which may need reviewed after conversion: MaterialDesignThemes.targets
+2021-03-01 20:24:43.167 +03:00 [INF] [try-convert] This project has an unrecognized custom import which may need reviewed after conversion: MongoDB.Libmongocrypt.targets
+2021-03-01 20:24:43.168 +03:00 [INF] [try-convert] This project has an unrecognized custom import which may need reviewed after conversion: MongoDB.Driver.Core.targets
+2021-03-01 20:24:45.737 +03:00 [INF] [try-convert] Conversion complete!
+2021-03-01 20:24:46.618 +03:00 [INF] Project file converted successfully! The project may require additional changes to build successfully against the new .NET target.
+2021-03-01 20:24:55.659 +03:00 [INF] Upgrade step Convert project file to SDK style applied successfully
+2021-03-01 20:25:06.024 +03:00 [INF] Initializing upgrade step Update TFM
+2021-03-01 20:25:15.421 +03:00 [INF] Applying upgrade step Update TFM
+2021-03-01 20:25:29.910 +03:00 [INF] Upgrade step Update TFM applied successfully
+2021-03-01 20:25:36.190 +03:00 [INF] Initializing upgrade step Update NuGet packages
+2021-03-01 20:25:38.242 +03:00 [INF] Marking package AutoMapper for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.248 +03:00 [INF] Marking package DnsClient for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.267 +03:00 [INF] Marking package MaterialDesignColors for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.290 +03:00 [INF] Marking package Microsoft.CSharp for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.304 +03:00 [INF] Marking package Microsoft.Extensions.DependencyInjection.Abstractions for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.314 +03:00 [INF] Marking package MongoDB.Bson for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.320 +03:00 [INF] Marking package MongoDB.Driver for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.326 +03:00 [INF] Marking package MongoDB.Driver.Core for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.334 +03:00 [INF] Marking package MongoDB.Libmongocrypt for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.340 +03:00 [INF] Marking package Newtonsoft.Json for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.350 +03:00 [INF] Marking package SharpCompress for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.362 +03:00 [INF] Marking package System.ComponentModel.Annotations for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.375 +03:00 [INF] Marking package System.Configuration.ConfigurationManager for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.392 +03:00 [INF] Marking package System.IO for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.431 +03:00 [INF] Marking package System.Runtime for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.447 +03:00 [INF] Marking package System.Runtime.InteropServices.RuntimeInformation for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.454 +03:00 [INF] Marking package System.Security.AccessControl for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.463 +03:00 [INF] Marking package System.Security.Cryptography.Algorithms for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.470 +03:00 [INF] Marking package System.Security.Cryptography.Encoding for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.481 +03:00 [INF] Marking package System.Security.Cryptography.Primitives for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.487 +03:00 [INF] Marking package System.Security.Cryptography.X509Certificates for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.493 +03:00 [INF] Marking package System.Security.Permissions for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.504 +03:00 [INF] Marking package System.Security.Principal.Windows for removal because it appears to be a transitive dependency
+2021-03-01 20:25:38.509 +03:00 [INF] Marking package System.Text.Encodings.Web for removal because it appears to be a transitive dependency
+2021-03-01 20:25:40.205 +03:00 [INF] Reference to .NET Upgrade Assistant analyzer package (Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, version 0.2.212405) needs added
+2021-03-01 20:25:41.242 +03:00 [INF] Adding Microsoft.Windows.Compatibility 5.0.2
+2021-03-01 20:25:41.244 +03:00 [INF] Packages to be removed:
+AutoMapper, Version=10.1.1
+DnsClient, Version=1.3.1
+MaterialDesignColors, Version=1.2.7
+Microsoft.CSharp, Version=4.7.0
+Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.9
+MongoDB.Bson, Version=2.11.6
+MongoDB.Driver, Version=2.11.6
+MongoDB.Driver.Core, Version=2.11.6
+MongoDB.Libmongocrypt, Version=1.0.0
+Newtonsoft.Json, Version=11.0.2
+SharpCompress, Version=0.23.0
+System.ComponentModel.Annotations, Version=5.0.0
+System.Configuration.ConfigurationManager, Version=5.0.0
+System.IO, Version=4.3.0
+System.Runtime, Version=4.3.0
+System.Runtime.InteropServices.RuntimeInformation, Version=4.3.0
+System.Security.AccessControl, Version=5.0.0
+System.Security.Cryptography.Algorithms, Version=4.3.0
+System.Security.Cryptography.Encoding, Version=4.3.0
+System.Security.Cryptography.Primitives, Version=4.3.0
+System.Security.Cryptography.X509Certificates, Version=4.3.0
+System.Security.Permissions, Version=5.0.0
+System.Security.Principal.Windows, Version=5.0.0
+System.Text.Encodings.Web, Version=5.0.0
+2021-03-01 20:25:41.247 +03:00 [INF] Packages to be addded:
+Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.212405
+Microsoft.Windows.Compatibility, Version=5.0.2
+2021-03-01 20:25:55.377 +03:00 [INF] Applying upgrade step Update NuGet packages
+2021-03-01 20:25:55.384 +03:00 [INF] Removing outdated package reference: AutoMapper, Version=10.1.1
+2021-03-01 20:25:55.385 +03:00 [INF] Removing outdated package reference: DnsClient, Version=1.3.1
+2021-03-01 20:25:55.387 +03:00 [INF] Removing outdated package reference: MaterialDesignColors, Version=1.2.7
+2021-03-01 20:25:55.388 +03:00 [INF] Removing outdated package reference: Microsoft.CSharp, Version=4.7.0
+2021-03-01 20:25:55.390 +03:00 [INF] Removing outdated package reference: Microsoft.Extensions.DependencyInjection.Abstractions, Version=3.1.9
+2021-03-01 20:25:55.391 +03:00 [INF] Removing outdated package reference: MongoDB.Bson, Version=2.11.6
+2021-03-01 20:25:55.391 +03:00 [INF] Removing outdated package reference: MongoDB.Driver, Version=2.11.6
+2021-03-01 20:25:55.392 +03:00 [INF] Removing outdated package reference: MongoDB.Driver.Core, Version=2.11.6
+2021-03-01 20:25:55.393 +03:00 [INF] Removing outdated package reference: MongoDB.Libmongocrypt, Version=1.0.0
+2021-03-01 20:25:55.394 +03:00 [INF] Removing outdated package reference: Newtonsoft.Json, Version=11.0.2
+2021-03-01 20:25:55.398 +03:00 [INF] Removing outdated package reference: SharpCompress, Version=0.23.0
+2021-03-01 20:25:55.399 +03:00 [INF] Removing outdated package reference: System.ComponentModel.Annotations, Version=5.0.0
+2021-03-01 20:25:55.401 +03:00 [INF] Removing outdated package reference: System.ComponentModel.Annotations, Version=5.0.0
+2021-03-01 20:25:55.402 +03:00 [INF] Removing outdated package reference: System.Configuration.ConfigurationManager, Version=5.0.0
+2021-03-01 20:25:55.403 +03:00 [INF] Removing outdated package reference: System.IO, Version=4.3.0
+2021-03-01 20:25:55.404 +03:00 [INF] Removing outdated package reference: System.Runtime, Version=4.3.0
+2021-03-01 20:25:55.405 +03:00 [INF] Removing outdated package reference: System.Runtime.InteropServices.RuntimeInformation, Version=4.3.0
+2021-03-01 20:25:55.409 +03:00 [INF] Removing outdated package reference: System.Security.AccessControl, Version=5.0.0
+2021-03-01 20:25:55.410 +03:00 [INF] Removing outdated package reference: System.Security.Cryptography.Algorithms, Version=4.3.0
+2021-03-01 20:25:55.412 +03:00 [INF] Removing outdated package reference: System.Security.Cryptography.Encoding, Version=4.3.0
+2021-03-01 20:25:55.413 +03:00 [INF] Removing outdated package reference: System.Security.Cryptography.Primitives, Version=4.3.0
+2021-03-01 20:25:55.414 +03:00 [INF] Removing outdated package reference: System.Security.Cryptography.X509Certificates, Version=4.3.0
+2021-03-01 20:25:55.415 +03:00 [INF] Removing outdated package reference: System.Security.Permissions, Version=5.0.0
+2021-03-01 20:25:55.416 +03:00 [INF] Removing outdated package reference: System.Security.Principal.Windows, Version=5.0.0
+2021-03-01 20:25:55.416 +03:00 [INF] Removing outdated package reference: System.Text.Encodings.Web, Version=5.0.0
+2021-03-01 20:25:55.423 +03:00 [INF] Adding package reference: Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers, Version=0.2.212405
+2021-03-01 20:25:55.425 +03:00 [INF] Adding package reference: Microsoft.Windows.Compatibility, Version=5.0.2
+2021-03-01 20:26:27.409 +03:00 [INF] Marking package System.ComponentModel.Composition for removal because it appears to be a transitive dependency
+2021-03-01 20:26:27.418 +03:00 [INF] Marking package System.Data.DataSetExtensions for removal because it appears to be a transitive dependency
+2021-03-01 20:26:27.439 +03:00 [INF] Marking package System.Numerics.Vectors for removal because it appears to be a transitive dependency
+2021-03-01 20:26:27.574 +03:00 [INF] Removing outdated package reference: System.ComponentModel.Composition, Version=5.0.0
+2021-03-01 20:26:27.575 +03:00 [INF] Removing outdated package reference: System.Data.DataSetExtensions, Version=4.5.0
+2021-03-01 20:26:27.575 +03:00 [INF] Removing outdated package reference: System.Numerics.Vectors, Version=4.5.0
+2021-03-01 20:26:30.933 +03:00 [INF] Upgrade step Update NuGet packages applied successfully
+2021-03-01 20:26:42.513 +03:00 [INF] Initializing upgrade step Add template files
+2021-03-01 20:26:42.531 +03:00 [INF] 0 expected template items needed
+2021-03-01 20:26:42.532 +03:00 [INF] Initializing upgrade step Upgrade app config files
+2021-03-01 20:26:42.640 +03:00 [INF] Found 4 app settings for upgrade: Address, ClientId, ClientSecret, Scope
+2021-03-01 20:26:42.650 +03:00 [INF] 0 web page namespace imports need upgraded: 
+2021-03-01 20:26:48.284 +03:00 [INF] Applying upgrade step Convert Application Settings
+2021-03-01 20:26:48.997 +03:00 [INF] Upgrade step Convert Application Settings applied successfully
+2021-03-01 20:26:48.998 +03:00 [INF] Applying upgrade step Upgrade app config files
+2021-03-01 20:26:48.999 +03:00 [INF] Upgrade step Upgrade app config files applied successfully
+2021-03-01 20:27:04.204 +03:00 [INF] Initializing upgrade step Update C# source
+2021-03-01 20:27:05.958 +03:00 [INF] Initializing upgrade step Move to next project
+2021-03-01 20:27:11.837 +03:00 [INF] Applying upgrade step Move to next project
+2021-03-01 20:27:11.838 +03:00 [INF] Upgrade step Move to next project applied successfully
+2021-03-01 20:27:31.687 +03:00 [INF] Initializing upgrade step Select project to upgrade
