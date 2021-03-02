@@ -90,6 +90,7 @@
                             <PasswordBox Style="{StaticResource PasswordBox}"
                                          Name="pbPassword"
                                          Padding="0 10 0 0"
+                                         VerticalContentAlignment="Center"
                                          Height="35">
                             </PasswordBox>
                             <Border Background="#C4C4C4"
