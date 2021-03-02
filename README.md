@@ -11,21 +11,21 @@
     * [x] Employee
         * [x] Add modal windows to add a new record
         * [x] Add modal windows for updating records
-        * [x] Add delete records
+        * [x] Add the ability to delete records
         * [x] Add pagination
         * [x] Add validation for fields on the view
         * [x] Add a search on the table
     * [ ] Сlient
         * [ ] Add modal windows to add a new record
         * [ ] Add modal windows for updating records
-        * [ ] Add delete records
+        * [ ] Add the ability to delete records
         * [ ] Add pagination
         * [ ] Add validation for fields on the view
-        * [] Add a search on the table
+        * [ ] Add a search on the table
     * [ ] Group 
         * [ ] Add modal windows to add a new record
         * [ ] Add modal windows for updating records
-        * [ ] Add delete records
+        * [ ] Add the ability to delete records
         * [ ] Add pagination
         * [ ] Add validation for fields on the view
         * [ ] Add a search on the table
