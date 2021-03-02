@@ -24,14 +24,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.8.0" />
-    <PackageReference Include="IdentityModel" Version="4.6.0" />
-    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    <PackageReference Include="IdentityModel" Version="5.0.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.2.212405">
       <PrivateAssets>all</PrivateAssets>
@@ -40,18 +40,5 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json" />
-  </ItemGroup>
-  <Import Project="..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.2.0\build\MaterialDesignThemes.targets')" />
-  <Import Project="..\packages\MongoDB.Libmongocrypt.1.0.0\build\MongoDB.Libmongocrypt.targets" Condition="Exists('..\packages\MongoDB.Libmongocrypt.1.0.0\build\MongoDB.Libmongocrypt.targets')" />
-  <Import Project="..\packages\MongoDB.Driver.Core.2.11.6\build\MongoDB.Driver.Core.targets" Condition="Exists('..\packages\MongoDB.Driver.Core.2.11.6\build\MongoDB.Driver.Core.targets')" />
-  <ItemGroup>
-    <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/libzstd.dll" />
-    <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy32.dll" />
-    <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy64.dll" />
-    <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Libmongocrypt.1.0.0\build\../x64/native/windows/mongocrypt.dll" />
-    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/libzstd.dll" />
-    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy32.dll" />
-    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy64.dll" />
-    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Libmongocrypt.1.0.0\build\../x64/native/windows/mongocrypt.dll" />
   </ItemGroup>
 </Project>
