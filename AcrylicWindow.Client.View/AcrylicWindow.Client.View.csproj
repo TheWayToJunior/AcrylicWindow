@@ -49,5 +49,9 @@
     <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy32.dll" />
     <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy64.dll" />
     <Content Remove="C:\Users\mihas\Desktop\AcrylicWindow\packages\MongoDB.Libmongocrypt.1.0.0\build\../x64/native/windows/mongocrypt.dll" />
+    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/libzstd.dll" />
+    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy32.dll" />
+    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Driver.Core.2.11.6\build\../runtimes/win/native/snappy64.dll" />
+    <Content Remove="D:\C#\.NET Framework\AcrylicWindow\packages\MongoDB.Libmongocrypt.1.0.0\build\../x64/native/windows/mongocrypt.dll" />
   </ItemGroup>
 </Project>
