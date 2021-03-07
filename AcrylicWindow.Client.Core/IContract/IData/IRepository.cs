@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using AcrylicWindow.Client.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcrylicWindow.Client.Data
+namespace AcrylicWindow.Client.Core.IContract.IData
 {
     public interface IRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>

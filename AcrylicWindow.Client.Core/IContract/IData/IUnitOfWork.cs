@@ -1,4 +1,4 @@
-﻿namespace AcrylicWindow.Client.Data
+﻿namespace AcrylicWindow.Client.Core.IContract.IData
 {
     public interface IUnitOfWork
     {

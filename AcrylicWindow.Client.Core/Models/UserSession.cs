@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AcrylicWindow.Client.Core.Model
+namespace AcrylicWindow.Client.Core.Models
 {
     public class UserSession
     {

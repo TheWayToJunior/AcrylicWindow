@@ -1,5 +1,4 @@
-﻿using AcrylicWindow.Client.Core.Model;
-using AcrylicWindow.Client.Core.Models;
+﻿using AcrylicWindow.Client.Core.Models;
 using System;
 using System.Threading.Tasks;
 

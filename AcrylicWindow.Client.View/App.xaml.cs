@@ -1,4 +1,4 @@
-﻿using AcrylicWindow.Client.Data;
+﻿using AcrylicWindow.Client.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 

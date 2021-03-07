@@ -1,5 +1,5 @@
-﻿using AcrylicWindow.Client.DAL;
-using AcrylicWindow.Client.Data;
+﻿using AcrylicWindow.Client.Core.IContract.IData;
+using AcrylicWindow.Client.DAL;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 

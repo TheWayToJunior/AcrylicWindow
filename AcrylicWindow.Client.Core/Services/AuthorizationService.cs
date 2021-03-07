@@ -1,5 +1,5 @@
 ﻿using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.Core.Models;
 using IdentityModel.Client;
 using System.Configuration;
 using System.Net;

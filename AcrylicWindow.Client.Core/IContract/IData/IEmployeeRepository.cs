@@ -1,7 +1,7 @@
-﻿using AcrylicWindow.Client.Data.Entities;
+﻿using AcrylicWindow.Client.Entity.Entities;
 using System;
 
-namespace AcrylicWindow.Client.Data
+namespace AcrylicWindow.Client.Core.IContract.IData
 {
     public interface IEmployeeRepository : IRepository<EmployeeEntity, Guid>
     {

@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Core.Providers;
 using Moq;
 using System.Threading.Tasks;

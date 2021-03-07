@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace AcrylicWindow.Client.Data.Entities
+namespace AcrylicWindow.Client.Entity
 {
     public class EntityBase<TKey> : IEntity<TKey>
     {

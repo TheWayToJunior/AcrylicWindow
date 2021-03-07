@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.Core.Models;
 using System;
 using System.IO;
 using System.Security;

@@ -1,9 +1,8 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
+using AcrylicWindow.Client.Core.IContract.IData;
 using AcrylicWindow.Client.Core.IContract.IServices;
-using AcrylicWindow.Client.Core.Model;
 using AcrylicWindow.Client.Core.Models;
-using AcrylicWindow.Client.Data;
-using AcrylicWindow.Client.Data.Entities;
+using AcrylicWindow.Client.Entity.Entities;
 using AutoMapper;
 using System;
 using System.Linq;

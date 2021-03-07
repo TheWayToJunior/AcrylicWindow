@@ -1,5 +1,5 @@
-﻿using AcrylicWindow.Client.DAL.Repositories;
-using AcrylicWindow.Client.Data;
+﻿using AcrylicWindow.Client.Core.IContract.IData;
+using AcrylicWindow.Client.DAL.Repositories;
 using MongoDB.Driver;
 
 namespace AcrylicWindow.Client.DAL

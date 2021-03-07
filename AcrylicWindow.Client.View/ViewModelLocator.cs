@@ -1,7 +1,7 @@
 ﻿using AcrylicWindow.Client.Core;
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.IContract.IServices;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
 using AcrylicWindow.Client.View.Navigation;

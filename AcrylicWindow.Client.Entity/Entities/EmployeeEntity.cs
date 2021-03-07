@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AcrylicWindow.Client.Data.Entities
+namespace AcrylicWindow.Client.Entity.Entities
 {
     public class EmployeeEntity : EntityBase<Guid>
     {

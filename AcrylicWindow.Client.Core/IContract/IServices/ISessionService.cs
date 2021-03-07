@@ -1,4 +1,4 @@
-﻿using AcrylicWindow.Client.Core.Model;
+﻿using AcrylicWindow.Client.Core.Models;
 using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.IContract

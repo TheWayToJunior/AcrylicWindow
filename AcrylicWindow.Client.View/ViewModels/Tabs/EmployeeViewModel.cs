@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract.IServices;
-using AcrylicWindow.Client.Core.Model;
+using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.ViewModels;
 using AcrylicWindow.Views.Dialogs;
 using MaterialDesignThemes.Wpf;

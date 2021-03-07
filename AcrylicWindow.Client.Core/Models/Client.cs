@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AcrylicWindow.Client.Core.Models
 {
-    public class Employee : IModel
+    public class Client : IModel
     {
         [DisplayIgnore]
         public Guid Id { get; set; }
@@ -12,9 +12,6 @@ namespace AcrylicWindow.Client.Core.Models
         [Displayed("Full name")]
         [Required(ErrorMessage = "This is a required field")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "This is a required field")]
-        public string Position { get; set; }
 
         [Required(ErrorMessage = "This is a required field")]
         [Phone(ErrorMessage = "Please enter your phone")]

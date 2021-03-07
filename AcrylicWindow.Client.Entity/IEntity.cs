@@ -1,4 +1,4 @@
-﻿namespace AcrylicWindow.Client.Data
+﻿namespace AcrylicWindow.Client.Entity
 {
     public interface IEntity<out TKey>
     {

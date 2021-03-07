@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
-using AcrylicWindow.Client.Data;
-using AcrylicWindow.Client.Data.Entities;
+using AcrylicWindow.Client.Core.IContract.IData;
+using AcrylicWindow.Client.Entity;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;

@@ -7,8 +7,16 @@
 * [x] Create Identity Server
 * [x] Add authorization using the Oauth 2.0 approach and a JWT Bearer
 * [x] Setting up adding an account
-* [x]  Creating entities(classes) and configuring entities
+* [x] Transferring the project to .NET 5.0
+* [x] Create a MongoDB database and connecting to it
+* [x] Create a repository for data access
+* [x] Add XUnit tests
+* [ ] Test the app
+    * [x] Test the AuthorizationProvider
+    * [ ] Test the main business logic services
+* [ ] Creating entities(classes) and configuring entities
     * [x] Employee
+        * [x] Create an entity and model
         * [x] Add modal windows to add a new record
         * [x] Add modal windows for updating records
         * [x] Add the ability to delete records
@@ -16,6 +24,7 @@
         * [x] Add validation for fields on the view
         * [x] Add a search on the table
     * [ ] Сlient
+        * [x] Create an entity and model
         * [ ] Add modal windows to add a new record
         * [ ] Add modal windows for updating records
         * [ ] Add the ability to delete records
@@ -23,18 +32,14 @@
         * [ ] Add validation for fields on the view
         * [ ] Add a search on the table
     * [ ] Group 
+        * [x] Create an entity and model
         * [ ] Add modal windows to add a new record
         * [ ] Add modal windows for updating records
         * [ ] Add the ability to delete records
         * [ ] Add pagination
         * [ ] Add validation for fields on the view
         * [ ] Add a search on the table
-* [x] Create a MongoDB database and connecting to it
-* [x] Create a repository for data access
-* [x] Create ViewModels for entities and configuring mapping (Automapper)
-* [x] Add XUnit tests
-    * [x] Test the AuthorizationProvider
-    * [ ] Test the main business logic services
+* [ ] Create ViewModels for entities and configuring mapping (Automapper)
 * [ ] Add the resulting charts (LiveCharts)
 * [ ] Visualize data on the home page
 

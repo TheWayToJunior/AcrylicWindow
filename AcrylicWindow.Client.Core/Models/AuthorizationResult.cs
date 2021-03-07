@@ -1,4 +1,4 @@
-﻿namespace AcrylicWindow.Client.Core.Model
+﻿namespace AcrylicWindow.Client.Core.Models
 {
     public class AuthorizationResult<T>
         where T : class
