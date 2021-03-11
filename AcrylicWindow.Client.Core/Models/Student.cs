@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AcrylicWindow.Client.Core.Models
 {
-    public class Client : IModel
+    public class Student : IModel
     {
         [DisplayIgnore]
         public Guid Id { get; set; }

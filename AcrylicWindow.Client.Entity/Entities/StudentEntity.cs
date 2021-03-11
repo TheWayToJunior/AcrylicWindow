@@ -2,7 +2,7 @@
 
 namespace AcrylicWindow.Client.Entity.Entities
 {
-    public class ClientEntity : EntityBase<Guid>
+    public class StudentEntity : EntityBase<Guid>
     {
         public string Name { get; set; }
 

@@ -10,6 +10,6 @@ namespace AcrylicWindow.Client.Core.Models
 
         public Employee Teacher { get; set; }
 
-        public ICollection<Client> Students { get; set; }
+        public ICollection<Student> Students { get; set; }
     }
 }

@@ -15,10 +15,14 @@ namespace AcrylicWindow.Client.DAL.Repositories
     {
         protected readonly IMongoCollection<TEntity> _collection;
 
-        public RepositoryBase(IMongoDatabase database, string tableName)
+        public RepositoryBase(IMongoDatabase database, string tableName, bool searchable = true)
         {
             _collection = Has.NotNull(database).GetCollection<TEntity>(tableName);
-            CreateIndex();
+
+            if(searchable)
+            {
+                CreateIndex();
+            }
         }
 
         /// <summary>

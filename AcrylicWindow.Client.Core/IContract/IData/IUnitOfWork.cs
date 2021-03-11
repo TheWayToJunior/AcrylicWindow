@@ -3,5 +3,7 @@
     public interface IUnitOfWork
     {
         IEmployeeRepository Employees { get; }
+
+        IStudentRepository Students { get; }
     }
 }

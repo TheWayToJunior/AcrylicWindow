@@ -9,6 +9,9 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\AcrylicWindow.Client.Core\AcrylicWindow.Client.Core.csproj" />
     <ProjectReference Include="..\AcrylicWindow.Client.DAL\AcrylicWindow.Client.DAL.csproj" />
     <ProjectReference Include="..\AcrylicWindow.Client.Entity\AcrylicWindow.Client.Entity.csproj" />
@@ -37,8 +40,5 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="appsettings.json" />
   </ItemGroup>
 </Project>

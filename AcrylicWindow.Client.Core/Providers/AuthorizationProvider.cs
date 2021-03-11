@@ -21,7 +21,7 @@ namespace AcrylicWindow.Client.Core.Providers
         private AuthenticationState Anonymous => new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 
         private AuthenticationState _authenticationState;
-        public AuthenticationState AuthenticationState => _authenticationState ?? GetAuthenticationState();
+        public AuthenticationState AuthenticationState => _authenticationState ??= GetAuthenticationState();
 
         public AuthorizationProvider(IAuthorizationService<JwtResponse> authorizationService, ISessionService<UserSession> sessionService,
             ITokenStorage tokenStorage)
@@ -59,7 +59,8 @@ namespace AcrylicWindow.Client.Core.Providers
             }
 
             return AuthenticationStateChangedAsync(session.AccessToken, session.RefreshToken, saveSession: false)
-                .Result;
+                .GetAwaiter()
+                .GetResult();
         }
 
         private async Task<AuthenticationState> SignInAsync(AuthorizationResult<JwtResponse> authorization)

@@ -42,7 +42,6 @@ namespace AcrylicWindow.Client.Core.Services
                 TotalCount = entitys.Count(),
                 Values = entitys
                     .Pagination(page, pageSize)
-                    .AsEnumerable()
                     .Select(e => _mapper.Map<Employee>(e))
             };
         }
