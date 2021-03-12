@@ -7,6 +7,7 @@ using AcrylicWindow.Client.Core.Services;
 using AcrylicWindow.Client.View.Navigation;
 using AcrylicWindow.Extensions;
 using AcrylicWindow.ViewModel;
+using AcrylicWindow.ViewModels.Tabs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
@@ -35,7 +36,8 @@ namespace AcrylicWindow
             /// Tabs
             services.AddTransient<HomeViewModel>();
             services.AddTransient<OptionViewModel>();
-            services.AddTransient<EmployeeViewModel>();
+            services.AddTransient<EmployeesViewModel>();
+            services.AddTransient<StudentsViewModel>();
 
             /// Windows
             services.AddSingleton<MainWindowViewModel>();
@@ -53,6 +55,7 @@ namespace AcrylicWindow
                 .AddTransient<IReaderTokenStore>(p => p.GetService<ITokenStorage>());
 
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IStudentService, StudentService>();
 
             /// Data
             services.AddMongoProvider();
@@ -70,8 +73,11 @@ namespace AcrylicWindow
         public SessionViewModel Session =>
             Provider.GetRequiredService<SessionViewModel>();
 
-        public EmployeeViewModel Employee =>
-            Provider.GetRequiredService<EmployeeViewModel>();
+        public EmployeesViewModel Employees =>
+            Provider.GetRequiredService<EmployeesViewModel>();
+
+        public StudentsViewModel Students =>
+            Provider.GetRequiredService<StudentsViewModel>();
 
         public HomeViewModel Home =>
             Provider.GetRequiredService<HomeViewModel>();

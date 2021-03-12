@@ -1,4 +1,5 @@
 ﻿using AcrylicWindow.View.Pages;
+using AcrylicWindow.Views.Tabs;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -14,9 +15,10 @@ namespace AcrylicWindow
 
         public  static IDictionary<string, Page> Tabs => new Dictionary<string, Page>()
         {
-            [nameof(HomeTab)] = new HomeTab(),
+            [nameof(HomeTab)]      = new HomeTab(),
             [nameof(EmployeesTab)] = new EmployeesTab(),
-            [nameof(OptionsTab)] = new OptionsTab()
+            [nameof(StudentsTab)]  = new StudentsTab(),
+            [nameof(OptionsTab)]   = new OptionsTab()
         };
     }
 }

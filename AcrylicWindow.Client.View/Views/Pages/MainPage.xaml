@@ -55,7 +55,7 @@
                                    FontWeight="Light"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem>
+                        <ListViewItem Name="StudentsTab">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="PeopleGroup" Margin="15"/>
                                 <TextBlock Text="Ученики"  

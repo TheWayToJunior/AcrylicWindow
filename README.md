@@ -23,14 +23,14 @@
         * [x] Add pagination
         * [x] Add validation for fields on the view
         * [x] Add a search on the table
-    * [ ] Сlient
+    * [x] Student
         * [x] Create an entity and model
-        * [ ] Add modal windows to add a new record
-        * [ ] Add modal windows for updating records
-        * [ ] Add the ability to delete records
-        * [ ] Add pagination
-        * [ ] Add validation for fields on the view
-        * [ ] Add a search on the table
+        * [x] Add modal windows to add a new record
+        * [x] Add modal windows for updating records
+        * [x] Add the ability to delete records
+        * [x] Add pagination
+        * [x] Add validation for fields on the view
+        * [x] Add a search on the table
     * [ ] Group 
         * [x] Create an entity and model
         * [ ] Add modal windows to add a new record

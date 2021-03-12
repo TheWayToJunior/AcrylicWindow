@@ -14,6 +14,9 @@ namespace AcrylicWindow.Client.Core.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "This is a required field")]
+        public string Training { get; set; }
+
+        [Required(ErrorMessage = "This is a required field")]
         [Phone(ErrorMessage = "Please enter your phone")]
         public string Phone { get; set; }
 
