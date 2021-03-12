@@ -5,6 +5,7 @@ using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Entity.Entities;
 using AutoMapper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,9 +29,8 @@ namespace AcrylicWindow.Client.Core.Services
             return new PaginationResult<Student>
             {
                 TotalCount = entitys.Count(),
-                Values = entitys
-                    .Pagination(page, pageSize)
-                    .Select(e => _mapper.Map<Student>(e))
+                Values = _mapper.Map<IEnumerable<Student>>(entitys
+                    .Pagination(page, pageSize))
             };
         }
 
