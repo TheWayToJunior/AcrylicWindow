@@ -1,6 +1,7 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Models;
+using AcrylicWindow.Dialogs;
 using AcrylicWindow.ViewModel;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModels.Tabs
 {
-    public class StudentsViewModel : ViewModel<Student>
+    public class StudentsViewModel : TemplateViewModel<Student>
     {
         private readonly IStudentService _service;
 
@@ -28,13 +29,13 @@ namespace AcrylicWindow.ViewModels.Tabs
 
         public ICommand DeleteManyCommand { get; }
 
-        public StudentsViewModel(IStudentService service)
-            : base(service)
+        public StudentsViewModel(IStudentService service, IDialogService dialogService)
+            : base(service, dialogService)
         {
             _service = Has.NotNull(service);
 
-            base.PageSize = 7;
-            base.Pagination = new PaginationViewModel(ReceiveData, PageSize);
+            PageSize = 7;
+            Pagination = new PaginationViewModel(ReceiveData, PageSize);
 
             CheckAllCommand = new DelegateCommand(Check);
             DeleteManyCommand = new DelegateCommand(DeleteMany, _ => IsAnyCheck);
@@ -98,7 +99,7 @@ namespace AcrylicWindow.ViewModels.Tabs
 
         private void OnListChanged(object sender, ListChangedEventArgs e)
         {
-            var hasFlag = (ListChangedType.ItemAdded | ListChangedType.ItemChanged);
+            var hasFlag = ListChangedType.ItemAdded | ListChangedType.ItemChanged;
 
             if (hasFlag.HasFlag(e.ListChangedType) && e.ListChangedType != ListChangedType.Reset)
             {

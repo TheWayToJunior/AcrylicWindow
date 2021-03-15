@@ -1,5 +1,4 @@
-﻿using AcrylicWindow.ViewModel;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;

@@ -1,14 +1,15 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Models;
-using AcrylicWindow.ViewModels;
+using AcrylicWindow.Dialogs;
+using AcrylicWindow.ViewModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels.Tabs
 {
-    public class EmployeesViewModel : ViewModel<Employee>
+    public class EmployeesViewModel : TemplateViewModel<Employee>
     {
         private readonly IEmployeeService _service;
 
@@ -28,13 +29,13 @@ namespace AcrylicWindow.ViewModel
 
         public ICommand DeleteManyCommand { get; }
 
-        public EmployeesViewModel(IEmployeeService service)
-            : base(service)
+        public EmployeesViewModel(IEmployeeService service, IDialogService dialogService)
+            : base(service, dialogService)
         {
             _service = Has.NotNull(service, nameof(service));
 
-            base.PageSize = 7;
-            base.Pagination = new PaginationViewModel(ReceiveData, PageSize);
+            PageSize = 7;
+            Pagination = new PaginationViewModel(ReceiveData, PageSize);
 
             CheckAllCommand = new DelegateCommand(Check);
             DeleteManyCommand = new DelegateCommand(DeleteMany, _ => IsAnyCheck);
@@ -98,7 +99,7 @@ namespace AcrylicWindow.ViewModel
 
         private void OnListChanged(object s, ListChangedEventArgs e)
         {
-            var hasFlag = (ListChangedType.ItemAdded | ListChangedType.ItemChanged);
+            var hasFlag = ListChangedType.ItemAdded | ListChangedType.ItemChanged;
 
             if (hasFlag.HasFlag(e.ListChangedType) && e.ListChangedType != ListChangedType.Reset)
             {

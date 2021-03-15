@@ -4,7 +4,7 @@ using AcrylicWindow.Client.View.Navigation;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels.Pages
 {
     public class SessionViewModel : ViewModelBase
     {
@@ -57,14 +57,14 @@ namespace AcrylicWindow.ViewModel
                 return;
             }
 
-            _pageService.NavigateTo(PageHalper.MainPage);
+            _pageService.NavigateTo(PageViewLocator.MainPage);
         }
 
         private async void Logout(object obj)
         {
             await _authorizationProvider.Logout();
 
-            _pageService.NavigateTo(PageHalper.LoginPage);
+            _pageService.NavigateTo(PageViewLocator.LoginPage);
         }
     }
 }

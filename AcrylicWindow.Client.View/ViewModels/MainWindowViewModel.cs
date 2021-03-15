@@ -2,7 +2,7 @@
 using AcrylicWindow.Client.View.Navigation;
 using System.Windows.Controls;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
@@ -22,11 +22,11 @@ namespace AcrylicWindow.ViewModel
 
             if (state.IsAuthenticated)
             {
-                pageService.NavigateTo(PageHalper.SessionPage);
+                pageService.NavigateTo(PageViewLocator.SessionPage);
                 return;
             }
 
-            pageService.NavigateTo(PageHalper.LoginPage);
+            pageService.NavigateTo(PageViewLocator.LoginPage);
         }
     }
 }

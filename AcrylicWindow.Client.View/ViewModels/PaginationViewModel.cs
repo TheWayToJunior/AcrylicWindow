@@ -1,5 +1,4 @@
-﻿using AcrylicWindow.ViewModel;
-using System;
+﻿using System;
 using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModels

@@ -5,8 +5,10 @@ using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
 using AcrylicWindow.Client.View.Navigation;
+using AcrylicWindow.Dialogs;
 using AcrylicWindow.Extensions;
-using AcrylicWindow.ViewModel;
+using AcrylicWindow.ViewModels;
+using AcrylicWindow.ViewModels.Pages;
 using AcrylicWindow.ViewModels.Tabs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -56,6 +58,8 @@ namespace AcrylicWindow
 
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IStudentService, StudentService>();
+
+            services.AddScoped<IDialogService, DialogService>();
 
             /// Data
             services.AddMongoProvider();

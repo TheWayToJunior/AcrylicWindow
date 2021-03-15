@@ -1,5 +1,5 @@
 ﻿using AcrylicWindow.Client.Core.IContract;
-using System.ComponentModel;
+using AcrylicWindow.ViewModels;
 using System.Windows.Input;
 
 namespace AcrylicWindow.ViewModel
@@ -24,10 +24,6 @@ namespace AcrylicWindow.ViewModel
             get => _check;
             set => Set(ref _check, value);
         }
-
-        public string DefaultImg => 
-            "Profile.png";
-
 
         public TModel Model { get; set; }
 

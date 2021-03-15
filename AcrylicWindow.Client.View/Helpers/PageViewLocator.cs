@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace AcrylicWindow
 {
-    public static class PageHalper
+    public static class PageViewLocator
     {
         public static Page MainPage => new MainPage();
 
@@ -16,9 +16,9 @@ namespace AcrylicWindow
         public  static IDictionary<string, Page> Tabs => new Dictionary<string, Page>()
         {
             [nameof(HomeTab)]      = new HomeTab(),
-            [nameof(EmployeesTab)] = new EmployeesTab(),
+            [nameof(OptionsTab)]   = new OptionsTab(),
             [nameof(StudentsTab)]  = new StudentsTab(),
-            [nameof(OptionsTab)]   = new OptionsTab()
+            [nameof(EmployeesTab)] = new EmployeesTab()
         };
     }
 }

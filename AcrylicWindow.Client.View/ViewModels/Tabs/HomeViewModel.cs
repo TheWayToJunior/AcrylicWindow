@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels.Tabs
 {
     public class HomeViewModel : ViewModelBase
     {

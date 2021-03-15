@@ -1,9 +1,7 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.IContract.IServices;
-using AcrylicWindow.ViewModel;
-using AcrylicWindow.Views.Dialogs;
-using MaterialDesignThemes.Wpf;
+using AcrylicWindow.Dialogs;
 using System;
 using System.Windows.Input;
 
@@ -13,13 +11,11 @@ namespace AcrylicWindow.ViewModels
     /// A base class that implements CRUD methods and logic for paginated output and filtering
     /// </summary>
     /// <typeparam name="TModel">Model type</typeparam>
-    public abstract class ViewModel<TModel> : ViewModelBase
+    public abstract class TemplateViewModel<TModel> : ViewModelBase
         where TModel : class, IModel, new()
     {
         private readonly ICrudService<TModel, Guid> _service;
-
-        private readonly AddDialog _addDialog;
-        private readonly UpdateDialog _updateDialog;
+        private readonly IDialogService _dialogService;
 
         protected int PageSize { get; set; }
 
@@ -43,17 +39,15 @@ namespace AcrylicWindow.ViewModels
 
         public ICommand RefreshCommand { get; }
 
-        public ViewModel(ICrudService<TModel, Guid> service)
+        public TemplateViewModel(ICrudService<TModel, Guid> service, IDialogService dialogService)
         {
             _service = Has.NotNull(service);
+            _dialogService = Has.NotNull(dialogService);
 
             /// CRUD Command
-            AddCommand    = new DelegateCommand(OnAddDialog, CanExecuteAdd);
+            AddCommand = new DelegateCommand(OnAddDialog, CanExecuteAdd);
             UpdateCommand = new DelegateCommand(OnUpdateDialog, CanExecutUpdate);
             DeleteCommand = new DelegateCommand(OnDelete, CanExecutDelete);
-
-            _addDialog = new();
-            _updateDialog = new();
 
             RefreshCommand = new DelegateCommand(_ =>
             {
@@ -75,12 +69,11 @@ namespace AcrylicWindow.ViewModels
 
         protected virtual async void OnAddDialog(object obj)
         {
-            _addDialog.DataContext = new AddDialogViewModel<TModel>();
-            var result = await DialogHost.Show(_addDialog, "RootDialog");
+            var result = await _dialogService.Show(new AddDialogViewModel<TModel>());
 
-            if (result is TModel employee)
+            if (result is TModel model)
             {
-                await _service.InsertAsync(employee);
+                await _service.InsertAsync(model);
                 ReceiveData(Pagination.Index, PageSize);
             }
         }
@@ -89,11 +82,10 @@ namespace AcrylicWindow.ViewModels
 
         protected virtual async void OnUpdateDialog(object obj)
         {
-             var key = Guid.Parse(obj.ToString());
+            var key = Guid.Parse(obj.ToString());
             var foundModel = await _service.GetByIdAsync(key);
 
-            _updateDialog.DataContext = new UpdateDialogViewModel<TModel>(foundModel);
-            var result = await DialogHost.Show(_updateDialog, "RootDialog");
+            var result = await _dialogService.Show(new UpdateDialogViewModel<TModel>(foundModel));
 
             if (result is TModel model)
             {

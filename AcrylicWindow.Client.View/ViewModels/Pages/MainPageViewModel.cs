@@ -2,14 +2,13 @@
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.View.Navigation;
 using AcrylicWindow.View.Pages;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels.Pages
 {
     public class MainPageViewModel : ViewModelBase
     {
@@ -69,7 +68,7 @@ namespace AcrylicWindow.ViewModel
             _authorizationProvider = Has.NotNull(authorizationProvider);
             _pageService = Has.NotNull(pageService);
 
-            _pages = PageHalper.Tabs;
+            _pages = PageViewLocator.Tabs;
 
             UserName = _authorizationProvider.AuthenticationState.GetClaim("sub");
 
@@ -82,7 +81,7 @@ namespace AcrylicWindow.ViewModel
         private async void Logout(object obj)
         {
             await _authorizationProvider.Logout();
-            _pageService.NavigateTo(PageHalper.LoginPage);
+            _pageService.NavigateTo(PageViewLocator.LoginPage);
 
             Dispose(true);
         }

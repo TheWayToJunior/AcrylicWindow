@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
@@ -34,14 +34,14 @@ namespace AcrylicWindow.ViewModel
         /// will accumulate, and we will get a form of memory leak when services
         /// remain alive far beyond their need.
         /// </summary>
-        public virtual void Dispose(bool collect) 
+        public virtual void Dispose(bool collect)
         {
             if (_disposed)
             {
                 return;
             }
 
-            if(collect)
+            if (collect)
             {
                 /// Trying to clear resources. Does not guarantee deletion
                 GC.Collect();

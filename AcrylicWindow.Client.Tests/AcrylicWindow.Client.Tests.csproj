@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AcrylicWindow.Client.Core\AcrylicWindow.Client.Core.csproj" />
+    <ProjectReference Include="..\AcrylicWindow.Client.View\AcrylicWindow.Client.View.csproj" />
   </ItemGroup>
 
 </Project>

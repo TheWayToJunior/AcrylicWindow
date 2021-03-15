@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AcrylicWindow.ViewModel
+namespace AcrylicWindow.ViewModels.Pages
 {
     public class LoginPageViewModel : ViewModelBase
     {
@@ -57,7 +57,7 @@ namespace AcrylicWindow.ViewModel
                 return;
             }
 
-            _pageService.NavigateTo(PageHalper.MainPage);
+            _pageService.NavigateTo(PageViewLocator.MainPage);
         }
     }
 }
