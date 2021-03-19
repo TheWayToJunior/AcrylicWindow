@@ -5,5 +5,7 @@
         IEmployeeRepository Employees { get; }
 
         IStudentRepository Students { get; }
+
+        IGroupRepository Groups { get; }
     }
 }

@@ -57,7 +57,7 @@ namespace AcrylicWindow.ViewModels.Pages
                 return;
             }
 
-            _pageService.NavigateTo(PageViewLocator.MainPage);
+            _pageService.NavigateTo(ViewPageLocator.MainPage);
         }
     }
 }

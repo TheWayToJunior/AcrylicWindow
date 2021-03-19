@@ -68,7 +68,7 @@ namespace AcrylicWindow.ViewModels.Pages
             _authorizationProvider = Has.NotNull(authorizationProvider);
             _pageService = Has.NotNull(pageService);
 
-            _pages = PageViewLocator.Tabs;
+            _pages = ViewPageLocator.Tabs;
 
             UserName = _authorizationProvider.AuthenticationState.GetClaim("sub");
 
@@ -81,7 +81,7 @@ namespace AcrylicWindow.ViewModels.Pages
         private async void Logout(object obj)
         {
             await _authorizationProvider.Logout();
-            _pageService.NavigateTo(PageViewLocator.LoginPage);
+            _pageService.NavigateTo(ViewPageLocator.LoginPage);
 
             Dispose(true);
         }

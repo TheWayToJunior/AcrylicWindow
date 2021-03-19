@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.Helpers
 {
-    public static class PaginationHelper
+    public static class CollectionHelper
     {
         public static IQueryable<TModel> Pagination<TModel>(this IQueryable<TModel> queryable, int index, int pageSize)
         {
@@ -17,6 +19,11 @@ namespace AcrylicWindow.Client.Core.Helpers
             return enumerable
                 .Skip((index - 1) * pageSize)
                 .Take(pageSize);
+        }
+
+        public static async Task<IEnumerable<TResult>> SelectAsync<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, Task<TResult>> method)
+        {
+            return await Task.WhenAll(source.Select(async s => await method(s)));
         }
     }
 }

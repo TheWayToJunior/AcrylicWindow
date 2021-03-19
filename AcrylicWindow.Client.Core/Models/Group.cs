@@ -4,9 +4,11 @@ using System.Collections.Generic;
 
 namespace AcrylicWindow.Client.Core.Models
 {
-    class Group : IModel
+    public class Group : IModel
     {
         public Guid Id { get; set; }
+
+        public string Name { get; set; }
 
         public Employee Teacher { get; set; }
 

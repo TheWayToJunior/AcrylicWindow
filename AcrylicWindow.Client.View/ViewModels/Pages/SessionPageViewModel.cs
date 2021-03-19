@@ -57,14 +57,14 @@ namespace AcrylicWindow.ViewModels.Pages
                 return;
             }
 
-            _pageService.NavigateTo(PageViewLocator.MainPage);
+            _pageService.NavigateTo(ViewPageLocator.MainPage);
         }
 
         private async void Logout(object obj)
         {
             await _authorizationProvider.Logout();
 
-            _pageService.NavigateTo(PageViewLocator.LoginPage);
+            _pageService.NavigateTo(ViewPageLocator.LoginPage);
         }
     }
 }

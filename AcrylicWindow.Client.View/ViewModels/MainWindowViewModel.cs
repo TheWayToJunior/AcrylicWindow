@@ -22,11 +22,11 @@ namespace AcrylicWindow.ViewModels
 
             if (state.IsAuthenticated)
             {
-                pageService.NavigateTo(PageViewLocator.SessionPage);
+                pageService.NavigateTo(ViewPageLocator.SessionPage);
                 return;
             }
 
-            pageService.NavigateTo(PageViewLocator.LoginPage);
+            pageService.NavigateTo(ViewPageLocator.LoginPage);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace AcrylicWindow.Dialogs
 {
     public interface IDialogService
     {
-        Task<object> Show(ViewModelBase viewModel);
+        Task<object> ShowAsync(ViewModelBase viewModel);
     }
 }

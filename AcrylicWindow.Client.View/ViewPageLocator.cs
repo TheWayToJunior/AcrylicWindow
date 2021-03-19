@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace AcrylicWindow
 {
-    public static class PageViewLocator
+    public static class ViewPageLocator
     {
         public static Page MainPage => new MainPage();
 

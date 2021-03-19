@@ -21,6 +21,16 @@ namespace AcrylicWindow.ViewModels
 
         public PaginationViewModel Pagination { get; set; }
 
+        /// <summary>
+        /// ViewModel that will be set when the add dialog is called 
+        /// </summary>
+        public ViewModelBase AddDialogViewModel { get; set; }
+
+        /// <summary>
+        /// ViewModel that will be set when the update dialog is called
+        /// </summary>
+        public ViewModelBase UpdateDialogViewModel { get; set; }
+
         private string _filter;
 
         public string Filter
@@ -69,7 +79,8 @@ namespace AcrylicWindow.ViewModels
 
         protected virtual async void OnAddDialog(object obj)
         {
-            var result = await _dialogService.Show(new AddDialogViewModel<TModel>());
+            /// AddDialogViewModel<TModel> is default ViewModel
+            var result = await _dialogService.ShowAsync(AddDialogViewModel ?? new AddDialogViewModel<TModel>());
 
             if (result is TModel model)
             {
@@ -85,7 +96,8 @@ namespace AcrylicWindow.ViewModels
             var key = Guid.Parse(obj.ToString());
             var foundModel = await _service.GetByIdAsync(key);
 
-            var result = await _dialogService.Show(new UpdateDialogViewModel<TModel>(foundModel));
+            /// UpdateDialogViewModel<TModel> is default ViewModel
+            var result = await _dialogService.ShowAsync(UpdateDialogViewModel ?? new UpdateDialogViewModel<TModel>(foundModel));
 
             if (result is TModel model)
             {
