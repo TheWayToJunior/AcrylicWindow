@@ -8,7 +8,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
     public class GroupRepository : RepositoryBase<GroupEntity, Guid>, IGroupRepository
     {
         public GroupRepository(IMongoDatabase database)
-            : base(database, "Groups", searchable: false)
+            : base(database, "Groups", searchable: true)
         {
         }
     }

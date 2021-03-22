@@ -8,7 +8,7 @@ namespace AcrylicWindow.ViewModels
     public class AddDialogViewModel<TModel> : ViewModelBase
         where TModel : class, new()
     {
-        public BindingList<PropertyViewModel<TModel>> _someCollection;
+        private BindingList<PropertyViewModel<TModel>> _someCollection;
 
         public BindingList<PropertyViewModel<TModel>> SomeCollection
         {

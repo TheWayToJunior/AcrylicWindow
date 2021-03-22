@@ -36,7 +36,7 @@
         * [ ] Add modal windows to add a new record
         * [ ] Add modal windows for updating records
         * [ ] Add the ability to delete records
-        * [ ] Add pagination
+        * [x] Add pagination
         * [ ] Add validation for fields on the view
         * [ ] Add a search on the table
 * [ ] Create ViewModels for entities and configuring mapping (Automapper)

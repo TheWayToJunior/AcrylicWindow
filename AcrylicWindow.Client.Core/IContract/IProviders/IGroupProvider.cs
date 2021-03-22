@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace AcrylicWindow.Client.Core.IContract.IProviders
+namespace AcrylicWindow.Client.Core.IContract
 {
     public interface IGroupProvider
     {
@@ -10,9 +10,9 @@ namespace AcrylicWindow.Client.Core.IContract.IProviders
 
         Task<Group> GetByIdAsync(Guid id);
 
-        Task InsertAsync(Group model);
+        Task InsertAsync(GroupCreate model);
 
-        Task UpdateAsync(Guid id, Group model);
+        Task UpdateAsync(Guid id, GroupUpdate model);
 
         Task DeleteAsync(Guid id);
     }

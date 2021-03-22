@@ -118,6 +118,17 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="BorderHover" TargetType="Border">
+        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="BorderBrush" Value="#E0E0E0"></Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--<Setter Property="Background" Value="#F1F1FB"></Setter>-->
+                <!--<Setter Property="BorderBrush" Value="#F1F1FB"></Setter>-->
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style x:Key="SystemText" TargetType="TextBlock">
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Regular"/>

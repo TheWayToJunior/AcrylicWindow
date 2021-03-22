@@ -40,6 +40,7 @@ namespace AcrylicWindow
             services.AddTransient<OptionViewModel>();
             services.AddTransient<EmployeesViewModel>();
             services.AddTransient<StudentsViewModel>();
+            services.AddTransient<GroupViewModel>();
 
             /// Windows
             services.AddSingleton<MainWindowViewModel>();
@@ -58,6 +59,7 @@ namespace AcrylicWindow
 
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IGroupProvider, GroupProvider>();
 
             services.AddScoped<IDialogService, DialogService>();
 
@@ -82,6 +84,9 @@ namespace AcrylicWindow
 
         public StudentsViewModel Students =>
             Provider.GetRequiredService<StudentsViewModel>();
+
+        public GroupViewModel Groups =>
+            Provider.GetRequiredService<GroupViewModel>();
 
         public HomeViewModel Home =>
             Provider.GetRequiredService<HomeViewModel>();

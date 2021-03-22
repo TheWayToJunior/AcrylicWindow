@@ -15,7 +15,9 @@ namespace AcrylicWindow
 
         public  static IDictionary<string, Page> Tabs => new Dictionary<string, Page>()
         {
+            [nameof(HelpTab)]      = new HelpTab(),
             [nameof(HomeTab)]      = new HomeTab(),
+            [nameof(GroupTab)]     = new GroupTab(),
             [nameof(OptionsTab)]   = new OptionsTab(),
             [nameof(StudentsTab)]  = new StudentsTab(),
             [nameof(EmployeesTab)] = new EmployeesTab()

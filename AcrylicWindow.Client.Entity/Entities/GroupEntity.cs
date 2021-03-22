@@ -7,6 +7,8 @@ namespace AcrylicWindow.Client.Entity.Entities
     {
         public string Name { get; set; }
 
+        public string Language { get; set; }
+
         public Guid TeacherId { get; set; }
 
         public ICollection<Guid> StudentsIds { get; set; }

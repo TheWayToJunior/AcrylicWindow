@@ -63,7 +63,7 @@
                                    FontWeight="Light"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem>
+                        <ListViewItem Name="GroupTab">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Group" Margin="15"/>
                                 <TextBlock Text="Группы"  
@@ -85,7 +85,7 @@
                                    FontWeight="Light"/>
                             </StackPanel>
                         </ListViewItem>
-                        <ListViewItem>
+                        <ListViewItem Name="HelpTab">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="InfoCircle" Margin="15"/>
                                 <TextBlock Text="Справка"  
@@ -128,7 +128,8 @@
                         </materialDesign:PopupBox>
                     </StackPanel>
                 </Grid>
-                <Frame Grid.Column="1" Background="#F8F8F8"
+                <!--F3F4F6-->
+                <Frame Grid.Column="1" Background="#F8F8F8" 
                        Grid.Row="1"
                        NavigationUIVisibility="Hidden"
                        Content="{Binding CurrentPage}">

@@ -16,7 +16,6 @@ namespace AcrylicWindow
 
         private void Frame_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
             this.DragMove();
         }
     }

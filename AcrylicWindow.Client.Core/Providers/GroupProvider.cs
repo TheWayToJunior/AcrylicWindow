@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract.IData;
-using AcrylicWindow.Client.Core.IContract.IProviders;
+using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Entity.Entities;
@@ -26,6 +26,7 @@ namespace AcrylicWindow.Client.Core.Providers
             _unitOfWork = Has.NotNull(unitOfWork);
             _studentService = Has.NotNull(studentService);
             _employeeService = Has.NotNull(employeeService);
+
             _mapper = Has.NotNull(mapper);
         }
 
@@ -66,14 +67,24 @@ namespace AcrylicWindow.Client.Core.Providers
             return model;
         }
 
-        public Task InsertAsync(Group model)
+        public async Task InsertAsync(GroupCreate model)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<GroupEntity>(Has.NotNull(model));
+
+            await _unitOfWork.Groups.InsertAsync(entity);
         }
 
-        public Task UpdateAsync(Guid id, Group model)
+        public async Task UpdateAsync(Guid id, GroupUpdate model)
         {
-            throw new NotImplementedException();
+            Has.NotNull(model);
+
+            if (!id.Equals(model.Id))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var entity = _mapper.Map<GroupEntity>(model);
+            await _unitOfWork.Groups.UpdateAsync(id, entity);
         }
 
         public async Task DeleteAsync(Guid id) => await _unitOfWork.Groups.DeleteAsync(id);
