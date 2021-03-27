@@ -26,7 +26,7 @@
                 </Grid.RowDefinitions>
 
 
-                <TextBlock Text="Сотрудники"
+                <TextBlock Text="Ученики"
                            FontSize="18"
                            FontWeight="Medium"
                            Margin="25 10"

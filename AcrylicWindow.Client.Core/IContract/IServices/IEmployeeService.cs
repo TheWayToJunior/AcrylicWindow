@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.IContract.IServices
 {
-    public interface IEmployeeService : ICrudService<Employee, Guid>
+    public interface IEmployeeService : IOperationBase<Employee, Guid>
     {
+        Task<Employee> SingleOrDefaultAsync(Guid id);
+
         Task<long> CountAsync();
     }
 }

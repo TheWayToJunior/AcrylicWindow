@@ -12,6 +12,10 @@ namespace AcrylicWindow.Client.Core.Models
 
         public string Language { get; set; }
 
+        public DateTime Begin { get; set; }
+
+        public DateTime End { get; set; }
+
         public Guid TeacherId { get; set; }
 
         public ICollection<Guid> StudentsIds { get; set; }

@@ -49,7 +49,7 @@ namespace AcrylicWindow.Client.DAL.Repositories
         public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
             return await _collection.AsQueryable()
-                .SingleAsync(entity => entity.Id.Equals(id));
+                .SingleOrDefaultAsync(entity => entity.Id.Equals(id));
         }
 
         public virtual async Task InsertAsync(TEntity entity)

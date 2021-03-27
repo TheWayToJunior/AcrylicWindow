@@ -10,7 +10,7 @@ namespace AcrylicWindow.Extensions
             /// Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new ApplicatinProfile());
+                mc.AddProfile(new ApplicationProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

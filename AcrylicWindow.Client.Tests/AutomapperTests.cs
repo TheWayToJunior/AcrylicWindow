@@ -8,7 +8,7 @@ namespace AcrylicWindow.Client.Tests
         [Fact]
         public void CorrectlyConfigured()
         {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<ApplicatinProfile>());
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<ApplicationProfile>());
 
             config.AssertConfigurationIsValid();
         }

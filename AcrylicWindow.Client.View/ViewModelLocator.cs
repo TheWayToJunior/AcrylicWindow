@@ -1,6 +1,8 @@
 ﻿using AcrylicWindow.Client.Core;
 using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.IContract.IServices;
+using AcrylicWindow.Client.Core.IManagers;
+using AcrylicWindow.Client.Core.Managers;
 using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Core.Providers;
 using AcrylicWindow.Client.Core.Services;
@@ -57,11 +59,14 @@ namespace AcrylicWindow
             services.AddSingleton<ITokenStorage, InMemoryTokenStorage>()
                 .AddTransient<IReaderTokenStore>(p => p.GetService<ITokenStorage>());
 
+            services.AddScoped<IDialogService, DialogService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IStudentService, StudentService>();
+
             services.AddScoped<IGroupProvider, GroupProvider>();
 
-            services.AddScoped<IDialogService, DialogService>();
+            services.AddScoped<IEmployeeManager, EmployeeManager>();
+            services.AddScoped<IStudentManager, StudentManager>();
 
             /// Data
             services.AddMongoProvider();

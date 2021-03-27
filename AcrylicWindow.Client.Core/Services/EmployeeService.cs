@@ -27,6 +27,9 @@ namespace AcrylicWindow.Client.Core.Services
                 await _repository.GetByIdAsync(id)
                 ?? throw new InvalidOperationException($"Object with this id: {id}, was not found"));
 
+        public async Task<Employee> SingleOrDefaultAsync(Guid id) =>
+            _mapper.Map<Employee>(await _repository.GetByIdAsync(id));
+
         /// <summary>
         /// Will give records, dividing them into pages and filtering them if necessary
         /// </summary>

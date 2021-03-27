@@ -39,6 +39,9 @@ namespace AcrylicWindow.Client.Core.Services
                 await _repository.GetByIdAsync(id)
                 ?? throw new InvalidOperationException($"Object with this id: {id}, was not found"));
 
+        public async Task<Student> SingleOrDefaultAsync(Guid id) =>
+            _mapper.Map<Student>(await _repository.GetByIdAsync(id));
+
         public async Task InsertAsync(Student model)
         {
             var entity = _mapper.Map<StudentEntity>(Has.NotNull(model));

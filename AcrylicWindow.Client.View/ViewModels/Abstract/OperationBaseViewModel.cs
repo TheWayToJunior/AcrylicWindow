@@ -1,6 +1,5 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
-using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Dialogs;
 using System;
 using System.Windows.Input;
@@ -11,11 +10,11 @@ namespace AcrylicWindow.ViewModels
     /// A base class that implements CRUD methods and logic for paginated output and filtering
     /// </summary>
     /// <typeparam name="TModel">Model type</typeparam>
-    public abstract class TemplateViewModel<TModel> : ViewModelBase
+    public abstract class OperationBaseViewModel<TModel> : ViewModelBase
         where TModel : class, IModel, new()
     {
-        private readonly ICrudService<TModel, Guid> _service;
-        private readonly IDialogService _dialogService;
+        protected readonly IOperationBase<TModel, Guid> CrudService;
+        protected readonly IDialogService DialogService;
 
         protected int PageSize { get; set; }
 
@@ -49,10 +48,10 @@ namespace AcrylicWindow.ViewModels
 
         public ICommand RefreshCommand { get; }
 
-        public TemplateViewModel(ICrudService<TModel, Guid> service, IDialogService dialogService)
+        public OperationBaseViewModel(IOperationBase<TModel, Guid> service, IDialogService dialogService)
         {
-            _service = Has.NotNull(service);
-            _dialogService = Has.NotNull(dialogService);
+            CrudService = Has.NotNull(service);
+            DialogService = Has.NotNull(dialogService);
 
             /// CRUD Command
             AddCommand = new DelegateCommand(OnAddDialog, CanExecuteAdd);
@@ -80,11 +79,11 @@ namespace AcrylicWindow.ViewModels
         protected virtual async void OnAddDialog(object obj)
         {
             /// AddDialogViewModel<TModel> is default ViewModel
-            var result = await _dialogService.ShowAsync(AddDialogViewModel ?? new AddDialogViewModel<TModel>());
+            var result = await DialogService.ShowAsync(AddDialogViewModel ?? new AddDialogViewModel<TModel>());
 
             if (result is TModel model)
             {
-                await _service.InsertAsync(model);
+                await CrudService.InsertAsync(model);
                 ReceiveData(Pagination.Index, PageSize);
             }
         }
@@ -94,14 +93,14 @@ namespace AcrylicWindow.ViewModels
         protected virtual async void OnUpdateDialog(object obj)
         {
             var key = Guid.Parse(obj.ToString());
-            var foundModel = await _service.GetByIdAsync(key);
+            var foundModel = await CrudService.GetByIdAsync(key);
 
             /// UpdateDialogViewModel<TModel> is default ViewModel
-            var result = await _dialogService.ShowAsync(UpdateDialogViewModel ?? new UpdateDialogViewModel<TModel>(foundModel));
+            var result = await DialogService.ShowAsync(UpdateDialogViewModel ?? new UpdateDialogViewModel<TModel>(foundModel));
 
             if (result is TModel model)
             {
-                await _service.UpdateAsync(key, model);
+                await CrudService.UpdateAsync(key, model);
                 ReceiveData(Pagination.Index, PageSize);
             }
         }
@@ -110,7 +109,7 @@ namespace AcrylicWindow.ViewModels
 
         protected virtual async void OnDelete(object obj)
         {
-            await _service.DeleteAsync(new Guid(obj.ToString()));
+            await CrudService.DeleteAsync(new Guid(obj.ToString()));
             ReceiveData(Pagination.Index, PageSize);
         }
 

@@ -24,8 +24,20 @@
                        VerticalAlignment="Center"
                        FontSize="18"
                        FontWeight="Medium"
-                       Margin="35 0 10 0"
+                       Margin="35 0 0 0"
                        Foreground="#727272"/>
+
+            <Button Command="{Binding AddCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="15 5 5 0">
+                <wpf:PackIcon Kind="GroupAdd"/>
+            </Button>
+
+            <Button Command="{Binding RefreshCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="0 5 5 0">
+                <wpf:PackIcon Kind="Refresh"/>
+            </Button>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Margin="5 0">
@@ -53,7 +65,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <wpf:Chip Command="{Binding DataContext.ClickCommand, ElementName=itemControl}"
+                                    <wpf:Chip Command="{Binding DataContext.UpdateCommand, ElementName=itemControl}"
                                               Grid.Column="1"
                                               CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Self}}"
                                               IconBackground="Transparent"
@@ -67,7 +79,7 @@
                                                            Foreground="#727272"
                                                            FontWeight="Medium"/>
 
-                                                <TextBlock Text="{Binding Teacher.Name}"
+                                                <TextBlock Text="{Binding Teacher.Name, FallbackValue='Teacher not specified' }"
                                                            Foreground="#959DA1"
                                                            FontWeight="Regular"/>
                                             </StackPanel>
@@ -128,12 +140,11 @@
                                         <TextBlock Text="Progress"
                                                    Foreground="#959DA1"
                                                    FontWeight="Regular"/>
-                                        <TextBlock Text="35%"
+                                        <TextBlock Text="{Binding Progress, StringFormat={}{0}%}"
                                                    FontSize="12"
                                                    Foreground="#727272"
                                                    FontWeight="Medium"/>
                                     </StackPanel>
-
                                 </Grid>
 
                                 <wpf:PopupBox Grid.Column="2"
@@ -143,12 +154,16 @@
                                         <wpf:PackIcon Kind="DotsHorizontal" />
                                     </wpf:PopupBox.ToggleContent>
                                     <StackPanel Width="150">
-                                        <Button FontWeight="Regular">
+                                        <Button FontWeight="Regular"
+                                                Command="{Binding DataContext.UpdateCommand, ElementName=itemControl}"
+                                                CommandParameter="{Binding Id}">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Edit"/>
                                             </StackPanel>
                                         </Button>
-                                        <Button FontWeight="Regular">
+                                        <Button FontWeight="Regular"
+                                                Command="{Binding DataContext.DeleteCommand, ElementName=itemControl}"
+                                                CommandParameter="{Binding Id}">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Delete"/>
                                             </StackPanel>

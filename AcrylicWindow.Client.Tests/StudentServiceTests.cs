@@ -24,7 +24,7 @@ namespace AcrylicWindow.Client.Tests
         {
             var mapper = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new ApplicatinProfile());
+                cfg.AddProfile(new ApplicationProfile());
             });
 
             return mapper.CreateMapper();

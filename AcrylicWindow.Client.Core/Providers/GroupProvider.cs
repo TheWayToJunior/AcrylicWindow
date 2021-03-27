@@ -1,12 +1,12 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
-using AcrylicWindow.Client.Core.IContract.IData;
 using AcrylicWindow.Client.Core.IContract;
+using AcrylicWindow.Client.Core.IContract.IData;
 using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Models;
+using AcrylicWindow.Client.Entity;
 using AcrylicWindow.Client.Entity.Entities;
 using AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace AcrylicWindow.Client.Core.Providers
 
         private readonly IMapper _mapper;
 
-        public GroupProvider(IUnitOfWork unitOfWork, IStudentService studentService, IEmployeeService employeeService, 
+        public GroupProvider(IUnitOfWork unitOfWork, IStudentService studentService, IEmployeeService employeeService,
             IMapper mapper)
         {
             _unitOfWork = Has.NotNull(unitOfWork);
@@ -30,10 +30,8 @@ namespace AcrylicWindow.Client.Core.Providers
             _mapper = Has.NotNull(mapper);
         }
 
-        public async Task<PaginationResult<Group>> GetAllAsync(int page, int pageSize, string filter = null)
+        public async Task<PaginationResult<Group>> GetAllAsync(int page, int pageSize)
         {
-            /// ToDo : Figure out what to do with the search
-
             var groups = await _unitOfWork.Groups
                 .GetAll()
                 .Pagination(page, pageSize)
@@ -50,19 +48,19 @@ namespace AcrylicWindow.Client.Core.Providers
 
         private async Task<Group> MapToModel(GroupEntity entity)
         {
-            Has.NotNull(entity);
+            var model = _mapper.Map<Group>(Has.NotNull(entity));
 
-            var teacher = await _employeeService.GetByIdAsync(entity.TeacherId);
-            var students = new List<Student>();
-
-            foreach (var studentId in entity.StudentsIds)
+            if (entity.TeacherId != default)
             {
-                students.Add(await _studentService.GetByIdAsync(studentId));
+                var teacher = await _employeeService.GetByIdAsync(entity.TeacherId);
+                model.Teacher = teacher;
             }
 
-            var model = _mapper.Map<Group>(entity);
-            model.Teacher = teacher;
-            model.Students = students;
+            entity.StudentsIds?.SelectAsync(async id =>
+            {
+                Has.NotNull(model.Students).Add(await _studentService.GetByIdAsync(id));
+                return id;
+            });
 
             return model;
         }
@@ -80,13 +78,51 @@ namespace AcrylicWindow.Client.Core.Providers
 
             if (!id.Equals(model.Id))
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"The IDs don't match: {id} and {model.Id}");
             }
 
             var entity = _mapper.Map<GroupEntity>(model);
+
+            await _unitOfWork.SetAllReferences(entity, (@ref, id) => @ref.Groups.Add(id));
             await _unitOfWork.Groups.UpdateAsync(id, entity);
         }
 
-        public async Task DeleteAsync(Guid id) => await _unitOfWork.Groups.DeleteAsync(id);
+        public async Task DeleteAsync(Guid id)
+        {
+            var entity = await _unitOfWork.Groups.GetByIdAsync(id);
+
+            if (entity == null)
+            {
+                throw new InvalidOperationException($"Missing id specified: {id}");
+            }
+
+            await _unitOfWork.SetAllReferences(entity, (@ref, id) => @ref.Groups.Remove(id));
+            await _unitOfWork.Groups.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// Deletes installed links in groups
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="referencesAction"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        async Task IGroupProvider.Exclude(Action<IReferencesDeleteable> referencesAction, IGroupsReferense model)
+        {
+            Has.NotNull(model);
+
+            foreach (var id in model.Groups)
+            {
+                var groupEntity = await _unitOfWork.Groups.GetByIdAsync(id);
+
+                if (groupEntity == null)
+                {
+                    throw new InvalidOperationException($"Missing id specified: {id}");
+                }
+
+                referencesAction?.Invoke(groupEntity);
+                await _unitOfWork.Groups.UpdateAsync(id, groupEntity);
+            }
+        }
     }
 }
