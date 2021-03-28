@@ -6,6 +6,7 @@ using AcrylicWindow.Client.Entity.Entities;
 using AutoMapper;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,7 +26,7 @@ namespace AcrylicWindow.Client.Tests
                 Id = new Guid(GroupId),
                 Name = "Test Group",
                 TeacherId = Guid.Parse(TeacherId),
-                StudentsIds = new Guid[]
+                StudentsIds = new List<Guid>
                 {
                     Guid.Parse(StudentId)
                 }
@@ -46,6 +47,7 @@ namespace AcrylicWindow.Client.Tests
         [Fact]
         public async Task GetAllAsync()
         {
+            // Arrange
             var mockStudents = new Mock<IStudentService>();
             mockStudents.Setup(repo => repo.GetByIdAsync(Guid.Parse(StudentId)))
                 .Returns(Task.FromResult(new Student
@@ -68,8 +70,10 @@ namespace AcrylicWindow.Client.Tests
 
             var provider = new GroupProvider(mockUnitOfWork.Object, mockStudents.Object, mockEmployees.Object, CreateMapper());
 
+            // Act
             var result = await provider.GetAllAsync(1, 1);
 
+            // Assert
             Assert.NotNull(result);
 
             var firstGroup = result.Values.FirstOrDefault();
@@ -87,6 +91,7 @@ namespace AcrylicWindow.Client.Tests
         [Fact]
         public async Task GetByIdAsync()
         {
+            // Arrange
             var groupId = new Guid(GroupId);
 
             var mockStudents = new Mock<IStudentService>();
@@ -111,8 +116,10 @@ namespace AcrylicWindow.Client.Tests
 
             var provider = new GroupProvider(mockUnitOfWork.Object, mockStudents.Object, mockEmployees.Object, CreateMapper());
 
+            // Act
             var result = await provider.GetByIdAsync(groupId);
 
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(groupId, result.Id);
             Assert.Equal("Test Group", result.Name);
@@ -124,6 +131,73 @@ namespace AcrylicWindow.Client.Tests
             Assert.NotEmpty(result.Students);
             Assert.IsType<Student>(result.Students.First());
             Assert.Equal("Test Student", result.Students.First().Name);
+        }
+
+        [Fact]
+        public async Task Exclude_DeleteReferenseTeacher()
+        {
+            // Arrange
+            var groupId = new Guid(GroupId);
+            GroupEntity testEntity = null;
+
+            var teacher = new EmployeeEntity { Id = new Guid(TeacherId) };
+            teacher.Groups.Add(groupId);
+
+            var mockEmployee = new Mock<IEmployeeService>();
+            var mockStudent = new Mock<IStudentService>();
+
+            var mockRepo = new Mock<IGroupRepository>();
+            mockRepo.Setup(repo => repo.GetByIdAsync(groupId)).Returns(Task.FromResult(GetGroups().First()));
+            mockRepo.Setup(repo => repo.UpdateAsync(groupId, It.IsAny<GroupEntity>()))
+                .Callback((Guid id, GroupEntity entity) =>
+                {
+                    testEntity = entity;
+                });
+
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork.Setup(uow => uow.Groups).Returns(mockRepo.Object);
+
+            var provider = new GroupProvider(mockUnitOfWork.Object, mockStudent.Object, mockEmployee.Object, CreateMapper());
+
+            // Act
+            await provider.Exclude(g => g.DeleteReferenseTeacher(), teacher);
+
+            // Assert
+            Assert.Equal(default, testEntity.TeacherId);
+        }
+
+        [Fact]
+        public async Task Exclude_DeleteReferenseStudent()
+        {
+            // Arrange
+            var groupId = new Guid(GroupId);
+            GroupEntity testEntity = null;
+
+            var studentId = new Guid(StudentId);
+            var student = new StudentEntity { Id = studentId };
+            student.Groups.Add(groupId);
+
+            var mockEmployee = new Mock<IEmployeeService>();
+            var mockStudent = new Mock<IStudentService>();
+
+            var mockRepo = new Mock<IGroupRepository>();
+            mockRepo.Setup(repo => repo.GetByIdAsync(groupId)).Returns(Task.FromResult(GetGroups().First()));
+            mockRepo.Setup(repo => repo.UpdateAsync(groupId, It.IsAny<GroupEntity>()))
+                .Callback((Guid id, GroupEntity entity) =>
+                {
+                    testEntity = entity;
+                });
+
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork.Setup(uow => uow.Groups).Returns(mockRepo.Object);
+
+            var provider = new GroupProvider(mockUnitOfWork.Object, mockStudent.Object, mockEmployee.Object, CreateMapper());
+
+            // Act
+            await provider.Exclude(g => g.DeleteReferenseStudent(studentId), student);
+
+            // Assert
+            Assert.False(testEntity.StudentsIds.Contains(studentId));
         }
     }
 }

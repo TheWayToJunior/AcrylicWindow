@@ -11,13 +11,13 @@ namespace AcrylicWindow.Client.Core.Managers
 {
     public class EmployeeManager : IEmployeeManager
     {
-        private readonly IGroupProvider _groupProvider;
+        private readonly IReferenceExcludable _excludable;
         private readonly IEmployeeService _employeeService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public EmployeeManager(IUnitOfWork unitOfWork, IGroupProvider groupProvider, IEmployeeService employeeService)
+        public EmployeeManager(IUnitOfWork unitOfWork, IReferenceExcludable excludable, IEmployeeService employeeService)
         {
-            _groupProvider = Has.NotNull(groupProvider);
+            _excludable = Has.NotNull(excludable);
             _employeeService = Has.NotNull(employeeService);
             _unitOfWork = Has.NotNull(unitOfWork);
         }
@@ -34,7 +34,7 @@ namespace AcrylicWindow.Client.Core.Managers
             if (entity == null)
                 throw new InvalidOperationException();
 
-            await _groupProvider.Exclude(g => g.DeleteReferenseTeacher(), entity);
+            await _excludable.Exclude(g => g.DeleteReferenseTeacher(), entity);
             await _employeeService.DeleteAsync(id);
         }
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.Providers
 {
-    public class GroupProvider : IGroupProvider
+    public class GroupProvider : IGroupProvider, IReferenceExcludable
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStudentService _studentService;
@@ -107,7 +107,7 @@ namespace AcrylicWindow.Client.Core.Providers
         /// <param name="referencesAction"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        async Task IGroupProvider.Exclude(Action<IReferencesDeleteable> referencesAction, IGroupsReferense model)
+        public async Task Exclude(Action<IReferencesDeleteable> referencesAction, IGroupsReferense model)
         {
             Has.NotNull(model);
 

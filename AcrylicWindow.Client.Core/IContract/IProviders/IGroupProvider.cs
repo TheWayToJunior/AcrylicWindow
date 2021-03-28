@@ -16,7 +16,5 @@ namespace AcrylicWindow.Client.Core.IContract
         Task UpdateAsync(Guid id, GroupUpdate model);
 
         Task DeleteAsync(Guid id);
-
-        internal Task Exclude(Action<IReferencesDeleteable> setReferencesAction, IGroupsReferense model);
     }
 }

@@ -63,7 +63,8 @@ namespace AcrylicWindow
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IStudentService, StudentService>();
 
-            services.AddScoped<IGroupProvider, GroupProvider>();
+            services.AddScoped<IGroupProvider, GroupProvider>()
+                .AddTransient<IReferenceExcludable>(p => p.GetService<IGroupProvider>() as GroupProvider);
 
             services.AddScoped<IEmployeeManager, EmployeeManager>();
             services.AddScoped<IStudentManager, StudentManager>();
