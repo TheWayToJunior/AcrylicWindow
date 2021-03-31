@@ -1,6 +1,7 @@
 ﻿using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Entity.Entities;
 using AutoMapper;
+using System.Linq;
 
 namespace AcrylicWindow
 {
@@ -37,6 +38,10 @@ namespace AcrylicWindow
             CreateMap<GroupUpdate, GroupEntity>()
                 .ForMember(ge => ge.CreatedBy, opt => opt.Ignore())
                 .ForMember(ge => ge.UpdatedBy, opt => opt.Ignore());
+
+           CreateMap<Group, GroupUpdate>()
+                .ForMember(gu => gu.TeacherId, opt => opt.MapFrom(g => g.Teacher.Id))
+                .ForMember(gu => gu.StudentsIds, opt => opt.MapFrom(g => g.Students.Select(s => s.Id)));
         }
     }
 }

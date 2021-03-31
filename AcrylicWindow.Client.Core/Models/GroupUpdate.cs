@@ -1,10 +1,11 @@
 ﻿using AcrylicWindow.Client.Core.IContract;
+using AcrylicWindow.Client.Entity;
 using System;
 using System.Collections.Generic;
 
 namespace AcrylicWindow.Client.Core.Models
 {
-    public class GroupUpdate : IModel
+    public class GroupUpdate : IModel, IParticipantsReferences
     {
         public Guid Id { get; set; }
 

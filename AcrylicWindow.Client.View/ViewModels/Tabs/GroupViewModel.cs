@@ -1,8 +1,10 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
+using AcrylicWindow.Client.Core.IManagers;
 using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Dialogs;
 using AcrylicWindow.ViewModels.Dialogs;
+using AutoMapper;
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -13,8 +15,12 @@ namespace AcrylicWindow.ViewModels.Tabs
     {
         private const int PageSize = 5;
 
+        private readonly IEmployeeManager _employeeManager;
+        private readonly IStudentManager _studentManager;
         private readonly IGroupProvider _groupProvider;
+
         private readonly IDialogService _dialogService;
+        private readonly IMapper _mapper;
 
         public PaginationViewModel Pagination { get; set; }
 
@@ -28,10 +34,15 @@ namespace AcrylicWindow.ViewModels.Tabs
 
         public ICommand RefreshCommand { get; set; }
 
-        public GroupViewModel(IGroupProvider groupProvider, IDialogService dialogService)
+        public GroupViewModel(IGroupProvider groupProvider, IEmployeeManager employeeManager, IStudentManager studentManager, 
+            IDialogService dialogService, IMapper mapper)
         {
+            _employeeManager = Has.NotNull(employeeManager);
+            _studentManager = Has.NotNull(studentManager);
             _groupProvider = Has.NotNull(groupProvider);
+
             _dialogService = Has.NotNull(dialogService);
+            _mapper = mapper;
 
             Pagination = new PaginationViewModel(ReceiveData, PageSize);
 
@@ -52,11 +63,17 @@ namespace AcrylicWindow.ViewModels.Tabs
         private async void OnUpdate(object obj)
         {
             var model = obj as Group;
-            var result = await _dialogService.ShowAsync(new UpdateGroupDialogViewModel(model));
 
-            if (result is GroupUpdate group)
+            var result = await _dialogService.ShowAsync(new UpdateGroupDialogViewModel(
+                group: model,
+                /// ToDo: Make a pagination
+                employees: (await _employeeManager.GetAll(1, 100)).Values,
+                students: (await _studentManager.GetAll(1, 100)).Values));
+
+            if (result is Group group)
             {
-                await _groupProvider.UpdateAsync(model.Id, group);
+                var update = _mapper.Map<GroupUpdate>(group);
+                await _groupProvider.UpdateAsync(model.Id, update);
                 ReceiveData(Pagination.Index, PageSize);
             }
         }

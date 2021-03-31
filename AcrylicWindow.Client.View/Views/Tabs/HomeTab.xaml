@@ -4,13 +4,144 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:controls="clr-namespace:AcrylicWindow.Views.Controls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:controls="clr-namespace:AcrylicWindow.Views.Controls" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="555" d:DesignWidth="780"
       Title="MainPage"
       DataContext="{Binding Home, Source={StaticResource ViewModelLocator}}">
 
-    <Grid>
-        <controls:EmptyPageControl/>
+    <Grid Margin="35">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Margin="25 10">
+                <TextBlock Text="Good mornin,"
+                           Foreground="#959DA1"
+                           FontSize="12"
+                           FontWeight="Regular"/>
+                <TextBlock Text="Test Name"
+                           FontSize="16"
+                           Foreground="#727272"
+                           FontWeight="Medium"/>
+                <TextBlock/>
+            </StackPanel>
+
+            <Border Grid.Column="1"
+                    CornerRadius="10"
+                    Background="White"
+                    Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" Direction="310" ShadowDepth="5" Opacity="0.1"
+                                      BlurRadius="10" />
+                </Border.Effect>
+
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="Your account value"
+                           Foreground="#959DA1"
+                           FontSize="12"
+                           FontWeight="Regular"/>
+                    
+                    <TextBlock Text="$ 13 000"
+                               Grid.Row="1"
+                               FontSize="25"
+                               Foreground="#727272"
+                               FontWeight="Medium"/>
+                </Grid>
+
+            </Border>
+
+            <Border Grid.Column="2"
+                    CornerRadius="10"
+                    Background="White"
+                    Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" Direction="310" ShadowDepth="5" Opacity="0.1"
+                                      BlurRadius="10" />
+                </Border.Effect>
+
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Since beginning"
+                           Foreground="#959DA1"
+                           FontSize="12"
+                           FontWeight="Regular"/>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Triangle"
+                                                 VerticalAlignment="Center"
+                                                 Width="10"
+                                                 Margin="0 10 0 0"
+                                                 Foreground="#00C981"/>
+
+                        <TextBlock Text="12.2%"
+                                   Margin="5 0 0 0"
+                                   FontSize="25"
+                                  Foreground="#00C981"
+                                   FontWeight="Medium"/>
+                    </StackPanel>
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Margin="25 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Text="Account Value"
+                           FontSize="18"
+                           FontWeight="Medium"
+                           Foreground="#727272"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Command="{Binding AddCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="0 0 5 0">
+                        <materialDesign:PackIcon Kind="CloudPrintOutline"/>
+                    </Button>
+
+                    <Button Command="{Binding RefreshCommand}"
+                            Style="{DynamicResource MaterialDesignToolButton}"
+                            Margin="0 0 5 0">
+                        <materialDesign:PackIcon Kind="Refresh"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <lvc:CartesianChart Series="{Binding SeriesCollection}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

@@ -25,5 +25,13 @@ namespace AcrylicWindow.Client.Core.Helpers
         {
             return await Task.WhenAll(source.Select(async s => await method(s)));
         }
+
+        public static void TryAdd<TModel>(this ICollection<TModel> source, TModel model)
+        {
+            if (!source.Contains(model))
+            {
+                source.Add(model);
+            }
+        }
     }
 }

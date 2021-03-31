@@ -38,12 +38,7 @@
                     </Grid.RowDefinitions>
                     
                     <StackPanel>
-                        <materialDesign:PackIcon Foreground="#7D9AFF"
-                                                 Kind="AccountCircle"
-                                                 HorizontalAlignment="Center"
-                                                 VerticalAlignment="Center"
-                                                 Width="250" Height="120">
-                        </materialDesign:PackIcon>
+                        <Image Source="{StaticResource LogoImage}" Width="100" Margin="25"/>
                         <TextBlock Text="Login to Your Account"
                                    FontSize="18"
                                    FontWeight="Medium"

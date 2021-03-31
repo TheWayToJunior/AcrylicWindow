@@ -1,6 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.IContract.IData;
+using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Client.Entity;
-using AcrylicWindow.Client.Entity.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -15,7 +15,7 @@ namespace AcrylicWindow.Client.Core.Helpers
         /// <param name="model"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static async Task SetAllReferences(this IUnitOfWork unitOfWork, GroupEntity model, Action<IGroupsReferense, Guid> action)
+        public static async Task SetAllReferences(this IUnitOfWork unitOfWork, IParticipantsReferences model, Action<IGroupsReferense, Guid> action)
         {
             if (model.TeacherId != default)
             {
@@ -35,6 +35,16 @@ namespace AcrylicWindow.Client.Core.Helpers
                 await unitOfWork.Students.UpdateAsync(student.Id, student);
                 return id;
             });
+        }
+
+        public static async Task SetAllReferences(this IUnitOfWork unitOfWork, DeletedGroupReference model)
+        {
+            await ReferenceHalper.SetAllReferences(unitOfWork, model, (@ref, id) => @ref.Groups.Remove(id));
+        }
+
+        public static async Task SetAllReferences(this IUnitOfWork unitOfWork, InsertedGroupReference model)
+        {
+            await ReferenceHalper.SetAllReferences(unitOfWork, model, (@ref, id) => @ref.Groups.Add(id));
         }
     }
 }

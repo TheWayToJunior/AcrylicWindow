@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AcrylicWindow.Client.Entity.Entities
 {
-    public class GroupEntity : EntityBase<Guid>, IReferencesDeleteable
+    public class GroupEntity : EntityBase<Guid>, IParticipantsReferences, IReferencesDeleteable
     {
         public string Name { get; set; }
 

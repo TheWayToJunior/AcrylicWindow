@@ -81,10 +81,15 @@ namespace AcrylicWindow.Client.Core.Providers
                 throw new InvalidOperationException($"The IDs don't match: {id} and {model.Id}");
             }
 
-            var entity = _mapper.Map<GroupEntity>(model);
+            var entity = await _unitOfWork.Groups.GetByIdAsync(model.Id);
 
-            await _unitOfWork.SetAllReferences(entity, (@ref, id) => @ref.Groups.Add(id));
-            await _unitOfWork.Groups.UpdateAsync(id, entity);
+            /// This is not a bug but a feature:
+            /// When you change the reference to the group in the Student and Employee objects is not deleted so you have to delete it manually
+            await _unitOfWork.SetAllReferences(DeletedGroupReference.GetInstance(entity, model));
+
+            /// Adding new links received from the UI
+            await _unitOfWork.SetAllReferences(InsertedGroupReference.GetInstance(entity, model));
+            await _unitOfWork.Groups.UpdateAsync(id, _mapper.Map(model, entity));
         }
 
         public async Task DeleteAsync(Guid id)
