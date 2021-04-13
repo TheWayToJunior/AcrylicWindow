@@ -1,20 +1,6 @@
-﻿using AcrylicWindow.Client.Core.Models;
-using AcrylicWindow.Client.Entity;
-using System;
-using System.Threading.Tasks;
-
-namespace AcrylicWindow.Client.Core.IContract
+﻿namespace AcrylicWindow.Client.Core.IContract
 {
-    public interface IGroupProvider
+    public interface IGroupProvider : IGroupOperation
     {
-        Task<PaginationResult<Group>> GetAllAsync(int page, int pageSize);
-
-        Task<Group> GetByIdAsync(Guid id);
-
-        Task InsertAsync(GroupCreate model);
-
-        Task UpdateAsync(Guid id, GroupUpdate model);
-
-        Task DeleteAsync(Guid id);
     }
 }

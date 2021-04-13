@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.Managers
 {
+    /// <summary>
+    /// Decorator over IEmployeeService that performs tasks related to Group references
+    /// </summary>
     public class EmployeeManager : IEmployeeManager
     {
         private readonly IReferenceExcludable _excludable;

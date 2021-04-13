@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AcrylicWindow.ViewModels.CheckOperationViewModel&lt;TModel&gt;" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQIAAAAACAAQAAAAQAAIAAAAAAAgAAoAAAAAAAAEAA=</HashCode>
+      <FileName>ViewModels\Abstract\CheckOperationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.MainWindowViewModel" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAI=</HashCode>
+      <FileName>ViewModels\MainWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.OperationBaseViewModel&lt;TModel&gt;" Collapsed="true">
+    <Position X="2.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAANAAgARAgQECoAAAAAAAIBAACIAAAAAAEIAAAAA=</HashCode>
+      <FileName>ViewModels\Abstract\OperationBaseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.ViewModelBase" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAEBAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Abstract\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Pages.LoginPageViewModel" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACAAAQCAAAAAAEAAAAAAIAAAAAAQAACAAAE=</HashCode>
+      <FileName>ViewModels\Pages\LoginPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Pages.MainPageViewModel" Collapsed="true">
+    <Position X="11.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACAAAACAIAAAAEIAAAAAIACAAQJAAAEAAII=</HashCode>
+      <FileName>ViewModels\Pages\MainPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Pages.SessionViewModel" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAQCAAAAAAEIAAAAAIAAAAQIQAACAAIA=</HashCode>
+      <FileName>ViewModels\Pages\SessionPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Tabs.EmployeesViewModel" Collapsed="true">
+    <Position X="3.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Tabs\EmployeesViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Tabs.GroupViewModel" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAEAAAAAACQECoAABAYAAIAAAAAQAAQAAEAEAAAA=</HashCode>
+      <FileName>ViewModels\Tabs\GroupViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Tabs.HomeViewModel" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAEIAAAAiAAAAAAAQAAAEAAAgAAAAAAAIAAAA=</HashCode>
+      <FileName>ViewModels\Tabs\HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Tabs.OptionViewModel" Collapsed="true">
+    <Position X="13.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Tabs\OptionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AcrylicWindow.ViewModels.Tabs.StudentsViewModel" Collapsed="true">
+    <Position X="1.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Tabs\StudentsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

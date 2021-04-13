@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Client.Core;
 using AcrylicWindow.Client.Core.IContract;
+using AcrylicWindow.Client.Core.IContract.IManagers;
 using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.IManagers;
 using AcrylicWindow.Client.Core.Managers;
@@ -59,15 +60,16 @@ namespace AcrylicWindow
             services.AddSingleton<ITokenStorage, InMemoryTokenStorage>()
                 .AddTransient<IReaderTokenStore>(p => p.GetService<ITokenStorage>());
 
-            services.AddScoped<IDialogService, DialogService>();
+            services.AddScoped<IGroupProvider, GroupProvider>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IStudentService, StudentService>();
 
-            services.AddScoped<IGroupProvider, GroupProvider>()
-                .AddTransient<IReferenceExcludable>(p => p.GetService<IGroupProvider>() as GroupProvider);
+            services.AddScoped<IDialogService, DialogService>();
 
+            services.AddScoped<IReferenceExcludable, ReferenceExcludableService>();
             services.AddScoped<IEmployeeManager, EmployeeManager>();
             services.AddScoped<IStudentManager, StudentManager>();
+            services.AddScoped<IGroupManager, GroupManager>();
 
             /// Data
             services.AddMongoProvider();

@@ -3,7 +3,6 @@ using AcrylicWindow.Client.Core.IContract;
 using AcrylicWindow.Client.Core.IContract.IData;
 using AcrylicWindow.Client.Core.IContract.IServices;
 using AcrylicWindow.Client.Core.Models;
-using AcrylicWindow.Client.Entity;
 using AcrylicWindow.Client.Entity.Entities;
 using AutoMapper;
 using System;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AcrylicWindow.Client.Core.Providers
 {
-    public class GroupProvider : IGroupProvider, IReferenceExcludable
+    public class GroupProvider : IGroupProvider
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStudentService _studentService;
@@ -74,60 +73,12 @@ namespace AcrylicWindow.Client.Core.Providers
 
         public async Task UpdateAsync(Guid id, GroupUpdate model)
         {
-            Has.NotNull(model);
-
-            if (!id.Equals(model.Id))
-            {
-                throw new InvalidOperationException($"The IDs don't match: {id} and {model.Id}");
-            }
-
-            var entity = await _unitOfWork.Groups.GetByIdAsync(model.Id);
-
-            /// This is not a bug but a feature:
-            /// When you change the reference to the group in the Student and Employee objects is not deleted so you have to delete it manually
-            await _unitOfWork.SetAllReferences(DeletedGroupReference.GetInstance(entity, model));
-
-            /// Adding new links received from the UI
-            await _unitOfWork.SetAllReferences(InsertedGroupReference.GetInstance(entity, model));
-            await _unitOfWork.Groups.UpdateAsync(id, _mapper.Map(model, entity));
+            await _unitOfWork.Groups.UpdateAsync(id, _mapper.Map<GroupEntity>(model));
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var entity = await _unitOfWork.Groups.GetByIdAsync(id);
-
-            if (entity == null)
-            {
-                throw new InvalidOperationException($"Missing id specified: {id}");
-            }
-
-            await _unitOfWork.SetAllReferences(entity, (@ref, id) => @ref.Groups.Remove(id));
             await _unitOfWork.Groups.DeleteAsync(id);
-        }
-
-        /// <summary>
-        /// Deletes installed links in groups
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="referencesAction"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public async Task Exclude(Action<IReferencesDeleteable> referencesAction, IGroupsReferense model)
-        {
-            Has.NotNull(model);
-
-            foreach (var id in model.Groups)
-            {
-                var groupEntity = await _unitOfWork.Groups.GetByIdAsync(id);
-
-                if (groupEntity == null)
-                {
-                    throw new InvalidOperationException($"Missing id specified: {id}");
-                }
-
-                referencesAction?.Invoke(groupEntity);
-                await _unitOfWork.Groups.UpdateAsync(id, groupEntity);
-            }
         }
     }
 }

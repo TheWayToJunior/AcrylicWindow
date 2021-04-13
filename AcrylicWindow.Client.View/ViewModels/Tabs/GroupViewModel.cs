@@ -1,5 +1,6 @@
 ﻿using AcrylicWindow.Client.Core.Helpers;
 using AcrylicWindow.Client.Core.IContract;
+using AcrylicWindow.Client.Core.IContract.IManagers;
 using AcrylicWindow.Client.Core.IManagers;
 using AcrylicWindow.Client.Core.Models;
 using AcrylicWindow.Dialogs;
@@ -17,7 +18,7 @@ namespace AcrylicWindow.ViewModels.Tabs
 
         private readonly IEmployeeManager _employeeManager;
         private readonly IStudentManager _studentManager;
-        private readonly IGroupProvider _groupProvider;
+        private readonly IGroupManager _groupManager;
 
         private readonly IDialogService _dialogService;
         private readonly IMapper _mapper;
@@ -34,12 +35,12 @@ namespace AcrylicWindow.ViewModels.Tabs
 
         public ICommand RefreshCommand { get; set; }
 
-        public GroupViewModel(IGroupProvider groupProvider, IEmployeeManager employeeManager, IStudentManager studentManager, 
+        public GroupViewModel(IGroupManager groupProvider, IEmployeeManager employeeManager, IStudentManager studentManager, 
             IDialogService dialogService, IMapper mapper)
         {
             _employeeManager = Has.NotNull(employeeManager);
             _studentManager = Has.NotNull(studentManager);
-            _groupProvider = Has.NotNull(groupProvider);
+            _groupManager = Has.NotNull(groupProvider);
 
             _dialogService = Has.NotNull(dialogService);
             _mapper = mapper;
@@ -73,7 +74,7 @@ namespace AcrylicWindow.ViewModels.Tabs
             if (result is Group group)
             {
                 var update = _mapper.Map<GroupUpdate>(group);
-                await _groupProvider.UpdateAsync(model.Id, update);
+                await _groupManager.UpdateAsync(model.Id, update);
                 ReceiveData(Pagination.Index, PageSize);
             }
         }
@@ -84,7 +85,7 @@ namespace AcrylicWindow.ViewModels.Tabs
 
             if (result is GroupCreate group)
             {
-                await _groupProvider.InsertAsync(group);
+                await _groupManager.InsertAsync(group);
                 ReceiveData(Pagination.Index, PageSize);
             }
         }
@@ -96,7 +97,7 @@ namespace AcrylicWindow.ViewModels.Tabs
                 Pagination.Previous();
             }
 
-            await _groupProvider.DeleteAsync(Guid.Parse(obj.ToString()));
+            await _groupManager.DeleteAsync(Guid.Parse(obj.ToString()));
             ReceiveData(Pagination.Index, PageSize);
         }
 
@@ -104,7 +105,7 @@ namespace AcrylicWindow.ViewModels.Tabs
         {
             Items.Clear();
 
-            var groups = await _groupProvider.GetAllAsync(index, size);
+            var groups = await _groupManager.GetAllAsync(index, size);
 
             foreach (var item in groups.Values)
             {
