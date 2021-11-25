@@ -39,8 +39,8 @@
 * [x] Create ViewModels for entities and configuring mapping (Automapper)
 * [x] Add the resulting charts (LiveCharts)
 * [x] Visualize data on the home page
-* [ ] Test the app
+* [x] Test the app
     * [x] Test the AuthorizationProvider
-    * [ ] Test the main business logic services
+    * [x] Test the main business logic services
 
 <img align="right" src="AcrylicWindow.Client.View/Images/Logo.png" width="135" height="100">
